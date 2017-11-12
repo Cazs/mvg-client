@@ -14,7 +14,7 @@ public enum Screens
     HOME("Homescreen.fxml"),
     LOGIN("Login.fxml"),
     SETTINGS("Settings.fxml"),
-    CREATE_ACCOUNT("Create_account.fxml"),
+    CREATE_ACCOUNT("CreateAccount.fxml"),
     RESET_PWD("ResetPassword.fxml");
 
     private String screen;
