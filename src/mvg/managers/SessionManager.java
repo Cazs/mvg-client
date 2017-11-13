@@ -10,12 +10,12 @@ import com.google.gson.GsonBuilder;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
 import mvg.auxilary.Session;
-import mvg.model.Employee;
+import mvg.model.User;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,9 +24,9 @@ import javax.swing.JOptionPane;
 public class SessionManager 
 {
     private static final SessionManager sess_mgr = new SessionManager();
-    private List<Session> sessions = new ArrayList<Session>();
+    private HashMap<String, Session> sessions = new HashMap<>();
     private Session active;
-    private Employee active_employee;
+    private User active_user;
     public static final String TAG = "SessionManager";
     
     private SessionManager(){};
@@ -35,21 +35,29 @@ public class SessionManager
     {
         return sess_mgr;
     }
-    
+
+    /**
+     * Method to add a Session to the HashMap of sessions
+     * @param session <pre>Session</pre> object to be added.
+     */
     public void addSession(Session session)
     {
         if(session==null)
             return;
+        //check if session being added exists in list of sessions
         Session s = getUserSession(session.getUsername());
         if(s!=null)
         {
+            //if it exists in the list,update the date, session_id & ttl
             s.setDate(session.getDate());
             s.setSessionId(session.getSessionId());
             s.setTtl(session.getTtl());
             setActive(s);
         }
-        else{
-            sessions.add(session);
+        else
+        {
+            //if it doesn't exist, add it to the list and set it as active
+            sessions.put(session.getSessionId(), session);
             setActive(session);
         }
         try 
@@ -59,22 +67,22 @@ public class SessionManager
             {
                 ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
                 headers.add(new AbstractMap.SimpleEntry<>("Cookie", active_sess.getSessionId()));
-                String employee_json = RemoteComms.sendGetRequest("/api/employee/" + active_sess.getUsername(), headers);
-                if(employee_json!=null)
+                String user_json = RemoteComms.sendGetRequest("/api/user/" + active_sess.getUsername(), headers);
+                if(user_json!=null)
                 {
-                    if(!employee_json.equals("[]") && !employee_json.equals("null"))
+                    if(!user_json.equals("[]") && !user_json.equals("null"))
                     {
                         Gson gson = new GsonBuilder().create();
-                        Employee e = gson.fromJson(employee_json, Employee.class);
-                        setActiveEmployee(e);
+                        User user = gson.fromJson(user_json, User.class);
+                        setActiveUser(user);
                     }else{
-                        JOptionPane.showMessageDialog(null, "No user was found that matches the given credentials.","Invalid Credentials", JOptionPane.ERROR_MESSAGE);
+                        IO.logAndAlert("Invalid Credentials", "No user was found that matches the given credentials.", IO.TAG_ERROR);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "No user was found that matches the given credentials.","Invalid Credentials", JOptionPane.ERROR_MESSAGE);
+                    IO.logAndAlert("Invalid Credentials", "No user was found that matches the given credentials.", IO.TAG_ERROR);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "No active sessions.","Session Error", JOptionPane.ERROR_MESSAGE);
+                IO.logAndAlert("Session Error", "No active sessions.", IO.TAG_ERROR);
             }
         } catch (IOException ex) 
         {
@@ -82,29 +90,24 @@ public class SessionManager
         }
     }
     
-    public void setActiveEmployee(Employee empl)
+    public void setActiveUser(User empl)
     {
-        this.active_employee=empl;
+        this.active_user =empl;
     }
     
-    public Employee getActiveEmployee()
+    public User getActiveUser()
     {
-        return this.active_employee;
+        return this.active_user;
     }
     
-    public List<Session> getSessions()
+    public HashMap<String, Session> getSessions()
     {
         return sessions;
     }
     
     public Session getUserSession(String usr)
     {
-        for(Session s : sessions)
-        {
-            if(s.getUsername().equals(usr))
-                return s;
-        }
-        return null;
+        return sessions.get(usr);
     }
     
     public void setActive(Session session)

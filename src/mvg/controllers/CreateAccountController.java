@@ -6,17 +6,10 @@
 package mvg.controllers;
 
 import mvg.auxilary.*;
-import mvg.managers.SessionManager;
-import mvg.model.Employee;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -48,7 +41,7 @@ public class CreateAccountController extends ScreenController implements Initial
     @FXML
     private TextField txtCellphone;
     @FXML
-    private TextArea txtOther;// = new TextArea();
+    private TextArea txtOther;
     private String[] access_levels = {"NONE", "NORMAL", "ADMIN", "SUPER"};
 
     @Override
@@ -106,8 +99,8 @@ public class CreateAccountController extends ScreenController implements Initial
             if(access_levels[access_level_index].toLowerCase().equals("super"))
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
-                params.add(new AbstractMap.SimpleEntry<>("usr", txtUsername.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("pwd", txtPassword.getText()));
+                params.add(new AbstractMap.SimpleEntry<>("username", txtUsername.getText()));
+                params.add(new AbstractMap.SimpleEntry<>("password", txtPassword.getText()));
                 params.add(new AbstractMap.SimpleEntry<>("access_level", "3"));
                 params.add(new AbstractMap.SimpleEntry<>("firstname", txtFirstname.getText()));
                 params.add(new AbstractMap.SimpleEntry<>("lastname", txtLastname.getText()));
@@ -120,10 +113,10 @@ public class CreateAccountController extends ScreenController implements Initial
 
                 try
                 {
-                    HttpURLConnection connection = RemoteComms.postData("/api/employee/add", params, null);
+                    HttpURLConnection connection = RemoteComms.postData("/api/user/add", params, null);
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     {
-                        IO.logAndAlert("Account Creation Success", IO.readStream(connection.getInputStream()), IO.TAG_INFO);
+                        IO.logAndAlert("Account Creation Success", "Successfully created account.", IO.TAG_INFO);
                     } else
                         IO.logAndAlert("Account Creation Failure", IO.readStream(connection.getErrorStream()), IO.TAG_ERROR);
 

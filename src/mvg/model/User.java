@@ -16,14 +16,11 @@ import java.net.URLEncoder;
  *
  * @author ghost
  */
-public class Employee implements BusinessObject, Serializable
+public class User implements BusinessObject, Serializable
 {
-    /*private Occupation current_occupation;
-    private Job current_job;
-    private Comment comments[];*/
     private String _id;
-    private String usr;
-    private String pwd;//hashed
+    private String username;
+    private String password;//hashed
     private String firstname;
     private String lastname;
     private String gender;
@@ -35,7 +32,7 @@ public class Employee implements BusinessObject, Serializable
     private boolean active;
     private String other;
     private boolean marked;
-    public static final String TAG = "Employee";
+    public static final String TAG = "User";
 
     public StringProperty idProperty(){return new SimpleStringProperty(_id);}
 
@@ -67,26 +64,26 @@ public class Employee implements BusinessObject, Serializable
         return _id.substring(0, 8);
     }
 
-    private StringProperty usrProperty(){return new SimpleStringProperty(usr);}
+    private StringProperty usernameProperty(){return new SimpleStringProperty(username);}
 
-    public String getUsr()
+    public String getUsername()
     {
-        return usr;
+        return username;
     }
 
-    public void setUsr(String usr) {
-        this.usr = usr;
+    public void setusername(String username) {
+        this.username = username;
     }
 
-    private StringProperty pwdProperty(){return new SimpleStringProperty(pwd);}
+    private StringProperty passwordProperty(){return new SimpleStringProperty(password);}
 
-    public String getPwd()
+    public String getpassword()
     {
-        return pwd;
+        return password;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setpassword(String password) {
+        this.password = password;
     }
 
     private StringProperty access_levelProperty(){return new SimpleStringProperty(String.valueOf(access_level));}
@@ -177,7 +174,7 @@ public class Employee implements BusinessObject, Serializable
         this.email = email;
     }
 
-    private StringProperty telProperty(){return new SimpleStringProperty(usr);}
+    private StringProperty telProperty(){return new SimpleStringProperty(username);}
 
     public String getTel()
     {
@@ -189,7 +186,7 @@ public class Employee implements BusinessObject, Serializable
         this.tel = tel;
     }
 
-    private StringProperty cellProperty(){return new SimpleStringProperty(usr);}
+    private StringProperty cellProperty(){return new SimpleStringProperty(username);}
 
     public String getCell()
     {
@@ -201,7 +198,7 @@ public class Employee implements BusinessObject, Serializable
         this.cell = cell;
     }
 
-    private StringProperty genderProperty(){return new SimpleStringProperty(usr);}
+    private StringProperty genderProperty(){return new SimpleStringProperty(username);}
 
     public String getGender()
     {
@@ -226,8 +223,8 @@ public class Employee implements BusinessObject, Serializable
                 case "lastname":
                     setLastname((String)val);
                     break;
-                case "usr":
-                    setUsr((String)val);
+                case "username":
+                    setusername((String)val);
                     break;
                 case "gender":
                     setGender((String)val);
@@ -254,7 +251,7 @@ public class Employee implements BusinessObject, Serializable
                     setOther((String)val);
                     break;
                 default:
-                    IO.log(TAG, IO.TAG_WARN, String.format("unknown Employee attribute '%s'", var));
+                    IO.log(TAG, IO.TAG_WARN, String.format("unknown User attribute '%s'", var));
                     break;
             }
         }catch (NumberFormatException e)
@@ -272,8 +269,8 @@ public class Employee implements BusinessObject, Serializable
                 return firstname;
             case "lastname":
                 return lastname;
-            case "usr":
-                return usr;
+            case "username":
+                return username;
             case "access_level":
                 return access_level;
             case "gender":
@@ -291,7 +288,7 @@ public class Employee implements BusinessObject, Serializable
             case "other":
                 return other;
             default:
-                IO.log(TAG, IO.TAG_WARN, String.format("unknown Employee attribute '%s'", var));
+                IO.log(TAG, IO.TAG_WARN, String.format("unknown User attribute '%s'", var));
                 return null;
         }
     }
@@ -311,10 +308,10 @@ public class Employee implements BusinessObject, Serializable
         StringBuilder result = new StringBuilder();
         try
         {
-            result.append(URLEncoder.encode("usr","UTF-8") + "="
-                    + URLEncoder.encode(usr, "UTF-8") + "&");
-            result.append(URLEncoder.encode("pwd","UTF-8") + "="
-                    + URLEncoder.encode(pwd, "UTF-8") + "&");
+            result.append(URLEncoder.encode("username","UTF-8") + "="
+                    + URLEncoder.encode(username, "UTF-8") + "&");
+            result.append(URLEncoder.encode("password","UTF-8") + "="
+                    + URLEncoder.encode(password, "UTF-8") + "&");
             result.append(URLEncoder.encode("access_level","UTF-8") + "="
                     + URLEncoder.encode(String.valueOf(access_level), "UTF-8") + "&");
             result.append(URLEncoder.encode("firstname","UTF-8") + "="

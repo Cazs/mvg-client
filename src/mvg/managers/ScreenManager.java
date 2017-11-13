@@ -12,10 +12,7 @@ import java.util.Stack;
 import mvg.auxilary.IO;
 import mvg.auxilary.RadialMenuItemCustom;
 import mvg.controllers.ScreenController;
-import javafx.animation.*;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.*;
 import javafx.util.Callback;
-import javafx.util.Duration;
 import jfxtras.labs.scene.control.radialmenu.RadialContainerMenuItem;
 import jfxtras.labs.scene.control.radialmenu.RadialMenu;
 import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
@@ -257,8 +253,8 @@ public class ScreenManager extends StackPane
                         if(getChildren().setAll(new Node[]{}))//remove all screens
                         {
                             focused.refreshStatusBar("Welcome back" + (SessionManager.getInstance()
-                                    .getActiveEmployee() != null ? " " + SessionManager.getInstance()
-                                    .getActiveEmployee() + "!" : "!"));
+                                    .getActiveUser() != null ? " " + SessionManager.getInstance()
+                                    .getActiveUser() + "!" : "!"));
                             focused.refreshView();//refresh the screen every time it's loaded
                             IO.log(getClass().getName(), IO.TAG_INFO, "set screen: " + id);
 

@@ -8,21 +8,18 @@ package mvg.controllers;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
 import mvg.managers.SessionManager;
-import mvg.model.Employee;
-import java.awt.image.BufferedImage;
+
 import java.io.*;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.embed.swing.SwingFXUtils;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javax.imageio.ImageIO;
 
 /**
  * views Controller class

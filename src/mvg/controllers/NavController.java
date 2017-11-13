@@ -4,7 +4,7 @@ import javafx.scene.image.ImageView;
 import mvg.auxilary.IO;
 import mvg.managers.ScreenManager;
 import mvg.managers.SessionManager;
-import mvg.model.Employee;
+import mvg.model.User;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,7 +54,7 @@ public class NavController extends ScreenController implements Initializable
             if (!SessionManager.getInstance().getActive().isExpired())
             {
                 //Render user name
-                Employee e = SessionManager.getInstance().getActiveEmployee();
+                User e = SessionManager.getInstance().getActiveUser();
                 if(e!=null)
                     this.getUserNameLabel().setText(e.toString());
                 else IO.log(getClass().getName(), IO.TAG_ERROR, "No active sessions.");

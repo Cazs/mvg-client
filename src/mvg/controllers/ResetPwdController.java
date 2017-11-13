@@ -8,12 +8,13 @@ package mvg.controllers;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
 import mvg.managers.SessionManager;
-import mvg.model.Employee;
+import mvg.model.User;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,7 +38,7 @@ public class ResetPwdController extends ScreenController implements Initializabl
     @Override
     public void refreshView()
     {
-        Employee e = SessionManager.getInstance().getActiveEmployee();
+        User e = SessionManager.getInstance().getActiveUser();
         if(e!=null)
             this.getUserNameLabel().setText(e.getFirstname() + " " + e.getLastname());
         else IO.log(getClass().getName(), IO.TAG_ERROR, "No active sessions.");

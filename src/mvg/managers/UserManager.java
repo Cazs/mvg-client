@@ -14,7 +14,8 @@ import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
 import mvg.auxilary.Validators;
 import mvg.model.CustomTableViewControls;
-import mvg.model.Employee;
+import mvg.model.User;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -27,24 +28,24 @@ import java.util.HashMap;
 /**
  * Created by ghost on 2017/01/11.
  */
-public class EmployeeManager extends BusinessObjectManager
+public class UserManager extends BusinessObjectManager
 {
-    //private Employee[] employees;
-    private HashMap<String, Employee> employees;
+    //private User[] users;
+    private HashMap<String, User> users;
     private Gson gson;
-    private static EmployeeManager employeeManager = new EmployeeManager();
+    private static UserManager userManager = new UserManager();
     public static String[] access_levels = {"NONE", "NORMAL", "ADMIN", "SUPER"};
     public static String[] sexes = {"MALE", "FEMALE"};
 
-    private EmployeeManager()
+    private UserManager()
     {
     }
 
-    public HashMap<String, Employee> getEmployees(){return this.employees;}
+    public HashMap<String, User> getusers(){return this.users;}
 
-    public static EmployeeManager getInstance()
+    public static UserManager getInstance()
     {
-        return employeeManager;
+        return userManager;
     }
 
     @Override
@@ -57,7 +58,7 @@ public class EmployeeManager extends BusinessObjectManager
     {
         try
         {
-            if(employees==null)
+            if(users==null)
                 reloadDataFromServer();
             else IO.log(getClass().getName(), IO.TAG_INFO, "clients object has already been set.");
         }catch (MalformedURLException ex)
@@ -88,19 +89,19 @@ public class EmployeeManager extends BusinessObjectManager
                     ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", smgr.getActive().getSessionId()));
 
-                    String employees_json = RemoteComms.sendGetRequest("/api/employees", headers);
-                    Employee[] users = gson.fromJson(employees_json, Employee[].class);
+                    String users_str = RemoteComms.sendGetRequest("/api/users", headers);
+                    User[] users_json = gson.fromJson(users_str, User[].class);
 
-                    employees = new HashMap();
-                    for(Employee employee: users)
-                        employees.put(employee.getUsr(), employee);
+                    users = new HashMap();
+                    for(User user : users_json)
+                        users.put(user.getUsername(), user);
 
-                    IO.log(getClass().getName(), IO.TAG_INFO, "reloaded employee collection.");
+                    IO.log(getClass().getName(), IO.TAG_INFO, "reloaded user collection.");
                 }else{
-                    JOptionPane.showMessageDialog(null, "Active session has expired.", "Session Expired", JOptionPane.ERROR_MESSAGE);
+                    IO.logAndAlert("Session Expired", "Active session has expired.", IO.TAG_ERROR);
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "No active sessions.", "Session Expired", JOptionPane.ERROR_MESSAGE);
+                IO.logAndAlert("Session Expired", "No active sessions were found.", IO.TAG_ERROR);
             }
         }catch (MalformedURLException ex)
         {
@@ -111,10 +112,10 @@ public class EmployeeManager extends BusinessObjectManager
         }
     }
 
-    public void newEmployeeWindow(Callback callback)
+    public void newUserWindow(Callback callback)
     {
         Stage stage = new Stage();
-        stage.setTitle(Globals.APP_NAME.getValue() + " - Create New Employee [User]");
+        stage.setTitle(Globals.APP_NAME.getValue() + " - Create New User [User]");
         stage.setMinWidth(320);
         stage.setMinHeight(350);
         stage.setHeight(500);
@@ -179,7 +180,7 @@ public class EmployeeManager extends BusinessObjectManager
         HBox access_level = CustomTableViewControls.getLabelledNode("Acccess Level: ", 200, cbxAccessLevel);
 
         HBox submit;
-        submit = CustomTableViewControls.getSpacedButton("Create Employee", event ->
+        submit = CustomTableViewControls.getSpacedButton("Create User", event ->
         {
             int sex_index = cbxSex.getSelectionModel().selectedIndexProperty().get();
 
@@ -236,10 +237,10 @@ public class EmployeeManager extends BusinessObjectManager
 
                 try
                 {
-                    HttpURLConnection connection = RemoteComms.postData("/api/employee/add", params, null);
+                    HttpURLConnection connection = RemoteComms.postData("/api/user/add", params, null);
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     {
-                        IO.logAndAlert("Account Creation Success", "Successfully created a new employee!", IO.TAG_INFO);
+                        IO.logAndAlert("Account Creation Success", "Successfully created a new user!", IO.TAG_INFO);
                         if(callback!=null)
                             callback.call(null);
                     } else

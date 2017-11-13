@@ -29,15 +29,15 @@ import javax.swing.JOptionPane;
 public class LoginController extends ScreenController implements Initializable
 {
     @FXML
-    private TextField txtUsr = new TextField();
+    private TextField txtUsr;
     @FXML
-    private TextField txtPwd = new TextField();
+    private TextField txtPwd;
 
     @Override
     public void refreshView()
     {
-        //TODO
-        txtUsr.setText("caspr");
+        //TODO: remove this
+        txtUsr.setText("ghost");
         txtPwd.setText("12345678");
     }
 
@@ -90,7 +90,7 @@ public class LoginController extends ScreenController implements Initializable
                             ssn_mgr.addSession(session);
 
                             //load User data to memory
-                            EmployeeManager.getInstance().loadDataFromServer();
+                            UserManager.getInstance().loadDataFromServer();
 
                             if (screenManager.loadScreen(Screens.HOME.getScreen(), getClass().getResource("../views/" + Screens.HOME.getScreen())))
                             {

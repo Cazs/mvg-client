@@ -31,8 +31,11 @@ public class RemoteComms
     public static Session auth(String usr, String pwd) throws IOException, LoginException
     {
         ArrayList<AbstractMap.SimpleEntry<String,String>> data = new ArrayList<>();
-        data.add(new AbstractMap.SimpleEntry<>("usr",usr));
-        data.add(new AbstractMap.SimpleEntry<>("pwd",pwd));
+        data.add(new AbstractMap.SimpleEntry<>("username",usr));
+        data.add(new AbstractMap.SimpleEntry<>("password",pwd));
+
+        System.out.println("usr: "  + usr + ", pwd: " + pwd);
+
         HttpURLConnection connObj = postData("/api/auth", data, null);
         
         if(connObj.getResponseCode()==200)
@@ -209,6 +212,7 @@ public class RemoteComms
         for(int i=0;i<params.size();i++)
         {
             AbstractMap.SimpleEntry<String,String> entry = params.get(i);
+            System.out.println(entry);
             if(entry!=null)
             {
                 if(entry.getKey()!=null && entry.getValue()!=null)
