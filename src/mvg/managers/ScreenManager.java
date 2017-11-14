@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.Stack;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.stage.Stage;
 import mvg.auxilary.IO;
 import mvg.auxilary.RadialMenuItemCustom;
 import mvg.controllers.ScreenController;
@@ -49,12 +53,24 @@ public class ScreenManager extends StackPane
     //private Node loading_screen;
     private ScreenController loading_screen_ctrl;
     private Node screen = null;
-    private static ScreenManager screenManager = new ScreenManager();
+    //private static ScreenManager screenManager = new ScreenManager();
     private Label lblScreenName;
+    private Stage stage;
 
-    private ScreenManager()
+    public ScreenManager()
+    {
+    }
+
+    public ScreenManager(Stage stage)
     {
         super();
+
+        if(stage!=null)
+            this.stage=stage;
+        else{
+            IO.logAndAlert("Error", "Main stage is null.", IO.TAG_ERROR);
+            System.exit(-1);
+        }
         /*try
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../views/loading.fxml"));
@@ -66,9 +82,14 @@ public class ScreenManager extends StackPane
         }*/
     }
 
-    public static ScreenManager getInstance()
+    /*public static ScreenManager getInstance()
     {
         return screenManager;
+    }*/
+
+    public Stage getStage()
+    {
+        return stage;
     }
 
 
@@ -261,9 +282,9 @@ public class ScreenManager extends StackPane
                             if(lblScreenName!=null)
                                 lblScreenName.setText(focused_id.split("\\.")[0]);
                             getChildren().add(screen);
-                            createRadialMenu();
-                            showRadialMenu(300,250);
-                            getChildren().add(radialMenu);
+                            //createRadialMenu();
+                            //showRadialMenu(300,250);
+                            //getChildren().add(radialMenu);
                         }else
                         {
                             IO.logAndAlert(getClass().getName(), "Could not remove StackPane children.", IO.TAG_ERROR);

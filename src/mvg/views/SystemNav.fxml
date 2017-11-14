@@ -10,67 +10,10 @@
 <BorderPane styleClass="sys-nav" stylesheets="@../styles/home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvg.controllers.NavController">
     <bottom>
         <BorderPane style="-fx-border-insets: -50 -10 0 -10;" BorderPane.alignment="CENTER">
-            <center>
-                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                    <children>
-                        <Label fx:id="lblScreen" text="">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </VBox>
-            </center>
             <left>
                 <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                     <children>
-                        <ImageView fx:id="btnBack" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#previousScreen" pickOnBounds="true" preserveRatio="true"/>
-                        <ImageView fx:id="btnNext" fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true"/>
-                        <ImageView fx:id="btnHome" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#showMain" pickOnBounds="true" preserveRatio="true"/>
-                    </children>
-                </HBox>
-            </left>
-            <right>
-                <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
-                    <children>
-                        <HBox alignment="CENTER_LEFT">
-                            <children>
-                                <Label fx:id="user_name" text="not signed in" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets right="10.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <ImageView fx:id="img_profile" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../images/profile.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </HBox>
-                    </children>
-                </HBox>
-            </right>
-        </BorderPane>
-    </bottom>
-    <center>
-        <BorderPane style="-fx-border-insets: -50 -10 0 -10;" BorderPane.alignment="CENTER">
-            <center>
-                <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-                    <children>
-                        <Label fx:id="company_name" text="MVG Reception">
-                            <font>
-                                <Font size="30.0" />
-                            </font>
-                        </Label>
-                    </children></VBox>
-            </center>
-            <left>
-                <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
-                    <children>
-                        <ImageView fx:id="img_logo" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_logo" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../images/logo.png" />
                             </image>
@@ -78,20 +21,55 @@
                                 <Insets left="10.0" />
                             </HBox.margin>
                         </ImageView>
+                          <ImageView fx:id="img_profile" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../../../images/profile.png" />
+                              </image>
+                          </ImageView>
+                          <Label fx:id="user_name" text="not signed in" textFill="WHITE" HBox.hgrow="ALWAYS">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                              <HBox.margin>
+                                  <Insets right="10.0" />
+                              </HBox.margin>
+                          </Label>
                     </children>
                 </HBox>
             </left>
-            <right>
-                <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+         <center>
+                <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                     <children>
-                        <ImageView fx:id="btnLogin" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#showLogin" pickOnBounds="true" preserveRatio="true">
-                            <HBox.margin>
-                                <Insets right="10.0" />
-                            </HBox.margin>
-                        </ImageView>
+                  <VBox alignment="CENTER">
+                     <children>
+                              <Label fx:id="company_name" alignment="CENTER" contentDisplay="CENTER" text="MVG Reception" textFill="WHITE">
+                                  <font>
+                                      <Font size="30.0" />
+                                  </font>
+                              </Label>
+                              <Label fx:id="lblScreen" alignment="CENTER" contentDisplay="CENTER" text="" textFill="WHITE">
+                                  <font>
+                                      <Font size="24.0" />
+                                  </font>
+                              </Label>
+                     </children>
+                  </VBox>
                     </children>
                 </HBox>
-            </right>
+         </center>
+         <right>
+                  <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+               <children>
+                        <ImageView fx:id="btnBack" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#previousScreen" pickOnBounds="true" preserveRatio="true" styleClass="btnPrev" />
+                        <ImageView fx:id="btnNext" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" styleClass="btnNext" />
+                        <ImageView fitHeight="60.0" fitWidth="60.0" onMouseClicked="#showMain" pickOnBounds="true" preserveRatio="true" styleClass="btnHome">
+                     <image>
+                        <Image url="@../gfx/home_black.png" />
+                     </image>
+                  </ImageView>
+               </children>
+                  </HBox>
+         </right>
         </BorderPane>
-    </center>
+    </bottom>
 </BorderPane>

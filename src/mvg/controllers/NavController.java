@@ -1,6 +1,7 @@
 package mvg.controllers;
 
 import javafx.scene.image.ImageView;
+import mvg.MVG;
 import mvg.auxilary.IO;
 import mvg.managers.ScreenManager;
 import mvg.managers.SessionManager;
@@ -21,7 +22,7 @@ public class NavController extends ScreenController implements Initializable
     @FXML
     private Label lblScreen;
     @FXML
-    private ImageView btnBack,btnNext,btnHome;
+    private ImageView btnBack,btnNext,btnHome,img_logo;
 
     @Override
     public void refreshView()
@@ -31,6 +32,10 @@ public class NavController extends ScreenController implements Initializable
             //Render default profile image
             Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/profile.png")), null);
             super.getProfileImageView().setImage(image);
+
+            //Render logo
+            image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/logo.png")), null);
+            img_logo.setImage(image);
 
             /*//Render forward nav icon
             image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/chevron_right_black.png")), null);
@@ -68,7 +73,7 @@ public class NavController extends ScreenController implements Initializable
             return;
         }
         //Render current screen name
-        lblScreen.setText(ScreenManager.getInstance().peekScreenControllers().getKey());
+        lblScreen.setText(MVG.getScreenManager().peekScreenControllers().getKey());
     }
 
     @Override
@@ -79,7 +84,7 @@ public class NavController extends ScreenController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        ScreenManager.getInstance().setLblScreenName(lblScreen);
+        MVG.getScreenManager().setLblScreenName(lblScreen);
         refreshView();
     }
 }

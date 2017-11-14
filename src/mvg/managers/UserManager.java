@@ -16,7 +16,6 @@ import mvg.auxilary.Validators;
 import mvg.model.CustomTableViewControls;
 import mvg.model.User;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -28,7 +27,7 @@ import java.util.HashMap;
 /**
  * Created by ghost on 2017/01/11.
  */
-public class UserManager extends BusinessObjectManager
+public class UserManager extends MVGObjectManager
 {
     //private User[] users;
     private HashMap<String, User> users;

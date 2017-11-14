@@ -8,7 +8,6 @@ package mvg;
 import com.sun.javafx.application.LauncherImpl;
 import mvg.auxilary.Globals;
 import mvg.auxilary.IO;
-import mvg.controllers.ScreenController;
 import mvg.managers.ScreenManager;
 import mvg.model.Screens;
 import javafx.application.Application;
@@ -16,12 +15,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  *
@@ -29,6 +24,9 @@ import java.io.IOException;
  */
 public class MVG extends Application
 {
+    private static ScreenManager screen_manager;
+    public static final long DELAY = 4000;
+
     @Override
     public void start(Stage stage) throws Exception 
     {
@@ -43,16 +41,16 @@ public class MVG extends Application
             else  event.consume();
         });
         //grid = new GridDisplay(2, 4);
-        ScreenManager screen_mgr = ScreenManager.getInstance();//new ScreenManager();
-        IO.getInstance().init(screen_mgr);
+        screen_manager = new ScreenManager(stage);//ScreenManager.getInstance();
+        IO.getInstance().init(screen_manager);
 
-        if(screen_mgr.loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("views/"+Screens.LOGIN.getScreen())))
+        if(screen_manager.loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("views/"+Screens.LOGIN.getScreen())))
         {
-            screen_mgr.setScreen(Screens.LOGIN.getScreen());
+            screen_manager.setScreen(Screens.LOGIN.getScreen());
             HBox root = new HBox();
-            HBox.setHgrow(screen_mgr, Priority.ALWAYS);
+            HBox.setHgrow(screen_manager, Priority.ALWAYS);
 
-            root.getChildren().addAll(screen_mgr);
+            root.getChildren().addAll(screen_manager);
 
             Scene scene = new Scene(root);
             stage.setTitle(Globals.APP_NAME.getValue());
@@ -78,5 +76,9 @@ public class MVG extends Application
     {
         LauncherImpl.launchApplication(mvg.MVG.class, MVGPreloader.class, args);
     }
-    
+
+    public static ScreenManager getScreenManager()
+    {
+        return screen_manager;
+    }
 }

@@ -41,46 +41,46 @@
     -fx-border-radius: 10;*/
 }
 
-#btnBack
+.btnPrev
 {
     -fx-image:url("../gfx/chevron_left_black.png");
     -fx-width:20px;
 }
 
-#btnBack:hover
+.btnPrev:hover
 {
     -fx-image:url("../gfx/chevron_left_white.png");
 }
 
-#btnNext
+.btnNext
 {
     -fx-image:url("../gfx/chevron_right_black.png");
     -fx-width:20px;
 }
 
-#btnNext:hover
+.btnNext:hover
 {
     -fx-image:url("../gfx/chevron_right_white.png");
 }
 
-#btnHome
+.btnHome
 {
     -fx-image:url("../gfx/home_black.png");
     -fx-width:20px;
 }
 
-#btnHome:hover
+.btnHome:hover
 {
     -fx-image:url("../gfx/home_white.png");
 }
 
-#btnLogin
+.btnLogin
 {
     -fx-image:url("../gfx/key_black.png");
     -fx-width:20px;
 }
 
-#btnLogin:hover
+.btnLogin:hover
 {
     -fx-image:url("../gfx/key_white.png");
 }
@@ -170,7 +170,7 @@
 
 .sys-btn
 {
-    -fx-background-color: radial-gradient(center 53% 50%, radius 80%, #969696 5%, #696969 100%);
+    -fx-background-color: radial-gradient(center 53% 50%, radius 80%, #002638 5%, #0c6f9e 100%);
     /*-fx-border-width: 5 3 1 1;
     -fx-border-color: #d6d6d6;*/
     /*-fx-background-color:
@@ -178,7 +178,7 @@
         linear-gradient(#d6d6d6 50%, white 100%),
         radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);*/
     -fx-background-insets: 0,1,1;
-    -fx-text-fill: black;
+    -fx-text-fill: #fff;
     /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
     -fx-background-radius: 5;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.7) , 15, 0.0 , 0 , 10 );
@@ -198,12 +198,12 @@
 
 .sys-nav
 {
-    -fx-background-color: #7A8FA1;/*linear-gradient(#D4D4D4 80%, #343434 100%);*/
+    -fx-background-color: rgba(0,0,0,0.6);/*#7A8FA1;/*linear-gradient(#D4D4D4 80%, #343434 100%);*/
     -fx-background-insets: 0,1,1;
     -fx-text-fill: black;
     -fx-border-width: 0 0 2 0;
     -fx-border-color: #343434;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
 }
 
 .sys-body

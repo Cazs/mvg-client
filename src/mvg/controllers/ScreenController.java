@@ -5,6 +5,7 @@
  */
 package mvg.controllers;
 
+import mvg.MVG;
 import mvg.auxilary.Globals;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
@@ -75,8 +76,8 @@ public abstract class ScreenController
     {
         try
         {
-            if(ScreenManager.getInstance().loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("../views/"+Screens.LOGIN.getScreen())))
-                ScreenManager.getInstance().setScreen(Screens.LOGIN.getScreen());
+            if(MVG.getScreenManager().loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("../views/"+Screens.LOGIN.getScreen())))
+                MVG.getScreenManager().setScreen(Screens.LOGIN.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load login screen.");
         } catch (IOException e)
         {
@@ -89,8 +90,8 @@ public abstract class ScreenController
     {
         try
         {
-            if(ScreenManager.getInstance().loadScreen(Screens.HOME.getScreen(),getClass().getResource("../views/"+Screens.HOME.getScreen())))
-                ScreenManager.getInstance().setScreen(Screens.HOME.getScreen());
+            if(MVG.getScreenManager().loadScreen(Screens.HOME.getScreen(),getClass().getResource("../views/"+Screens.HOME.getScreen())))
+                MVG.getScreenManager().setScreen(Screens.HOME.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
         } catch (IOException e)
         {
@@ -103,8 +104,8 @@ public abstract class ScreenController
     {
         try
         {
-            if(ScreenManager.getInstance().loadScreen(Screens.CREATE_ACCOUNT.getScreen(),getClass().getResource("../views/"+Screens.CREATE_ACCOUNT.getScreen())))
-                ScreenManager.getInstance().setScreen(Screens.CREATE_ACCOUNT.getScreen());
+            if(MVG.getScreenManager().loadScreen(Screens.CREATE_ACCOUNT.getScreen(),getClass().getResource("../views/"+Screens.CREATE_ACCOUNT.getScreen())))
+                MVG.getScreenManager().setScreen(Screens.CREATE_ACCOUNT.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load account creation screen.");
         } catch (IOException e)
         {
@@ -138,7 +139,7 @@ public abstract class ScreenController
     {
         try
         {
-            ScreenManager.getInstance().setPreviousScreen();
+            MVG.getScreenManager().setPreviousScreen();
         } catch (IOException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());

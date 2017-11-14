@@ -5,6 +5,7 @@
  */
 package mvg.controllers;
 
+import mvg.MVG;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
 import mvg.managers.*;
@@ -60,8 +61,8 @@ public class LoginController extends ScreenController implements Initializable
     {
         try
         {
-            if(ScreenManager.getInstance().loadScreen(Screens.RESET_PWD.getScreen(),getClass().getResource("../views/"+Screens.RESET_PWD.getScreen())))
-                ScreenManager.getInstance().setScreen(Screens.RESET_PWD.getScreen());
+            if(MVG.getScreenManager().loadScreen(Screens.RESET_PWD.getScreen(),getClass().getResource("../views/"+Screens.RESET_PWD.getScreen())))
+                MVG.getScreenManager().setScreen(Screens.RESET_PWD.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load password reset screen.");
         } catch (IOException e)
         {
@@ -72,8 +73,8 @@ public class LoginController extends ScreenController implements Initializable
     @FXML
     public void login()
     {
-        final ScreenManager screenManager = ScreenManager.getInstance();
-        ScreenManager.getInstance().showLoadingScreen(param ->
+        final ScreenManager screenManager = MVG.getScreenManager();
+        MVG.getScreenManager().showLoadingScreen(param ->
         {
             new Thread(new Runnable()
             {

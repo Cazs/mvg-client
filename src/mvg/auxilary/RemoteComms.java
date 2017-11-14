@@ -144,9 +144,9 @@ public class RemoteComms
 
     public static byte[] sendFileRequest(String filename, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
     {
-        IO.log(TAG, IO.TAG_INFO, String.format("\nGET %s HTTP/1.1",  "/api/file/"+filename));
+        IO.log(TAG, IO.TAG_INFO, String.format("\nGET %s HTTP/1.1", filename));
 
-        URL urlConn = new URL(host + "/api/file/"+filename);
+        URL urlConn = new URL(host + filename);
         //URL urlConn = new URL("http://127.0.0.1:9000/api/file/inspection/3-demolition.pdf");
         try(InputStream in = urlConn.openStream())
         {
@@ -160,7 +160,7 @@ public class RemoteComms
                 outbytes.write(buffer, 0, read);
             outbytes.flush();
             in.close();
-            IO.log(TAG, IO.TAG_INFO, "GET received file> " + filename + " " + outbytes.toByteArray().length + "bytes.\n");
+            IO.log(TAG, IO.TAG_INFO, "GET received file> " + filename + " " + outbytes.toByteArray().length + " bytes.\n");
             return outbytes.toByteArray();
         }
         //URL urlConn = new URL(host);
