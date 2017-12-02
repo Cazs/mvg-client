@@ -93,7 +93,7 @@ public class LoginController extends ScreenController implements Initializable
                             //load User data to memory
                             UserManager.getInstance().loadDataFromServer();
 
-                            if (screenManager.loadScreen(Screens.HOME.getScreen(), getClass().getResource("../views/" + Screens.HOME.getScreen())))
+                            if (screenManager.loadScreen(Screens.HOME.getScreen(), MVG.class.getResource("views/" + Screens.HOME.getScreen())))
                             {
                                 screenManager.setScreen(Screens.HOME.getScreen());
                             } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
@@ -105,13 +105,16 @@ public class LoginController extends ScreenController implements Initializable
                     {
                         JOptionPane.showMessageDialog(null, ex.getMessage() + ", \nis the server up? are you connected to the network?", "Login failure", JOptionPane.ERROR_MESSAGE);
                         IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage() + ", \nis the server up? are you connected to the network?");
+                        ex.printStackTrace();
                     } catch (LoginException ex)
                     {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Login failure", JOptionPane.ERROR_MESSAGE);
                         IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
+                        ex.printStackTrace();
                     } catch (IOException e)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }).start();

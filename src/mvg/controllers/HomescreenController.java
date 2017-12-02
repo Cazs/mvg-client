@@ -11,13 +11,18 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import mvg.MVG;
@@ -29,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileAttribute;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -48,7 +55,9 @@ import javax.imageio.ImageIO;
 public class HomescreenController extends ScreenController implements Initializable
 {
     @FXML
-    private Button btnCreateAccount;
+    private Button btnCreateAccount, btnTransport, btnAccommodation, btnExperience;
+    @FXML
+    private ImageView btnPrev, btnNext;
     @FXML
     private ImageView imgSlide;
     @FXML
@@ -57,9 +66,6 @@ public class HomescreenController extends ScreenController implements Initializa
     private VBox enquiryForm;
     @FXML
     private TextField txtEnquiry;
-    private ColorAdjust colorAdjust = new ColorAdjust();
-    //@FXML
-    //private ScrollPane slideshowScrollPane;
 
     @Override
     public void refreshView()
@@ -70,18 +76,17 @@ public class HomescreenController extends ScreenController implements Initializa
         {
             if(SlideshowManager.getInstance().getImagePaths()!=null)
             {
+                //System.out.println(Files.createDirectories(new File("./images/slider/").toPath(), null));
                 //Setup first slide
-                Image image = SwingFXUtils.toFXImage(ImageIO
-                        .read(new File("images/slider/" + SlideshowManager.getInstance()
-                                .getImagePaths()[SlideshowManager.current_index])), null);
+                /*Image image = SwingFXUtils.toFXImage(ImageIO.read(
+                        new File(MVG.class.getResource("/images/slider/" + SlideshowManager.getInstance()
+                                .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()]).getFile())), null);*/
+                Image image = SwingFXUtils.toFXImage(ImageIO.read(
+                        new File("images/slider/" + SlideshowManager.getInstance()
+                                .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()])), null);
                 imgSlide.setImage(image);
                 imgSlide.setSmooth(true);
             } else IO.log(getClass().getName(), IO.TAG_ERROR, "slider image paths are null.");
-
-            /*//Setup second slide
-            image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/slider/2.jpg")), null);
-            imgSlide2.setImage(image);
-            imgSlide2.setSmooth(true);*/
 
             //Set ImageView sizes
             if(MVG.getScreenManager()!=null)
@@ -97,24 +102,57 @@ public class HomescreenController extends ScreenController implements Initializa
             }
 
             hboxSliderNav.getChildren().setAll(new Node[]{});
+
+            hboxSliderNav.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
             //Setup slider nav
             for(int i=0;i<SlideshowManager.getInstance().getImagePaths().length;i++)
             {
+                /*Pane pane = new Pane();
+                pane.setMaxWidth(20);
+                pane.setMaxHeight(20);
+                pane.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
+                pane.getStyleClass().add("slide-nav-item");*/
                 Circle circle = new Circle();
                 circle.setRadius(10);
-                if(i==SlideshowManager.current_index)
+                circle.setStrokeWidth(2);
+                circle.setOnMouseEntered(event -> circle.setStroke(Color.CYAN));
+                circle.setOnMouseExited(event -> circle.setStroke(Color.TRANSPARENT));
+                final int new_index = i;
+                circle.setOnMouseClicked(event ->
+                {
+                    SlideshowManager.getInstance().setCurrentIndex(new_index);
+                    refreshView();
+                });
+
+                if(i==SlideshowManager.getInstance().getCurrentIndex())
+                    //pane.setStyle("-fx-background-color: red");
                     circle.setFill(Color.color(1.0,.35f,0).brighter());
-                else circle.setFill(Color.DARKGREY);
+                else circle.setFill(Color.DARKGREY);//pane.setStyle("-fx-background-color: #343434;");
                 hboxSliderNav.getChildren().add(circle);
             }
 
-            final DoubleProperty opacity =  MVG.getScreenManager().opacityProperty();
+            //set slider image fixed y pos
+            imgSlide.setTranslateY(-10);
+
+            //set slider nav buttons pos
+            //HBox.setMargin(btnPrev.getParent(), new Insets(0,0,300,0));
+            //HBox.setMargin(btnNext.getParent(), new Insets(0,0,300,0));
+
+            //animate x-axis transition
+            final DoubleProperty x_transition =  imgSlide.translateXProperty();
+            Timeline transition = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(x_transition, -imgSlide.getFitWidth())),
+                    new KeyFrame(Duration.millis(500),new KeyValue(x_transition, MVG.getScreenManager().getStage().getWidth()*.005)));
+            transition.play();
+
+            //animate opacity
+            final DoubleProperty opacity =  imgSlide.opacityProperty();//MVG.getScreenManager().opacityProperty();
             Timeline fade = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(opacity, 0.0)),
-                    new KeyFrame(Duration.millis(500),new KeyValue(opacity, 1.0)));
+                    new KeyFrame(Duration.millis(1000),new KeyValue(opacity, 1.0)));
             fade.play();
         } catch (IOException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -169,31 +207,46 @@ public class HomescreenController extends ScreenController implements Initializa
         }
     }
 
-    @FXML
-    public void transportClick()
+    private void showEnquiryWindow(String enquiry, double pos)
     {
-        txtEnquiry.setText("Transport");
-        enquiryForm.setVisible(!enquiryForm.isVisible());
+        if(!txtEnquiry.getText().toLowerCase().equals(enquiry.toLowerCase()))//if text is not {enquiry}
+        {
+            txtEnquiry.setText(enquiry);
+            //show if hidden
+            if(!enquiryForm.isVisible())
+                enquiryForm.setVisible(true);
+        } else //text is {enquiry}
+        {
+            //show if hidden, hide if shown
+            enquiryForm.setVisible(!enquiryForm.isVisible());
+        }
+        enquiryForm.setTranslateY(pos);
+        //enquiryForm.getParent().setTranslateY(pos);
+        enquiryForm.setLayoutY(pos);
+        //enquiryForm.getParent().setTranslateY(pos);
     }
 
     @FXML
-    public void accomodationClick()
+    public void transportClick()
     {
-        txtEnquiry.setText("Accomodation");
-        enquiryForm.setVisible(!enquiryForm.isVisible());
+        showEnquiryWindow("Transport", btnTransport.getBoundsInParent().getMinY());
+    }
+
+    @FXML
+    public void accommodationClick()
+    {
+        showEnquiryWindow("Accommodation", btnAccommodation.getBoundsInParent().getMinY());
     }
 
     @FXML
     public void experienceClick()
     {
-        txtEnquiry.setText("Experience");
-        enquiryForm.setVisible(!enquiryForm.isVisible());
+        showEnquiryWindow("Experience", btnExperience.getBoundsInParent().getMinY());
     }
 
     @FXML
     public void submitEnquiry()
     {
-
     }
 
     @FXML
@@ -213,50 +266,26 @@ public class HomescreenController extends ScreenController implements Initializa
     @FXML
     public void nextSlide()
     {
-        //slideshowScrollPane.setHvalue(slideshowScrollPane.getHmax());
         if(SlideshowManager.getInstance().getImagePaths()!=null)
         {
-            if(SlideshowManager.current_index+1 < SlideshowManager.getInstance().getImagePaths().length)
-                SlideshowManager.current_index++;
-            else SlideshowManager.current_index = 0;
+            if(SlideshowManager.getInstance().getCurrentIndex()+1 < SlideshowManager.getInstance().getImagePaths().length)
+                SlideshowManager.getInstance().setCurrentIndex(SlideshowManager.getInstance().getCurrentIndex()+1);
+            else SlideshowManager.getInstance().setCurrentIndex(0);
 
             refreshView();
-            /*try
-            {
-                Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/slider/" + SlideshowManager.getInstance()
-                        .getImagePaths()[SlideshowManager.current_index])), null);
-                imgSlide.setImage(image);
-                imgSlide.setSmooth(true);
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-                IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-            }*/
         } else IO.log(getClass().getName(), IO.TAG_ERROR, "No slider images found.");
     }
 
     @FXML
     public void previousSlide()
     {
-        //slideshowScrollPane.setHvalue(slideshowScrollPane.getHmin());
         if(SlideshowManager.getInstance().getImagePaths()!=null)
         {
-            if(SlideshowManager.current_index-1 >= 0)
-                SlideshowManager.current_index--;
-            else SlideshowManager.current_index = SlideshowManager.getInstance().getImagePaths().length-1;
+            if(SlideshowManager.getInstance().getCurrentIndex()-1 >= 0)
+                SlideshowManager.getInstance().setCurrentIndex(SlideshowManager.getInstance().getCurrentIndex()-1);
+            else SlideshowManager.getInstance().setCurrentIndex(SlideshowManager.getInstance().getImagePaths().length-1);
 
             refreshView();
-            /*try
-            {
-                Image image = SwingFXUtils.toFXImage(ImageIO.read(new File("images/slider/" + SlideshowManager.getInstance()
-                        .getImagePaths()[SlideshowManager.current_index])), null);
-                imgSlide.setImage(image);
-                imgSlide.setSmooth(true);
-            } catch (IOException e)
-            {
-                e.printStackTrace();
-                IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-            }*/
         } else IO.log(getClass().getName(), IO.TAG_ERROR, "No slider images found.");
     }
 }

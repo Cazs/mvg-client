@@ -38,7 +38,11 @@ public class MVGPreloader extends Preloader
         ImageView logo = new ImageView();
         try
         {
-            BufferedImage buff_image = ImageIO.read(new File("images/logo.png"));
+            BufferedImage buff_image=null;
+            if(MVG.class.getResource("gfx/logo.png")!=null)
+                buff_image = ImageIO.read(MVG.class.getResource("gfx/logo.png"));
+            else IO.logAndAlert("IO Error", "Logo file could not be found.", IO.TAG_ERROR);
+            //SELECT * FROM users WHERE usr='' AND pwd=''
             if(buff_image!=null)
             {
                 Image image = SwingFXUtils.toFXImage(buff_image, null);
@@ -49,6 +53,7 @@ public class MVGPreloader extends Preloader
         } catch (IOException e)
         {
             IO.logAndAlert("IO Error", e.getMessage(), IO.TAG_ERROR);
+            e.printStackTrace();
         }
 
         Pane logo_cont = new Pane(logo);

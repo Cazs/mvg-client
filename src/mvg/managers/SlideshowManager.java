@@ -14,16 +14,27 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import mvg.MVG;
 
 public class SlideshowManager extends MVGObjectManager
 {
     private String[] image_paths;
     private Gson gson;
-    public static int current_index;
+    private int current_index;
     private static SlideshowManager slideshowManager = new SlideshowManager();
 
     private SlideshowManager()
     {
+    }
+
+    public void setCurrentIndex(int index)
+    {
+        this.current_index=index;
+    }
+
+    public int getCurrentIndex()
+    {
+        return this.current_index;
     }
 
     @Override
@@ -63,6 +74,9 @@ public class SlideshowManager extends MVGObjectManager
     {
         try
         {
+            if(new File("images/slider/").mkdirs())
+                IO.log(getClass().getName(), IO.TAG_ERROR, "successfully created [images/slider/] directory.");
+            
             SessionManager smgr = SessionManager.getInstance();
             if(smgr.getActive()!=null)
             {
@@ -77,13 +91,22 @@ public class SlideshowManager extends MVGObjectManager
                     image_paths = gson.fromJson(slider_images_listing, String[].class);
                     for(String img_filename: image_paths)
                     {
-                        if(!new File(new File(".").getCanonicalPath() + "/images/slider/" + img_filename).exists())
+                        //if(!new File(new File(".").getCanonicalPath() + "/images/slider/" + img_filename).exists())
+                        if(MVG.class.getResource("images/slider/" + img_filename)==null)
                         {
                             long start = System.currentTimeMillis();
 
                             byte[] img = RemoteComms.sendFileRequest("/api/images/slider/" + img_filename, headers);
-                            FileOutputStream out = new FileOutputStream(new File(".")
-                                    .getCanonicalPath() + "/images/slider/" + img_filename);
+                            /*FileOutputStream out = new FileOutputStream(new File(".")
+                                    .getCanonicalPath() + "/images/slider/" + img_filename);*/
+                            //System.out.println("Root Path: " + MVG.class.getCanonicalName());
+                            
+                            //FileOutputStream out = new FileOutputStream(new File(MVG.class.getResource(".").getPath() + "/images/slider/" + img_filename));
+                            //FileOutputStream out = new FileOutputStream(new File("mvg/images/slider/" + img_filename));
+                            //System.out.println("Sliders dir exists: " + (new File("images/slider/").exists()));
+                            
+                           
+                            FileOutputStream out = new FileOutputStream(new File("images/slider/"+img_filename));
                             out.write(img);
                             out.flush();
                             out.close();
@@ -91,7 +114,7 @@ public class SlideshowManager extends MVGObjectManager
                             IO.log(getClass()
                                     .getName(), IO.TAG_INFO, "downloaded [" + img_filename + ", " + img.length + " bytes] in [" + (System
                                     .currentTimeMillis() - start) + "] msec");
-                        }else IO.log(getClass().getName(), IO.TAG_INFO, "file [/images/slider/"+img_filename+"] already exists.");
+                        } else IO.log(getClass().getName(), IO.TAG_INFO, "file [/images/slider/"+img_filename+"] already exists.");
                     }
                     IO.log(getClass().getName(), IO.TAG_INFO, "reloaded slideshow collection.");
                 }else{

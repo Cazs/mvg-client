@@ -53,7 +53,7 @@ public class MVG extends Application
             root.getChildren().addAll(screen_manager);
 
             Scene scene = new Scene(root);
-            stage.setTitle(Globals.APP_NAME.getValue());
+            stage.setTitle(Globals.COMPANY.getValue()+" - "+Globals.APP_NAME.getValue());
             stage.setScene(scene);
 
             stage.setMinHeight(600);

@@ -27,9 +27,9 @@
                   </ImageView>
                </center>
             </BorderPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <BorderPane>
                <top>
-                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                  <VBox BorderPane.alignment="CENTER">
                      <children>
                          <fx:include source="SystemNav.fxml" />
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -152,17 +152,17 @@
                                     </VBox>
                                     <VBox prefWidth="400.0">
                                        <children>
-                                          <Button minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#transportClick" styleClass="sys-btn" text="Transport">
+                                          <Button fx:id="btnTransport" minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#transportClick" styleClass="sys-btn" text="Transport">
                                              <VBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#accomodationClick" styleClass="sys-btn" text="Accomodation">
+                                          <Button fx:id="btnAccommodation" minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#accommodationClick" styleClass="sys-btn" text="Accommodation">
                                              <VBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </VBox.margin>
                                           </Button>
-                                          <Button minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#experienceClick" styleClass="sys-btn" text="Experience">
+                                          <Button fx:id="btnExperience" minHeight="60.0" minWidth="180.0" mnemonicParsing="false" onMouseClicked="#experienceClick" styleClass="sys-btn" text="Experience">
                                              <VBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </VBox.margin>
@@ -204,6 +204,9 @@
                      </center>
                   </BorderPane>
                </center>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
             </BorderPane>
          </children>
       </StackPane>

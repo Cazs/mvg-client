@@ -149,6 +149,20 @@
     -fx-background-radius: 15;
 }
 
+/*.slide-nav-item
+{
+    -fx-border-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}*/
+
+.slide-nav-item:hover
+{
+    -fx-border-color: #fff;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+}
+
 .grid-button
 {
     -fx-border-color: #fff;
