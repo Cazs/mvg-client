@@ -5,44 +5,34 @@
  */
 package mvg.controllers;
 
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.object.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import mvg.MVG;
 import mvg.auxilary.*;
-import mvg.managers.ScreenManager;
 import mvg.managers.SlideshowManager;
 import mvg.model.Screens;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.attribute.FileAttribute;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
 
@@ -52,7 +42,7 @@ import javax.imageio.ImageIO;
  * @author ghost
  */
 
-public class HomescreenController extends ScreenController implements Initializable
+public class HomescreenController extends ScreenController implements Initializable, MapComponentInitializedListener
 {
     @FXML
     private Button btnCreateAccount, btnTransport, btnAccommodation, btnExperience;
@@ -66,6 +56,11 @@ public class HomescreenController extends ScreenController implements Initializa
     private VBox enquiryForm;
     @FXML
     private TextField txtEnquiry;
+
+    //@FXML
+    //private GoogleMapView mapView;
+
+    private GoogleMap map;
 
     @Override
     public void refreshView()
@@ -168,6 +163,7 @@ public class HomescreenController extends ScreenController implements Initializa
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        //mapView.addMapInializedListener(this);
         if(MVG.getScreenManager()!=null)
         {
             SlideshowManager.getInstance().initialize();
@@ -287,5 +283,68 @@ public class HomescreenController extends ScreenController implements Initializa
 
             refreshView();
         } else IO.log(getClass().getName(), IO.TAG_ERROR, "No slider images found.");
+    }
+
+    @Override
+    public void mapInitialized()
+    {
+        IO.log(getClass().getName(), IO.TAG_INFO, "map initialized");
+        LatLong joeSmithLocation = new LatLong(47.6197, -122.3231);
+        LatLong joshAndersonLocation = new LatLong(47.6297, -122.3431);
+        LatLong bobUnderwoodLocation = new LatLong(47.6397, -122.3031);
+        LatLong tomChoiceLocation = new LatLong(47.6497, -122.3325);
+        LatLong fredWilkieLocation = new LatLong(47.6597, -122.3357);
+
+
+        //Set the initial properties of the map.
+        MapOptions mapOptions = new MapOptions();
+
+        mapOptions.center(new LatLong(47.6097, -122.3331))
+                .mapType(MapTypeIdEnum.ROADMAP)
+                .overviewMapControl(false)
+                .panControl(false)
+                .rotateControl(false)
+                .scaleControl(false)
+                .streetViewControl(false)
+                .zoomControl(false)
+                .zoom(12);
+
+        //map = mapView.createMap(mapOptions);
+
+        //Add markers to the map
+        MarkerOptions markerOptions1 = new MarkerOptions();
+        markerOptions1.position(joeSmithLocation);
+
+        MarkerOptions markerOptions2 = new MarkerOptions();
+        markerOptions2.position(joshAndersonLocation);
+
+        MarkerOptions markerOptions3 = new MarkerOptions();
+        markerOptions3.position(bobUnderwoodLocation);
+
+        MarkerOptions markerOptions4 = new MarkerOptions();
+        markerOptions4.position(tomChoiceLocation);
+
+        MarkerOptions markerOptions5 = new MarkerOptions();
+        markerOptions5.position(fredWilkieLocation);
+
+        Marker joeSmithMarker = new Marker(markerOptions1);
+        Marker joshAndersonMarker = new Marker(markerOptions2);
+        Marker bobUnderwoodMarker = new Marker(markerOptions3);
+        Marker tomChoiceMarker= new Marker(markerOptions4);
+        Marker fredWilkieMarker = new Marker(markerOptions5);
+
+        map.addMarker( joeSmithMarker );
+        map.addMarker( joshAndersonMarker );
+        map.addMarker( bobUnderwoodMarker );
+        map.addMarker( tomChoiceMarker );
+        map.addMarker( fredWilkieMarker );
+
+        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+        infoWindowOptions.content("<h2>Fred Wilkie</h2>"
+                + "Current Location: Safeway<br>"
+                + "ETA: 45 minutes" );
+
+        InfoWindow fredWilkeInfoWindow = new InfoWindow(infoWindowOptions);
+        fredWilkeInfoWindow.open(map, fredWilkieMarker);
     }
 }

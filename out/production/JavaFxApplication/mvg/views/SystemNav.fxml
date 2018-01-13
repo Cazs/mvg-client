@@ -15,7 +15,7 @@
                     <children>
                         <ImageView fx:id="img_logo" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../images/logo.png" />
+                                <Image url="@../gfx/logo.png" />
                             </image>
                             <HBox.margin>
                                 <Insets left="10.0" />
@@ -23,7 +23,7 @@
                         </ImageView>
                           <ImageView fx:id="img_profile" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                               <image>
-                                  <Image url="@../../../images/profile.png" />
+                                  <Image url="@../gfx/profile.png" />
                               </image>
                           </ImageView>
                           <Label fx:id="user_name" text="not signed in" textFill="WHITE" HBox.hgrow="ALWAYS">

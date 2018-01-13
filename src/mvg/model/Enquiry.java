@@ -145,7 +145,7 @@ public class Enquiry implements BusinessObject, Serializable
                     setComments((String)val);
                     break;
                 default:
-                    IO.log(TAG, IO.TAG_WARN, String.format("unknown Enquiry attribute '%s'", var));
+                    IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
                     break;
             }
         }catch (NumberFormatException e)
