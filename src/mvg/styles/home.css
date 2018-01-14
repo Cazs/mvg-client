@@ -52,6 +52,17 @@
     -fx-image:url("../gfx/chevron_left_white.png");
 }
 
+.btnProfile
+{
+    -fx-image:url("../gfx/profile_minimal.png");
+    -fx-width:20px;
+}
+
+.btnProfile:hover
+{
+    -fx-image:url("../gfx/profile.png");
+}
+
 .btnNext
 {
     -fx-image:url("../gfx/chevron_right_black.png");
@@ -208,6 +219,13 @@
     -fx-text-fill: black;
     /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
     -fx-background-radius: 0;
+}
+
+.nav
+{
+    -fx-background-color: rgba(0,0,0,0.0);/*#7A8FA1;/*linear-gradient(#D4D4D4 80%, #343434 100%);*/
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
 }
 
 .sys-nav

@@ -26,7 +26,6 @@ public class SessionManager
     private static final SessionManager sess_mgr = new SessionManager();
     private HashMap<String, Session> sessions = new HashMap<>();
     private Session active;
-    private User active_user;
     public static final String TAG = "SessionManager";
     
     private SessionManager(){};
@@ -60,44 +59,14 @@ public class SessionManager
             sessions.put(session.getSessionId(), session);
             setActive(session);
         }
-        try 
-        {
-            Session active_sess = getActive();
-            if(active_sess!=null)
-            {
-                ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
-                headers.add(new AbstractMap.SimpleEntry<>("Cookie", active_sess.getSessionId()));
-                String user_json = RemoteComms.sendGetRequest("/api/user/" + active_sess.getUsername(), headers);
-                if(user_json!=null)
-                {
-                    if(!user_json.equals("[]") && !user_json.equals("null"))
-                    {
-                        Gson gson = new GsonBuilder().create();
-                        User user = gson.fromJson(user_json, User.class);
-                        setActiveUser(user);
-                    }else{
-                        IO.logAndAlert("Invalid Credentials", "No user was found that matches the given credentials.", IO.TAG_ERROR);
-                    }
-                }else{
-                    IO.logAndAlert("Invalid Credentials", "No user was found that matches the given credentials.", IO.TAG_ERROR);
-                }
-            }else{
-                IO.logAndAlert("Session Error", "No active sessions.", IO.TAG_ERROR);
-            }
-        } catch (IOException ex) 
-        {
-            IO.log(TAG, IO.TAG_ERROR, ex.getMessage());
-        }
-    }
-    
-    public void setActiveUser(User empl)
-    {
-        this.active_user =empl;
     }
     
     public User getActiveUser()
     {
-        return this.active_user;
+        UserManager.getInstance().loadDataFromServer();
+        if(UserManager.getInstance().getUsers()!=null && this.active!=null)
+            return UserManager.getInstance().getUsers().get(this.active.getUsername());
+        else return null;
     }
     
     public HashMap<String, Session> getSessions()

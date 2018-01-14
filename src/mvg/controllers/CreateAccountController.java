@@ -10,6 +10,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import mvg.model.CustomTableViewControls;
+import mvg.model.User;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,21 +28,9 @@ import java.util.ResourceBundle;
 public class CreateAccountController extends ScreenController implements Initializable
 {
     @FXML
-    private TextField txtUsername;
+    private ComboBox<String> cbxSex, cbxAccessLevel;
     @FXML
-    private TextField txtPassword;
-    @FXML
-    private TextField txtFirstname;
-    @FXML
-    private TextField txtLastname;
-    @FXML
-    private ComboBox cbxSex, cbxAccessLevel;
-    @FXML
-    private TextField txtEmail;
-    @FXML
-    private TextField txtTelephone;
-    @FXML
-    private TextField txtCellphone;
+    private TextField txtUsername, txtPassword, txtFirstname, txtLastname, txtEmail, txtOrganisationId, txtTelephone, txtCellphone;
     @FXML
     private TextArea txtOther;
     private String[] access_levels = {"NONE", "NORMAL", "ADMIN", "SUPER"};
@@ -47,6 +38,7 @@ public class CreateAccountController extends ScreenController implements Initial
     @Override
     public void refreshView()
     {
+        cbxSex.setItems(FXCollections.observableArrayList(new String[]{"Male", "Female"}));
         cbxAccessLevel.setItems(FXCollections.observableArrayList(access_levels));
     }
 
@@ -68,13 +60,13 @@ public class CreateAccountController extends ScreenController implements Initial
     {
         int sex_index = cbxSex.getSelectionModel().selectedIndexProperty().get();
 
-        if(!validateFormField(txtUsername, "Invalid Username", "please enter a valid username", "^.*(?=.{5,}).*"))
+        if(!CustomTableViewControls.validateFormField(txtUsername, "Invalid Username", "please enter a valid username", "^.*(?=.{5,}).*"))
             return;
-        if(!validateFormField(txtPassword, "Invalid Password", "please enter a valid password", "^.*(?=.{8,}).*"))//(?=[a-zA-Z])(?=.*[0-9])(?=.*[@#!$%^&*-+=])
+        if(!CustomTableViewControls.validateFormField(txtPassword, "Invalid Password", "please enter a valid password", "^.*(?=.{8,}).*"))//(?=[a-zA-Z])(?=.*[0-9])(?=.*[@#!$%^&*-+=])
             return;
-        if(!validateFormField(txtFirstname, "Invalid Firstname", "please enter a valid first name", "^.*(?=.{1,}).*"))
+        if(!CustomTableViewControls.validateFormField(txtFirstname, "Invalid Firstname", "please enter a valid first name", "^.*(?=.{1,}).*"))
             return;
-        if(!validateFormField(txtLastname, "Invalid Lastname", "please enter a valid last name", "^.*(?=.{1,}).*"))
+        if(!CustomTableViewControls.validateFormField(txtLastname, "Invalid Lastname", "please enter a valid last name", "^.*(?=.{1,}).*"))
             return;
 
         if(sex_index<0)
@@ -85,11 +77,11 @@ public class CreateAccountController extends ScreenController implements Initial
             cbxSex.getStyleClass().remove("control-input-error");
             cbxSex.getStyleClass().add("form-control-default");
         }
-        if(!validateFormField(txtEmail, "Invalid Email", "please enter a valid email address", "^.*(?=.{5,})(?=(.*@.*\\.)).*"))
+        if(!CustomTableViewControls.validateFormField(txtEmail, "Invalid Email", "please enter a valid email address", "^.*(?=.{5,})(?=(.*@.*\\.)).*"))
             return;
-        if(!validateFormField(txtTelephone, "Invalid Telephone Number", "please enter a valid telephone number", "^.*(?=.{10,}).*"))
+        if(!CustomTableViewControls.validateFormField(txtTelephone, "Invalid Telephone Number", "please enter a valid telephone number", "^.*(?=.{10,}).*"))
             return;
-        if(!validateFormField(txtCellphone, "Invalid Cellphone Number", "please enter a valid cellphone number", "^.*(?=.{10,}).*"))
+        if(!CustomTableViewControls.validateFormField(txtCellphone, "Invalid Cellphone Number", "please enter a valid cellphone number", "^.*(?=.{10,}).*"))
             return;
 
         //all valid, send data to server
@@ -98,7 +90,7 @@ public class CreateAccountController extends ScreenController implements Initial
         {
             if(access_levels[access_level_index].toLowerCase().equals("super"))
             {
-                ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
+                /*ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
                 params.add(new AbstractMap.SimpleEntry<>("username", txtUsername.getText()));
                 params.add(new AbstractMap.SimpleEntry<>("password", txtPassword.getText()));
                 params.add(new AbstractMap.SimpleEntry<>("access_level", "3"));
@@ -109,11 +101,28 @@ public class CreateAccountController extends ScreenController implements Initial
                 params.add(new AbstractMap.SimpleEntry<>("tel", txtTelephone.getText()));
                 params.add(new AbstractMap.SimpleEntry<>("cell", txtCellphone.getText()));
                 if(txtOther.getText()!=null)
-                    params.add(new AbstractMap.SimpleEntry<>("other", txtOther.getText()));
+                    params.add(new AbstractMap.SimpleEntry<>("other", txtOther.getText()));*/
+                User user = new User();
+                user.setUsr(txtUsername.getText());
+                user.setPwd(txtPassword.getText());
+                user.setAccessLevel(3);
+                user.setFirstname(txtFirstname.getText());
+                user.setLastname(txtLastname.getText());
+                user.setGender(cbxSex.getValue());
+                user.setEmail(txtEmail.getText());
+                user.setTel(txtTelephone.getText());
+                user.setCell(txtCellphone.getText());
+                user.setOrganisation_id(txtOrganisationId.getText());
+                user.setCreator("system");//TODO: check this
+                if(txtOther.getText()!=null)
+                    user.setOther(txtOther.getText());
 
                 try
                 {
-                    HttpURLConnection connection = RemoteComms.postData("/api/user/add", params, null);
+                    ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                    headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
+
+                    HttpURLConnection connection = RemoteComms.putJSON("/users", user.toString(), headers);
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     {
                         IO.logAndAlert("Account Creation Success", "Successfully created account.", IO.TAG_INFO);
@@ -127,16 +136,5 @@ public class CreateAccountController extends ScreenController implements Initial
                 }
             }
         }
-    }
-
-    private boolean validateFormField(TextField txt, String errTitle, String errMsg, String regex)
-    {
-        if(!Validators.isValidNode(txt, txt.getText(), regex))
-        {
-            //IO.logAndAlert(errTitle, errMsg, IO.TAG_ERROR);
-            IO.log(getClass().getName(), IO.TAG_ERROR, errMsg);
-            return false;
-        }
-        return true;
     }
 }

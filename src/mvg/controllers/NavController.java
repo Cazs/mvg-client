@@ -1,6 +1,7 @@
 package mvg.controllers;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import mvg.MVG;
 import mvg.auxilary.IO;
 import mvg.managers.ScreenManager;
@@ -23,6 +24,8 @@ public class NavController extends ScreenController implements Initializable
     private Label lblScreen;
     @FXML
     private ImageView btnBack,btnNext,btnHome,img_logo;
+    @FXML
+    private VBox menu_container;
 
     @Override
     public void refreshView()
@@ -61,14 +64,15 @@ public class NavController extends ScreenController implements Initializable
                 //Render user name
                 User e = SessionManager.getInstance().getActiveUser();
                 if(e!=null)
-                    this.getUserNameLabel().setText(e.toString());
+                    this.getUserNameLabel().setText(e.getName());
                 else IO.log(getClass().getName(), IO.TAG_ERROR, "No active sessions.");
-            }else
+            } else
             {
                 IO.log(getClass().getName(), IO.TAG_ERROR, "No active sessions were found!");
                 return;
             }
-        } else {
+        } else
+        {
             IO.log(getClass().getName(), IO.TAG_ERROR, "No valid sessions were found!");
             return;
         }
@@ -86,5 +90,11 @@ public class NavController extends ScreenController implements Initializable
     {
         MVG.getScreenManager().setLblScreenName(lblScreen);
         refreshView();
+    }
+
+    @FXML
+    public void showMenu()
+    {
+        menu_container.setVisible(!menu_container.isVisible());
     }
 }

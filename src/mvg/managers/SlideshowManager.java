@@ -86,7 +86,7 @@ public class SlideshowManager extends MVGObjectManager
                     ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", smgr.getActive().getSessionId()));
 
-                    String slider_images_listing = RemoteComms.sendGetRequest("/api/images/slider", headers);
+                    String slider_images_listing = RemoteComms.sendGetRequestByURL(RemoteComms.webserver_url+"/api/images/slider", headers);
 
                     image_paths = gson.fromJson(slider_images_listing, String[].class);
                     for(String img_filename: image_paths)
@@ -96,15 +96,7 @@ public class SlideshowManager extends MVGObjectManager
                         {
                             long start = System.currentTimeMillis();
 
-                            byte[] img = RemoteComms.sendFileRequest("/api/images/slider/" + img_filename, headers);
-                            /*FileOutputStream out = new FileOutputStream(new File(".")
-                                    .getCanonicalPath() + "/images/slider/" + img_filename);*/
-                            //System.out.println("Root Path: " + MVG.class.getCanonicalName());
-                            
-                            //FileOutputStream out = new FileOutputStream(new File(MVG.class.getResource(".").getPath() + "/images/slider/" + img_filename));
-                            //FileOutputStream out = new FileOutputStream(new File("mvg/images/slider/" + img_filename));
-                            //System.out.println("Sliders dir exists: " + (new File("images/slider/").exists()));
-                            
+                            byte[] img = RemoteComms.sendFileRequestByURL(RemoteComms.webserver_url+"/api/images/slider/" + img_filename, headers);
                            
                             FileOutputStream out = new FileOutputStream(new File("images/slider/"+img_filename));
                             out.write(img);

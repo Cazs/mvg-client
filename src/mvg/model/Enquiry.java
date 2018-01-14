@@ -17,7 +17,7 @@ import java.net.URLEncoder;
  *
  * @author ghost
  */
-public class Enquiry implements BusinessObject, Serializable
+public class Enquiry extends MVGObject implements Serializable
 {
     private String _id;
     private String enquiry;
@@ -68,7 +68,7 @@ public class Enquiry implements BusinessObject, Serializable
         return pickup_location;
     }
 
-    public void setPickup_location(String password) {
+    public void setPickup_location(String pickup_location) {
         this.pickup_location = pickup_location;
     }
 
@@ -172,7 +172,7 @@ public class Enquiry implements BusinessObject, Serializable
             case "comments":
                 return comments;
             default:
-                IO.log(TAG, IO.TAG_WARN, String.format("unknown Enquiry attribute '%s'", var));
+                IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
                 return null;
         }
     }
@@ -192,40 +192,23 @@ public class Enquiry implements BusinessObject, Serializable
     @Override
     public String toString()
     {
-        return enquiry;
-    }
-
-    @Override
-    public String asUTFEncodedString()
-    {
-        //Return encoded URL parameters in UTF-8 charset
-        StringBuilder result = new StringBuilder();
-        try
-        {
-            result.append(URLEncoder.encode("enquiry","UTF-8") + "="
-                    + URLEncoder.encode(enquiry, "UTF-8") + "&");
-            result.append(URLEncoder.encode("pickup_location","UTF-8") + "="
-                    + URLEncoder.encode(pickup_location, "UTF-8") + "&");
-            if(date_scheduled>0)
-                result.append(URLEncoder.encode("date_scheduled","UTF-8") + "="
-                        + URLEncoder.encode(String.valueOf(date_scheduled), "UTF-8") + "&");
-            result.append(URLEncoder.encode("firstname","UTF-8") + "="
-                    + URLEncoder.encode(destination, "UTF-8") + "&");
-            result.append(URLEncoder.encode("trip_type","UTF-8") + "="
-                    + URLEncoder.encode(trip_type, "UTF-8") + "&");
-            result.append(URLEncoder.encode("comments","UTF-8") + "="
-                    + URLEncoder.encode(comments, "UTF-8") + "&");
-            return result.toString();
-        } catch (UnsupportedEncodingException e)
-        {
-            IO.log(TAG, IO.TAG_ERROR, e.getMessage());
-        }
-        return null;
+        //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
+        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")+
+                "\"enquiry\":\""+getEnquiry()+"\""+
+                ",\"destination\":\""+getDestination()+"\""+
+                ",\"pickup_location\":\""+getPickup_location()+"\""+
+                ",\"trip_type\":\""+getTrip_type()+"\""+
+                ",\"date_scheduled\":\""+getDate_scheduled()+"\""
+                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
+                +(getDate_logged()>0?",\"date_logged\":\""+getDate_logged()+"\"":"")
+                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
+                +(getOther()!=null?",\"other\":\""+getOther()+"\"":"")
+                +"}";
     }
 
     @Override
     public String apiEndpoint()
     {
-        return "/api/employee";
+        return "/enquiries";
     }
 }

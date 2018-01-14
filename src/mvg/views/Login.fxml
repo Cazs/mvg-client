@@ -11,10 +11,16 @@
    <center>
       <StackPane fx:id="main_pane" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="sys-body" StackPane.alignment="CENTER">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
+            <BorderPane prefHeight="423.0" prefWidth="800.0" styleClass="sys-body">
+               <top>
+                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <fx:include source="SystemNav.fxml" />
+                     </children>
+                  </VBox>
+               </top>
+            </BorderPane>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="465.0" prefWidth="800.0" style="-fx-background-color: rgba(0,0,0,.0);">
                <center>
                   <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
                     <columnConstraints>
@@ -30,12 +36,14 @@
                         <Label text="Username/eMail" textFill="#e1e1e1">
                            <font>
                               <Font size="15.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <TextField fx:id="txtUsr" minWidth="300.0" GridPane.columnIndex="1" />
                         <Label text="Password" textFill="#f8f4f4" GridPane.rowIndex="1">
                            <font>
                               <Font size="17.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
                               <PasswordField fx:id="txtPwd" minWidth="230.0" HBox.hgrow="ALWAYS">
@@ -55,7 +63,8 @@
                               <Button defaultButton="true" minHeight="60.0" minWidth="120.0" mnemonicParsing="false" onMouseClicked="#login" text="Login">
                                  <HBox.margin>
                                     <Insets />
-                                 </HBox.margin></Button>
+                                 </HBox.margin>
+                              </Button>
                               <Button minHeight="60.0" mnemonicParsing="false" onMouseClicked="#createAccount" text="Create Account">
                                  <HBox.margin>
                                     <Insets left="20.0" />
@@ -77,13 +86,16 @@
                      </BorderPane.margin>
                   </GridPane>
                </center>
+               <StackPane.margin>
+                  <Insets top="150.0" />
+               </StackPane.margin>
             </BorderPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </StackPane>
    </center>
-   <top>
-      <fx:include source="SystemNav.fxml" />
-   </top>
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>

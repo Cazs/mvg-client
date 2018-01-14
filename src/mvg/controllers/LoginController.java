@@ -39,7 +39,7 @@ public class LoginController extends ScreenController implements Initializable
     {
         //TODO: remove this
         txtUsr.setText("ghost");
-        txtPwd.setText("12345678");
+        txtPwd.setText("password");
     }
 
     @Override
@@ -87,34 +87,33 @@ public class LoginController extends ScreenController implements Initializable
                         if(usr!=null && pwd!=null)
                         {
                             Session session = RemoteComms.auth(usr, pwd);
-                            SessionManager ssn_mgr = SessionManager.getInstance();
-                            ssn_mgr.addSession(session);
-
-                            //load User data to memory
-                            UserManager.getInstance().loadDataFromServer();
-
-                            if (screenManager.loadScreen(Screens.HOME.getScreen(), MVG.class.getResource("views/" + Screens.HOME.getScreen())))
+                            if(session!=null)
                             {
-                                screenManager.setScreen(Screens.HOME.getScreen());
-                            } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
-                        }else{
-                            JOptionPane.showMessageDialog(null, "Invalid entry.", "Login failure", JOptionPane.ERROR_MESSAGE);
-                            IO.log(getClass().getName(), IO.TAG_ERROR, "invalid input.");
+                                SessionManager ssn_mgr = SessionManager.getInstance();
+                                ssn_mgr.addSession(session);
+
+                                //load User data to memory
+                                UserManager.getInstance().loadDataFromServer();
+
+                                if (screenManager.loadScreen(Screens.HOME.getScreen(), MVG.class.getResource("views/" + Screens.HOME.getScreen())))
+                                {
+                                    screenManager.setScreen(Screens.HOME.getScreen());
+                                }
+                                else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
+                            } else IO.logAndAlert("Login Failure", "Invalid login credentials.", IO.TAG_ERROR);
+                        } else
+                        {
+                            IO.logAndAlert("Invalid Input", IO.TAG_ERROR, "invalid input.");
                         }
-                    }catch(ConnectException ex)
+                    } catch(ConnectException ex)
                     {
-                        JOptionPane.showMessageDialog(null, ex.getMessage() + ", \nis the server up? are you connected to the network?", "Login failure", JOptionPane.ERROR_MESSAGE);
-                        IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage() + ", \nis the server up? are you connected to the network?");
-                        ex.printStackTrace();
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
                     } catch (LoginException ex)
                     {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Login failure", JOptionPane.ERROR_MESSAGE);
-                        IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
-                        ex.printStackTrace();
+                        IO.logAndAlert("Login Failure", ex.getMessage(), IO.TAG_ERROR);
                     } catch (IOException e)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-                        e.printStackTrace();
                     }
                 }
             }).start();

@@ -37,7 +37,7 @@
                            <right>
                               <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <VBox fx:id="enquiryForm" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="500.0" minWidth="400.0" prefWidth="400.0" style="-fx-background-color: rgba(0,0,0,0.8); -fx-background-radius: 20;" visible="false">
+                                    <VBox fx:id="enquiryForm" alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="400.0" minWidth="400.0" prefWidth="400.0" style="-fx-background-color: rgba(0,0,0,0.8); -fx-background-radius: 20;" visible="false">
                                        <children>
                                           <HBox layoutX="10.0" layoutY="92.0" nodeOrientation="LEFT_TO_RIGHT">
                                              <children>
@@ -182,7 +182,7 @@
                   </VBox>
                </top>
                <left>
-                  <ImageView fx:id="btnPrev" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#previousSlide" pickOnBounds="true" preserveRatio="true" styleClass="btnPrev" BorderPane.alignment="TOP_LEFT">
+                  <ImageView fx:id="btnPrev" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#previousSlide" pickOnBounds="true" preserveRatio="true" styleClass="btnPrev" BorderPane.alignment="TOP_CENTER">
                      <BorderPane.margin>
                         <Insets bottom="150.0" />
                      </BorderPane.margin>
@@ -198,9 +198,9 @@
                <center>
                   <BorderPane BorderPane.alignment="CENTER">
                      <center>
-                        <HBox fx:id="hboxSliderNav" maxHeight="15.0" maxWidth="-Infinity" prefHeight="15.0" prefWidth="100.0" style="-fx-background-color: rgba(0,0,0,0.6); -fx-border-color: #000; -fx-border-width: 2; -fx-border-radius: 50; -fx-background-radius: 50;" BorderPane.alignment="CENTER">
+                        <HBox fx:id="hboxSliderNav" alignment="TOP_CENTER" maxHeight="15.0" maxWidth="-Infinity" prefHeight="15.0" prefWidth="100.0" style="-fx-background-color: rgba(0,0,0,0.6); -fx-border-color: #000; -fx-border-width: 2; -fx-border-radius: 50; -fx-background-radius: 50;" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
-                              <Insets bottom="50.0" />
+                              <Insets bottom="250.0" />
                            </BorderPane.margin>
                         </HBox>
                      </center>

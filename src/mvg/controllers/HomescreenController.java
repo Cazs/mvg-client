@@ -14,21 +14,28 @@ import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import mvg.MVG;
 import mvg.auxilary.*;
+import mvg.managers.EnquiryManager;
+import mvg.managers.SessionManager;
 import mvg.managers.SlideshowManager;
+import mvg.model.CustomTableViewControls;
+import mvg.model.Enquiry;
 import mvg.model.Screens;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -55,7 +62,9 @@ public class HomescreenController extends ScreenController implements Initializa
     @FXML
     private VBox enquiryForm;
     @FXML
-    private TextField txtEnquiry;
+    private TextField txtEnquiry, txtTime, txtAddress, txtDestination, txtTripType, txtComments;
+    @FXML
+    private DatePicker dateScheduled;
 
     //@FXML
     //private GoogleMapView mapView;
@@ -81,69 +90,69 @@ public class HomescreenController extends ScreenController implements Initializa
                                 .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()])), null);
                 imgSlide.setImage(image);
                 imgSlide.setSmooth(true);
-            } else IO.log(getClass().getName(), IO.TAG_ERROR, "slider image paths are null.");
 
-            //Set ImageView sizes
-            if(MVG.getScreenManager()!=null)
-            {
-                imgSlide.setFitHeight(MVG.getScreenManager().getStage().getHeight());
-                imgSlide.setFitWidth(MVG.getScreenManager().getStage().getWidth());
-
-                //imgSlide2.setFitHeight(MVG.getScreenManager().getStage().getHeight());
-                //imgSlide2.setFitWidth(MVG.getScreenManager().getStage().getWidth());
-            }else
-            {
-                IO.log(getClass().getName(), IO.TAG_ERROR, "MVG ScreenManager is null.");
-            }
-
-            hboxSliderNav.getChildren().setAll(new Node[]{});
-
-            hboxSliderNav.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
-            //Setup slider nav
-            for(int i=0;i<SlideshowManager.getInstance().getImagePaths().length;i++)
-            {
-                /*Pane pane = new Pane();
-                pane.setMaxWidth(20);
-                pane.setMaxHeight(20);
-                pane.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
-                pane.getStyleClass().add("slide-nav-item");*/
-                Circle circle = new Circle();
-                circle.setRadius(10);
-                circle.setStrokeWidth(2);
-                circle.setOnMouseEntered(event -> circle.setStroke(Color.CYAN));
-                circle.setOnMouseExited(event -> circle.setStroke(Color.TRANSPARENT));
-                final int new_index = i;
-                circle.setOnMouseClicked(event ->
+                //Set ImageView sizes
+                if(MVG.getScreenManager()!=null)
                 {
-                    SlideshowManager.getInstance().setCurrentIndex(new_index);
-                    refreshView();
-                });
+                    imgSlide.setFitHeight(MVG.getScreenManager().getStage().getHeight());
+                    imgSlide.setFitWidth(MVG.getScreenManager().getStage().getWidth());
 
-                if(i==SlideshowManager.getInstance().getCurrentIndex())
-                    //pane.setStyle("-fx-background-color: red");
-                    circle.setFill(Color.color(1.0,.35f,0).brighter());
-                else circle.setFill(Color.DARKGREY);//pane.setStyle("-fx-background-color: #343434;");
-                hboxSliderNav.getChildren().add(circle);
-            }
+                    //imgSlide2.setFitHeight(MVG.getScreenManager().getStage().getHeight());
+                    //imgSlide2.setFitWidth(MVG.getScreenManager().getStage().getWidth());
 
-            //set slider image fixed y pos
-            imgSlide.setTranslateY(-10);
+                    hboxSliderNav.getChildren().setAll(new Node[]{});
 
-            //set slider nav buttons pos
-            //HBox.setMargin(btnPrev.getParent(), new Insets(0,0,300,0));
-            //HBox.setMargin(btnNext.getParent(), new Insets(0,0,300,0));
+                    hboxSliderNav.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
+                    //Setup slider nav
+                    for(int i=0;i<SlideshowManager.getInstance().getImagePaths().length;i++)
+                    {
+                        /*Pane pane = new Pane();
+                        pane.setMaxWidth(20);
+                        pane.setMaxHeight(20);
+                        pane.getStylesheets().add(MVG.class.getResource("styles/home.css").toExternalForm());
+                        pane.getStyleClass().add("slide-nav-item");*/
+                        Circle circle = new Circle();
+                        circle.setRadius(10);
+                        circle.setStrokeWidth(2);
+                        circle.setOnMouseEntered(event -> circle.setStroke(Color.CYAN));
+                        circle.setOnMouseExited(event -> circle.setStroke(Color.TRANSPARENT));
+                        final int new_index = i;
+                        circle.setOnMouseClicked(event ->
+                        {
+                            SlideshowManager.getInstance().setCurrentIndex(new_index);
+                            refreshView();
+                        });
 
-            //animate x-axis transition
-            final DoubleProperty x_transition =  imgSlide.translateXProperty();
-            Timeline transition = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(x_transition, -imgSlide.getFitWidth())),
-                    new KeyFrame(Duration.millis(500),new KeyValue(x_transition, MVG.getScreenManager().getStage().getWidth()*.005)));
-            transition.play();
+                        if(i==SlideshowManager.getInstance().getCurrentIndex())
+                            //pane.setStyle("-fx-background-color: red");
+                            circle.setFill(Color.color(1.0,.35f,0).brighter());
+                        else circle.setFill(Color.DARKGREY);//pane.setStyle("-fx-background-color: #343434;");
+                        hboxSliderNav.getChildren().add(circle);
+                    }
 
-            //animate opacity
-            final DoubleProperty opacity =  imgSlide.opacityProperty();//MVG.getScreenManager().opacityProperty();
-            Timeline fade = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(opacity, 0.0)),
-                    new KeyFrame(Duration.millis(1000),new KeyValue(opacity, 1.0)));
-            fade.play();
+                    //set slider image fixed y pos
+                    imgSlide.setTranslateY(-80);
+
+                    //set slider nav buttons pos
+                    //HBox.setMargin(btnPrev.getParent(), new Insets(0,0,300,0));
+                    //HBox.setMargin(btnNext.getParent(), new Insets(0,0,300,0));
+
+                    //animate x-axis transition
+                    final DoubleProperty x_transition =  imgSlide.translateXProperty();
+                    Timeline transition = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(x_transition, -imgSlide.getFitWidth())),
+                            new KeyFrame(Duration.millis(500),new KeyValue(x_transition, MVG.getScreenManager().getStage().getWidth()*.005)));
+                    transition.play();
+
+                    //animate opacity
+                    final DoubleProperty opacity =  imgSlide.opacityProperty();//MVG.getScreenManager().opacityProperty();
+                    Timeline fade = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(opacity, 0.0)),
+                            new KeyFrame(Duration.millis(1000),new KeyValue(opacity, 1.0)));
+                    fade.play();
+                } else
+                {
+                    IO.log(getClass().getName(), IO.TAG_ERROR, "MVG ScreenManager is null.");
+                }
+            } else IO.log(getClass().getName(), IO.TAG_ERROR, "slider image paths are null.");
         } catch (IOException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
@@ -243,6 +252,39 @@ public class HomescreenController extends ScreenController implements Initializa
     @FXML
     public void submitEnquiry()
     {
+        if(!CustomTableViewControls.validateFormField(txtEnquiry, "Invalid Enquiry", "please enter a valid enquiry", "^.*(?=.{5,}).*"))
+            return;
+        if(!Validators.isValidNode(dateScheduled, (dateScheduled.getValue()==null?"":String.valueOf(dateScheduled.getValue())), "^.*(?=.{1,}).*"))
+            return;
+        if(!CustomTableViewControls.validateFormField(txtTime, "Invalid Pickup Location", "please enter a valid pickup address", "^.*(?=.{1,}).*"))
+            return;
+        if(!CustomTableViewControls.validateFormField(txtAddress, "Invalid Pickup Location", "please enter a valid pickup address", "^.*(?=.{1,}).*"))
+            return;
+        if(!CustomTableViewControls.validateFormField(txtDestination, "Invalid Destination", "please enter a valid destination", "^.*(?=.{1,}).*"))
+            return;
+        if(!CustomTableViewControls.validateFormField(txtTripType, "Invalid Trip Type", "please enter a valid trip type", "^.*(?=.{1,}).*"))
+            return;
+
+        Enquiry enquiry = new Enquiry();
+        enquiry.setEnquiry(txtEnquiry.getText());
+        enquiry.setComments(txtComments.getText());
+        enquiry.setPickup_location(txtAddress.getText());
+        enquiry.setDestination(txtDestination.getText());
+        enquiry.setDate_scheduled(dateScheduled.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
+        enquiry.setTrip_type(txtTripType.getText());
+        enquiry.setCreator(SessionManager.getInstance().getActive().getUsername());
+
+        try
+        {
+            EnquiryManager.getInstance().createEnquiry(enquiry, new_enquiry_id ->
+            {
+                IO.logAndAlert("Success", "Created Enquiry ["+new_enquiry_id+"].", IO.TAG_INFO);
+                return null;
+            });
+        } catch (IOException e)
+        {
+            IO.logAndAlert("I/O Error", e.getMessage(), IO.TAG_ERROR);
+        }
     }
 
     @FXML

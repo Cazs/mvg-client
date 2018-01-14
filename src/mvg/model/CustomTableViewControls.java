@@ -196,4 +196,15 @@ public class CustomTableViewControls
 
         return name;
     }
+
+    public static boolean validateFormField(TextField txt, String errTitle, String errMsg, String regex)
+    {
+        if(!Validators.isValidNode(txt, txt.getText(), regex))
+        {
+            //IO.logAndAlert(errTitle, errMsg, IO.TAG_ERROR);
+            IO.log(CustomTableViewControls.class.getName(), IO.TAG_ERROR, errMsg);
+            return false;
+        }
+        return true;
+    }
 }

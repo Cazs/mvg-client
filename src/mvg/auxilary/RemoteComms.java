@@ -25,10 +25,13 @@ import java.util.ArrayList;
  */
 public class RemoteComms
 {
-    public static String host = "http://95.85.57.110:9999";
+    public static String master_ip = "localhost";
+    public static int master_port = 8083;
+    public static String host = "http://"+master_ip+":"+master_port;
+    public static String webserver_url = "http://95.85.57.110:9999";
     public static final String TAG = "RemoteComms";
 
-    public static Session auth(String usr, String pwd) throws IOException, LoginException
+    public static Session auth_legacy(String usr, String pwd) throws IOException, LoginException
     {
         ArrayList<AbstractMap.SimpleEntry<String,String>> data = new ArrayList<>();
         data.add(new AbstractMap.SimpleEntry<>("username",usr));
@@ -94,6 +97,42 @@ public class RemoteComms
         }
     }
 
+    public static Session auth(String usr, String pwd) throws IOException, LoginException
+    {
+        ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
+        headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
+        headers.add(new AbstractMap.SimpleEntry<>("usr", usr));
+        headers.add(new AbstractMap.SimpleEntry<>("pwd", pwd));
+        HttpURLConnection connObj = putJSONData("/auth", null, headers);
+
+        if(connObj.getResponseCode()==200)
+        {
+            //String cookie = connObj.getHeaderField("Set-Cookie");
+            String session_str = IO.readStream(connObj.getInputStream());
+            Session session = new GsonBuilder().create().fromJson(session_str, Session.class);
+            if(session!=null)
+            {
+                IO.log("User Authenticator", IO.TAG_INFO, "successfully signed in.");
+                connObj.disconnect();
+                return session;
+            }else{
+                connObj.disconnect();
+                IO.logAndAlert("Authentication Error", "Could not parse Session JSON object.", IO.TAG_ERROR);
+                //throw new LoginException("Cookie object is not set.");
+            }
+        }else{
+            connObj.disconnect();
+            IO.log("User Authenticator", IO.TAG_ERROR, "could not sign in.");
+            if(connObj.getResponseCode()==HttpURLConnection.HTTP_NOT_FOUND)
+                IO.logAndAlert("Authentication Error", "Invalid credentials.\nPlease try again with valid credentials or reset your password if you have forgotten it.", IO.TAG_ERROR);
+            /*if(connObj.getResponseCode()==404)
+                throw new LoginException("Invalid credentials.");
+            else
+                throw new LoginException("Could not authenticate, server response code: " + connObj.getResponseCode());*/
+        }
+        return null;
+    }
+
     public static void setHost(String h)
     {
         host = h;
@@ -118,6 +157,39 @@ public class RemoteComms
         for(AbstractMap.SimpleEntry<String,String> header:headers)
             httpConn.setRequestProperty(header.getKey() , header.getValue());
         
+        String response = null;
+        if(httpConn.getResponseCode() == HttpURLConnection.HTTP_OK)
+        {
+            response="";
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getInputStream()));
+            String line="";
+            int read=0;
+            while ((line=in.readLine())!=null)
+                response += line;
+            //Log.d(TAG,response);
+        }else
+        {
+            response="";
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getErrorStream()));
+            String line="";
+            int read=0;
+            while ((line=in.readLine())!=null)
+                response += line;
+        }
+
+        IO.log(TAG, IO.TAG_INFO, "GET response> " + response + "\n");
+        return response;
+    }
+
+    public static String sendGetRequestByURL(String url, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        IO.log(TAG, IO.TAG_INFO, String.format("\nGET %s HTTP/1.1\nHost: %s", url, host));
+
+        URL urlConn = new URL(url);
+        HttpURLConnection httpConn =  (HttpURLConnection)urlConn.openConnection();
+        for(AbstractMap.SimpleEntry<String,String> header:headers)
+            httpConn.setRequestProperty(header.getKey() , header.getValue());
+
         String response = null;
         if(httpConn.getResponseCode() == HttpURLConnection.HTTP_OK)
         {
@@ -193,7 +265,29 @@ public class RemoteComms
             return null;
         }*/
     }
-    
+
+    public static byte[] sendFileRequestByURL(String url, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        IO.log(TAG, IO.TAG_INFO, String.format("\nGET %s HTTP/1.1", url));
+
+        URL urlConn = new URL(url);
+        try(InputStream in = urlConn.openStream())
+        {
+            //Files.copy(in, new File("download.pdf").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            //DataInputStream dataInputStream = new DataInputStream(in);
+
+            ByteArrayOutputStream outbytes = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int read=0;
+            while ((read=in.read(buffer, 0, buffer.length))>0)
+                outbytes.write(buffer, 0, read);
+            outbytes.flush();
+            in.close();
+            IO.log(TAG, IO.TAG_INFO, "GET received file> " + url + " " + outbytes.toByteArray().length + " bytes.\n");
+            return outbytes.toByteArray();
+        }
+    }
+
     public static HttpURLConnection postData(String function, ArrayList<AbstractMap.SimpleEntry<String,String>> params, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
     {
         URL urlConn = new URL(host + function);
@@ -345,5 +439,205 @@ public class RemoteComms
         IO.logAndAlert("File Upload", httpConn.getResponseCode() + ":\t" + desc, IO.TAG_INFO);
         httpConn.disconnect();
 
+    }
+
+    public static HttpURLConnection putJSONData(String function, ArrayList<AbstractMap.SimpleEntry<String,String>> params, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        /*URL urlConn = new URL(host + function);
+        HttpURLConnection httpConn = (HttpURLConnection)urlConn.openConnection();
+        if(headers!=null)
+            for(AbstractMap.SimpleEntry<String,String> header:headers)
+            {
+                IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "setting header: ["+header.getKey()+":"+header.getValue()+"]");
+                httpConn.setRequestProperty(header.getKey(), header.getValue());
+            }
+        httpConn.setReadTimeout(10000);
+        httpConn.setConnectTimeout(15000);
+        httpConn.setRequestMethod("PUT");
+        httpConn.setDoInput(true);
+        httpConn.setDoOutput(true);*/
+
+        //Encode body data in UTF-8 charset
+        StringBuilder result = new StringBuilder("{");
+        if(params!=null)
+        {
+            for (int i = 0; i < params.size(); i++)
+            {
+                AbstractMap.SimpleEntry<String, String> entry = params.get(i);
+                if (entry != null)
+                {
+                    if (entry.getKey() != null && entry.getValue() != null)
+                    {
+                        //if not first item, add commas
+                        if(i>0)
+                            result.append(",");
+                        result.append("\"" + entry.getKey() + "\"");
+                        result.append(':');
+                        result.append("\"" + entry.getValue() + "\"");
+                        //result.append((i != params.size() - 1 ? "," : ""));//add comma if not last param
+                    } else
+                    {
+                        IO.log(RemoteComms.class.getName(), IO.TAG_ERROR, "invalid key-value pair for entry: [" + entry.getKey()+","+entry.getValue()+"]");
+                        return null;
+                    }
+                } else
+                {
+                    IO.log(RemoteComms.class.getName(), IO.TAG_ERROR, "invalid entry");
+                    return null;
+                }
+            }
+        }
+        result.append("}");
+        /*IO.log(TAG, IO.TAG_INFO, String.format("%s %s HTTP/1.1\nHost: %s", httpConn.getRequestMethod(), function, host));
+
+        //Write to server
+        OutputStream os = httpConn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(result.toString());
+        writer.flush();
+        writer.close();
+        os.close();
+
+        //httpConn.connect();
+
+        /*Scanner scn = new Scanner(new InputStreamReader(httpConn.getErrorStream()));
+        String resp = "";
+        while(scn.hasNext())
+            resp+=scn.nextLine();
+        System.err.println(resp);*
+        String resp = httpConn.getHeaderField("Set-Cookie");
+        System.err.println(resp);*
+
+        return httpConn;*/
+        return putJSON(function, result.toString(), headers);
+    }
+
+    public static HttpURLConnection patchJSON(String function, String object, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        URL urlConn = new URL(host + function);
+        HttpURLConnection httpConn = (HttpURLConnection)urlConn.openConnection();
+        if(headers!=null)
+            for(AbstractMap.SimpleEntry<String,String> header:headers)
+            {
+                IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "setting header: ["+header.getKey()+":"+header.getValue()+"]");
+                httpConn.setRequestProperty(header.getKey(), header.getValue());
+            }
+        httpConn.setReadTimeout(10000);
+        httpConn.setConnectTimeout(15000);
+        httpConn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+        httpConn.setRequestMethod("POST");
+        httpConn.setDoInput(true);
+        httpConn.setDoOutput(true);
+
+        IO.log(TAG, IO.TAG_INFO, String.format("%s %s HTTP/1.1\nHost: %s", httpConn.getRequestMethod(), function, host));
+        IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "PATCHing data: "+object);
+
+        //Write to server
+        OutputStream os = httpConn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(object);
+        writer.flush();
+        writer.close();
+        os.close();
+
+        return httpConn;
+    }
+
+    public static HttpURLConnection postJSON(String function, String object, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        URL urlConn = new URL(host + function);
+        HttpURLConnection httpConn = (HttpURLConnection)urlConn.openConnection();
+        if(headers!=null)
+            for(AbstractMap.SimpleEntry<String,String> header:headers)
+            {
+                IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "setting header: ["+header.getKey()+":"+header.getValue()+"]");
+                httpConn.setRequestProperty(header.getKey(), header.getValue());
+            }
+        httpConn.setReadTimeout(10000);
+        httpConn.setConnectTimeout(15000);
+        httpConn.setRequestMethod("POST");
+        httpConn.setDoInput(true);
+        httpConn.setDoOutput(true);
+
+        IO.log(TAG, IO.TAG_INFO, String.format("%s %s HTTP/1.1\nHost: %s", httpConn.getRequestMethod(), function, host));
+        IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "POSTting data: "+object);
+
+        //Write to server
+        OutputStream os = httpConn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(object);
+        writer.flush();
+        writer.close();
+        os.close();
+
+        return httpConn;
+    }
+
+    public static HttpURLConnection putJSON(String function, String object, ArrayList<AbstractMap.SimpleEntry<String,String>> headers) throws IOException
+    {
+        URL urlConn = new URL(host + function);
+        HttpURLConnection httpConn = (HttpURLConnection)urlConn.openConnection();
+        if(headers!=null)
+            for(AbstractMap.SimpleEntry<String,String> header:headers)
+            {
+                IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "setting header: ["+header.getKey()+":"+header.getValue()+"]");
+                httpConn.setRequestProperty(header.getKey(), header.getValue());
+            }
+        httpConn.setReadTimeout(10000);
+        httpConn.setConnectTimeout(15000);
+        httpConn.setRequestMethod("PUT");
+        httpConn.setDoInput(true);
+        httpConn.setDoOutput(true);
+
+        IO.log(TAG, IO.TAG_INFO, String.format("%s %s HTTP/1.1\nHost: %s", httpConn.getRequestMethod(), function, host));
+        IO.log(RemoteComms.class.getName(), IO.TAG_INFO, "PUTting data: "+object);
+
+        //Write to server
+        OutputStream os = httpConn.getOutputStream();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os,"UTF-8"));
+        writer.write(object);
+        writer.flush();
+        writer.close();
+        os.close();
+
+        return httpConn;
+    }
+
+    public static void updateBusinessObjectOnServer(BusinessObject bo, String property)
+    {
+        if(SessionManager.getInstance().getActive()!=null)
+        {
+            if(!SessionManager.getInstance().getActive().isExpired())
+            {
+                ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                //String id = bo.get_id();
+
+                if(bo!=null)
+                {
+                    headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
+                    headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
+                    try
+                    {
+                        HttpURLConnection connection = RemoteComms.patchJSON(bo.apiEndpoint(), bo.toString(), headers);
+                        if(connection!=null)
+                        {
+                            if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
+                                IO.log(TAG, IO.TAG_INFO, "Successfully updated BusinessObject{"+bo.getClass().getName()+"}'s '" + property + "' property to ["+bo.get(property)+"].");
+                            else
+                            {
+                                String msg = IO.readStream(connection.getErrorStream());
+                                /*Gson gson = new GsonBuilder().create();
+                                Error error = gson.fromJson(msg, Error.class);*/
+                                IO.logAndAlert("Error " +String.valueOf(connection.getResponseCode()), msg, IO.TAG_ERROR);
+                            }
+                            connection.disconnect();
+                        } else IO.logAndAlert("Error", "Connection to server was interrupted.", IO.TAG_ERROR);
+                    } catch (IOException e)
+                    {
+                        IO.logAndAlert(TAG, e.getMessage(), IO.TAG_ERROR);
+                    }
+                } else IO.log(TAG, IO.TAG_ERROR, "Invalid BusinessObject");
+            } else IO.logAndAlert("Session expired", "No active sessions.", IO.TAG_ERROR);
+        } else IO.logAndAlert("Error: Invalid Session", "Active Session is invalid.", IO.TAG_ERROR);
     }
 }

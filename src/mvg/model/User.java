@@ -16,79 +16,46 @@ import java.net.URLEncoder;
  *
  * @author ghost
  */
-public class User implements BusinessObject, Serializable
+public class User extends MVGObject implements Serializable
 {
-    private String _id;
-    private String username;
-    private String password;//hashed
+    private String usr;
+    private String pwd;//hashed
     private String firstname;
     private String lastname;
+    private String organisation_id;
     private String gender;
     private String email;
-    private long date_joined;
     private String tel;
     private String cell;
     private int access_level;
     private boolean active;
-    private String other;
-    private boolean marked;
     public static final String TAG = "User";
+    public static int ACCESS_LEVEL_NONE = 0;
+    public static int ACCESS_LEVEL_NORMAL = 1;
+    public static int ACCESS_LEVEL_ADMIN = 2;
+    public static int ACCESS_LEVEL_SUPER = 3;
 
-    public StringProperty idProperty(){return new SimpleStringProperty(_id);}
+    public StringProperty usrProperty(){return new SimpleStringProperty(usr);}
 
-    @Override
-    public String get_id()
+    public String getUsr()
     {
-        return _id;
+        return usr;
     }
 
-    public void set_id(String _id)
+    public void setUsr(String usr)
     {
-        this._id = _id;
+        this.usr = usr;
     }
 
-    public StringProperty short_idProperty(){return new SimpleStringProperty(_id.substring(0, 8));}
-
-    @Override
-    public boolean isMarked()
+    public void setPwd(String pwd)
     {
-        return marked;
+        this.pwd = pwd;
     }
 
-    @Override
-    public void setMarked(boolean marked){this.marked=marked;}
+    public StringProperty access_levelProperty(){return new SimpleStringProperty(String.valueOf(access_level));}
 
-    @Override
-    public String getShort_id()
+    public int getAccessLevel()
     {
-        return _id.substring(0, 8);
-    }
-
-    private StringProperty usernameProperty(){return new SimpleStringProperty(username);}
-
-    public String getUsername()
-    {
-        return username;
-    }
-
-    public void setusername(String username) {
-        this.username = username;
-    }
-
-    private StringProperty passwordProperty(){return new SimpleStringProperty(password);}
-
-    public String getpassword()
-    {
-        return password;
-    }
-
-    public void setpassword(String password) {
-        this.password = password;
-    }
-
-    private StringProperty access_levelProperty(){return new SimpleStringProperty(String.valueOf(access_level));}
-
-    public int getAccessLevel() {
         return access_level;
     }
 
@@ -97,7 +64,7 @@ public class User implements BusinessObject, Serializable
         this.access_level = access_level;
     }
 
-    private StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
+    public StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
 
     public String isActive()
     {
@@ -114,19 +81,14 @@ public class User implements BusinessObject, Serializable
         this.active = active;
     }
 
-    private StringProperty otherProperty(){return new SimpleStringProperty(other);}
+    public StringProperty nameProperty(){return new SimpleStringProperty(getName());}
 
-    public String getOther() 
+    public String getName()
     {
-        return other;
+        return firstname + " " + lastname;
     }
 
-    public void setOther(String other) 
-    {
-        this.other = other;
-    }
-
-    private StringProperty firstnameProperty(){return new SimpleStringProperty(firstname);}
+    public StringProperty firstnameProperty(){return new SimpleStringProperty(firstname);}
 
     public String getFirstname()
     {
@@ -138,7 +100,7 @@ public class User implements BusinessObject, Serializable
         this.firstname = firstname;
     }
 
-    private StringProperty lastnameProperty(){return new SimpleStringProperty(lastname);}
+    public StringProperty lastnameProperty(){return new SimpleStringProperty(lastname);}
 
     public String getLastname()
     {
@@ -150,23 +112,29 @@ public class User implements BusinessObject, Serializable
         this.lastname = lastname;
     }
 
-    private StringProperty date_joinedProperty(){return new SimpleStringProperty(String.valueOf(date_joined));}
-
-    public long getDate_joined()
-    {
-        return date_joined;
-    }
-
-    public void setDate_joined(long date_joined)
-    {
-        this.date_joined = date_joined;
-    }
-
-    private StringProperty emailProperty(){return new SimpleStringProperty(email);}
+    public StringProperty emailProperty(){return new SimpleStringProperty(email);}
 
     public String getEmail()
     {
         return email;
+    }
+
+    public StringProperty organisationProperty(){return new SimpleStringProperty(getOrganisation());}
+
+    public String getOrganisation()
+    {
+        //TODO: implement this
+        return "temp";
+    }
+
+    public String getOrganisation_id()
+    {
+        return organisation_id;
+    }
+
+    public void setOrganisation_id(String organisation_id)
+    {
+        this.organisation_id = organisation_id;
     }
 
     public void setEmail(String email)
@@ -174,7 +142,7 @@ public class User implements BusinessObject, Serializable
         this.email = email;
     }
 
-    private StringProperty telProperty(){return new SimpleStringProperty(username);}
+    public StringProperty telProperty(){return new SimpleStringProperty(usr);}
 
     public String getTel()
     {
@@ -186,7 +154,7 @@ public class User implements BusinessObject, Serializable
         this.tel = tel;
     }
 
-    private StringProperty cellProperty(){return new SimpleStringProperty(username);}
+    public StringProperty cellProperty(){return new SimpleStringProperty(usr);}
 
     public String getCell()
     {
@@ -198,7 +166,7 @@ public class User implements BusinessObject, Serializable
         this.cell = cell;
     }
 
-    private StringProperty genderProperty(){return new SimpleStringProperty(username);}
+    public StringProperty genderProperty(){return new SimpleStringProperty(usr);}
 
     public String getGender()
     {
@@ -213,6 +181,7 @@ public class User implements BusinessObject, Serializable
     @Override
     public void parse(String var, Object val)
     {
+        super.parse(var, val);
         try
         {
             switch (var.toLowerCase())
@@ -223,8 +192,11 @@ public class User implements BusinessObject, Serializable
                 case "lastname":
                     setLastname((String)val);
                     break;
-                case "username":
-                    setusername((String)val);
+                case "usr":
+                    setUsr((String)val);
+                    break;
+                case "organisation_id":
+                    setOrganisation_id((String)val);
                     break;
                 case "gender":
                     setGender((String)val);
@@ -241,9 +213,6 @@ public class User implements BusinessObject, Serializable
                 case "cell":
                     setCell((String)val);
                     break;
-                case "date_joined":
-                    setDate_joined(Long.parseLong(String.valueOf(val)));
-                    break;
                 case "active":
                     setActive(Boolean.parseBoolean((String)val));
                     break;
@@ -251,10 +220,10 @@ public class User implements BusinessObject, Serializable
                     setOther((String)val);
                     break;
                 default:
-                    IO.log(TAG, IO.TAG_WARN, String.format("unknown User attribute '%s'", var));
+                    IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
                     break;
             }
-        }catch (NumberFormatException e)
+        } catch (NumberFormatException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
         }
@@ -269,8 +238,10 @@ public class User implements BusinessObject, Serializable
                 return firstname;
             case "lastname":
                 return lastname;
-            case "username":
-                return username;
+            case "usr":
+                return usr;
+            case "organisation_id":
+                return organisation_id;
             case "access_level":
                 return access_level;
             case "gender":
@@ -281,70 +252,40 @@ public class User implements BusinessObject, Serializable
                 return tel;
             case "cell":
                 return cell;
-            case "date_joined":
-                return date_joined;
             case "active":
                 return active;
-            case "other":
-                return other;
-            default:
-                IO.log(TAG, IO.TAG_WARN, String.format("unknown User attribute '%s'", var));
-                return null;
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        return firstname + " " + lastname;
+        return super.get(var);
     }
 
     public String getInitials(){return new String(firstname.substring(0,1) + lastname.substring(0,1));}
 
     @Override
-    public String asUTFEncodedString()
+    public String toString()
     {
-        //Return encoded URL parameters in UTF-8 charset
-        StringBuilder result = new StringBuilder();
-        try
-        {
-            result.append(URLEncoder.encode("username","UTF-8") + "="
-                    + URLEncoder.encode(username, "UTF-8") + "&");
-            result.append(URLEncoder.encode("password","UTF-8") + "="
-                    + URLEncoder.encode(password, "UTF-8") + "&");
-            result.append(URLEncoder.encode("access_level","UTF-8") + "="
-                    + URLEncoder.encode(String.valueOf(access_level), "UTF-8") + "&");
-            result.append(URLEncoder.encode("firstname","UTF-8") + "="
-                    + URLEncoder.encode(firstname, "UTF-8") + "&");
-            result.append(URLEncoder.encode("lastname","UTF-8") + "="
-                    + URLEncoder.encode(lastname, "UTF-8") + "&");
-            result.append(URLEncoder.encode("gender","UTF-8") + "="
-                    + URLEncoder.encode(gender, "UTF-8") + "&");
-            result.append(URLEncoder.encode("email","UTF-8") + "="
-                    + URLEncoder.encode(email, "UTF-8") + "&");
-            result.append(URLEncoder.encode("tel","UTF-8") + "="
-                    + URLEncoder.encode(tel, "UTF-8") + "&");
-            result.append(URLEncoder.encode("cell","UTF-8") + "="
-                    + URLEncoder.encode(cell, "UTF-8") + "&");
-            result.append(URLEncoder.encode("date_joined","UTF-8") + "="
-                    + URLEncoder.encode(String.valueOf(date_joined), "UTF-8") + "&");
-            result.append(URLEncoder.encode("active","UTF-8") + "="
-                    + URLEncoder.encode(String.valueOf(active), "UTF-8"));
-            if(other!=null)
-                if(!other.isEmpty())
-                    result.append("&" + URLEncoder.encode("other","UTF-8") + "="
-                        + URLEncoder.encode(other, "UTF-8"));
-            return result.toString();
-        } catch (UnsupportedEncodingException e)
-        {
-            IO.log(TAG, IO.TAG_ERROR, e.getMessage());
-        }
-        return null;
+        //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
+        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")+
+                "\"firstname\":\""+firstname+"\""+
+                ",\"lastname\":\""+lastname+"\""+
+                ",\"usr\":\""+usr+"\""+
+                ",\"pwd\":\""+pwd+"\""
+                +(organisation_id!=null?",\"organisation_id\":\""+organisation_id+"\"":"")+
+                ",\"access_level\":\""+access_level+"\""+
+                ",\"gender\":\""+gender+"\""+
+                ",\"email\":\""+email+"\""+
+                ",\"tel\":\""+tel+"\""+
+                ",\"cell\":\""+cell+"\""+
+                ",\"active\":\""+active+"\""
+                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
+                +(getDate_logged()>0?",\"date_logged\":\""+getDate_logged()+"\"":"")
+                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
+                +(getOther()!=null?",\"other\":\""+getOther()+"\"":"")
+                +"}";
     }
 
     @Override
     public String apiEndpoint()
     {
-        return "/api/employee";
+        return "/users";
     }
 }
