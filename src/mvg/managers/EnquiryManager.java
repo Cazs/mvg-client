@@ -79,8 +79,8 @@ public class EnquiryManager extends MVGObjectManager
 
     public Enquiry getSelectedEnquiry()
     {
-        /*if(selected_quote>-1)
-            return quotes[selected_quote];
+        /*if(selected_enquiry>-1)
+            return enquiries[selected_enquiry];
         else return null;*/
         return selected_enquiry;
     }
@@ -114,7 +114,7 @@ public class EnquiryManager extends MVGObjectManager
 
     public void reloadDataFromServer() throws ClassNotFoundException, IOException
     {
-        //quotes = null;
+        //enquiries = null;
         SessionManager smgr = SessionManager.getInstance();
         if(smgr.getActive()!=null)
         {
@@ -125,8 +125,8 @@ public class EnquiryManager extends MVGObjectManager
                 ArrayList<AbstractMap.SimpleEntry<String,String>> headers = new ArrayList<>();
                 headers.add(new AbstractMap.SimpleEntry<>("Cookie", smgr.getActive().getSessionId()));
                 //Get Timestamp
-                String quotes_timestamp_json = RemoteComms.sendGetRequest("/timestamp/quotes_timestamp", headers);
-                Counter enquiries_timestamp = gson.fromJson(quotes_timestamp_json, Counter.class);
+                String enquiries_timestamp_json = RemoteComms.sendGetRequest("/timestamp/enquiries_timestamp", headers);
+                Counter enquiries_timestamp = gson.fromJson(enquiries_timestamp_json, Counter.class);
                 if(enquiries_timestamp!=null)
                 {
                     timestamp = enquiries_timestamp.getCount();
@@ -139,19 +139,22 @@ public class EnquiryManager extends MVGObjectManager
 
                 if(!isSerialized(ROOT_PATH+filename))
                 {
-                    //Load Enquirys
-                    String quotes_json = RemoteComms.sendGetRequest("/quotes", headers);
-                    EnquiryServerObject enquiryServerObject = gson.fromJson(quotes_json, EnquiryServerObject.class);
+                    //Load Enquiries
+                    String enquiries_json = RemoteComms.sendGetRequest("/enquiries", headers);
+                    EnquiryServerObject enquiryServerObject = gson.fromJson(enquiries_json, EnquiryServerObject.class);
                     if(enquiryServerObject!=null)
                     {
                         if(enquiryServerObject.get_embedded()!=null)
                         {
-                            Enquiry[] quotes_arr = enquiryServerObject.get_embedded().getEnquiries();
+                            Enquiry[] enquiries_arr = enquiryServerObject.get_embedded().getEnquiries();
                             enquiries = new HashMap<>();
-                            for (Enquiry enquiry : quotes_arr)
+                            for (Enquiry enquiry : enquiries_arr)
                                 enquiries.put(enquiry.get_id(), enquiry);
                         } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not find any Enquiries in the database.");
                     } else IO.log(getClass().getName(), IO.TAG_ERROR, "EnquiryServerObject (containing Enquiry objects & other metadata) is null");
+
+                    IO.log(getClass().getName(), IO.TAG_INFO, "reloaded collection of enquiries.");
+                    this.serialize(ROOT_PATH + filename, enquiries);
                 } else {
                     IO.log(this.getClass().getName(), IO.TAG_INFO, "binary object ["+ROOT_PATH+filename+"] on local disk is already up-to-date.");
                     enquiries = (HashMap<String, Enquiry>) this.deserialize(ROOT_PATH+filename);
@@ -240,7 +243,7 @@ public class EnquiryManager extends MVGObjectManager
         //Enquiry selected = getSelectedEnquiry();
         if(enquiry!=null)
         {
-            //prepare quote parameters
+            //prepare enquiry parameters
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
@@ -307,7 +310,7 @@ public class EnquiryManager extends MVGObjectManager
                 return enquiries;
             }
 
-            public void setEnquiries(Enquiry[] quotes)
+            public void setEnquiries(Enquiry[] enquiries)
             {
                 this.enquiries = enquiries;
             }

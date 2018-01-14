@@ -61,8 +61,8 @@ public class LoginController extends ScreenController implements Initializable
     {
         try
         {
-            if(MVG.getScreenManager().loadScreen(Screens.RESET_PWD.getScreen(),getClass().getResource("../views/"+Screens.RESET_PWD.getScreen())))
-                MVG.getScreenManager().setScreen(Screens.RESET_PWD.getScreen());
+            if(ScreenManager.getInstance().loadScreen(Screens.RESET_PWD.getScreen(),getClass().getResource("../views/"+Screens.RESET_PWD.getScreen())))
+                ScreenManager.getInstance().setScreen(Screens.RESET_PWD.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load password reset screen.");
         } catch (IOException e)
         {
@@ -73,8 +73,8 @@ public class LoginController extends ScreenController implements Initializable
     @FXML
     public void login()
     {
-        final ScreenManager screenManager = MVG.getScreenManager();
-        MVG.getScreenManager().showLoadingScreen(param ->
+        final ScreenManager screenManager = ScreenManager.getInstance();//MVG.getScreenManager();
+        screenManager.showLoadingScreen(param ->
         {
             new Thread(new Runnable()
             {

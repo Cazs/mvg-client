@@ -9,7 +9,11 @@ import mvg.MVG;
 import mvg.auxilary.Globals;
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
+import mvg.auxilary.Session;
+import mvg.exceptions.LoginException;
 import mvg.managers.ScreenManager;
+import mvg.managers.SessionManager;
+import mvg.managers.UserManager;
 import mvg.model.Screens;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -20,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.ConnectException;
 
 /**
  *
@@ -76,8 +81,8 @@ public abstract class ScreenController
     {
         try
         {
-            if(MVG.getScreenManager().loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("../views/"+Screens.LOGIN.getScreen())))
-                MVG.getScreenManager().setScreen(Screens.LOGIN.getScreen());
+            if(ScreenManager.getInstance().loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("../views/"+Screens.LOGIN.getScreen())))
+                ScreenManager.getInstance().setScreen(Screens.LOGIN.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load login screen.");
         } catch (IOException e)
         {
@@ -90,8 +95,8 @@ public abstract class ScreenController
     {
         try
         {
-            if(MVG.getScreenManager().loadScreen(Screens.HOME.getScreen(),getClass().getResource("../views/"+Screens.HOME.getScreen())))
-                MVG.getScreenManager().setScreen(Screens.HOME.getScreen());
+            if(ScreenManager.getInstance().loadScreen(Screens.HOME.getScreen(),getClass().getResource("../views/"+Screens.HOME.getScreen())))
+                ScreenManager.getInstance().setScreen(Screens.HOME.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
         } catch (IOException e)
         {
@@ -100,12 +105,45 @@ public abstract class ScreenController
     }
 
     @FXML
+    public void showEnquiries()
+    {
+        ScreenManager.getInstance().showLoadingScreen(param ->
+        {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        //load User data to memory
+                        UserManager.getInstance().loadDataFromServer();
+
+                        if (ScreenManager.getInstance().loadScreen(Screens.DASHBOARD.getScreen(), MVG.class.getResource("views/" + Screens.DASHBOARD.getScreen())))
+                        {
+                            ScreenManager.getInstance().setScreen(Screens.DASHBOARD.getScreen());
+                        } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load dashboard screen.");
+                    } catch(ConnectException ex)
+                    {
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
+                    } catch (IOException e)
+                    {
+                        IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return null;
+        });
+    }
+
+    @FXML
     public void createAccount()
     {
         try
         {
-            if(MVG.getScreenManager().loadScreen(Screens.CREATE_ACCOUNT.getScreen(),getClass().getResource("../views/"+Screens.CREATE_ACCOUNT.getScreen())))
-                MVG.getScreenManager().setScreen(Screens.CREATE_ACCOUNT.getScreen());
+            if(ScreenManager.getInstance().loadScreen(Screens.CREATE_ACCOUNT.getScreen(),getClass().getResource("../views/"+Screens.CREATE_ACCOUNT.getScreen())))
+                ScreenManager.getInstance().setScreen(Screens.CREATE_ACCOUNT.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load account creation screen.");
         } catch (IOException e)
         {
@@ -139,7 +177,7 @@ public abstract class ScreenController
     {
         try
         {
-            MVG.getScreenManager().setPreviousScreen();
+            ScreenManager.getInstance().setPreviousScreen();
         } catch (IOException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());

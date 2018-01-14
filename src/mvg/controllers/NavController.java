@@ -77,7 +77,7 @@ public class NavController extends ScreenController implements Initializable
             return;
         }
         //Render current screen name
-        lblScreen.setText(MVG.getScreenManager().peekScreenControllers().getKey());
+        lblScreen.setText(ScreenManager.getInstance().peekScreenControllers().getKey());
     }
 
     @Override
@@ -88,7 +88,7 @@ public class NavController extends ScreenController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
-        MVG.getScreenManager().setLblScreenName(lblScreen);
+        ScreenManager.getInstance().setLblScreenName(lblScreen);
         refreshView();
     }
 

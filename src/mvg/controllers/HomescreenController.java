@@ -18,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -26,6 +27,7 @@ import javafx.util.Duration;
 import mvg.MVG;
 import mvg.auxilary.*;
 import mvg.managers.EnquiryManager;
+import mvg.managers.ScreenManager;
 import mvg.managers.SessionManager;
 import mvg.managers.SlideshowManager;
 import mvg.model.CustomTableViewControls;
@@ -65,6 +67,8 @@ public class HomescreenController extends ScreenController implements Initializa
     private TextField txtEnquiry, txtTime, txtAddress, txtDestination, txtTripType, txtComments;
     @FXML
     private DatePicker dateScheduled;
+    @FXML
+    private BorderPane popup_window;
 
     //@FXML
     //private GoogleMapView mapView;
@@ -92,13 +96,13 @@ public class HomescreenController extends ScreenController implements Initializa
                 imgSlide.setSmooth(true);
 
                 //Set ImageView sizes
-                if(MVG.getScreenManager()!=null)
+                if(ScreenManager.getInstance()!=null)
                 {
-                    imgSlide.setFitHeight(MVG.getScreenManager().getStage().getHeight());
-                    imgSlide.setFitWidth(MVG.getScreenManager().getStage().getWidth());
+                    imgSlide.setFitHeight(ScreenManager.getInstance().getStage().getHeight());
+                    imgSlide.setFitWidth(ScreenManager.getInstance().getStage().getWidth());
 
-                    //imgSlide2.setFitHeight(MVG.getScreenManager().getStage().getHeight());
-                    //imgSlide2.setFitWidth(MVG.getScreenManager().getStage().getWidth());
+                    //imgSlide2.setFitHeight(ScreenManager.getInstance().getStage().getHeight());
+                    //imgSlide2.setFitWidth(ScreenManager.getInstance().getStage().getWidth());
 
                     hboxSliderNav.getChildren().setAll(new Node[]{});
 
@@ -140,11 +144,11 @@ public class HomescreenController extends ScreenController implements Initializa
                     //animate x-axis transition
                     final DoubleProperty x_transition =  imgSlide.translateXProperty();
                     Timeline transition = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(x_transition, -imgSlide.getFitWidth())),
-                            new KeyFrame(Duration.millis(500),new KeyValue(x_transition, MVG.getScreenManager().getStage().getWidth()*.005)));
+                            new KeyFrame(Duration.millis(500),new KeyValue(x_transition, ScreenManager.getInstance().getStage().getWidth()*.005)));
                     transition.play();
 
                     //animate opacity
-                    final DoubleProperty opacity =  imgSlide.opacityProperty();//MVG.getScreenManager().opacityProperty();
+                    final DoubleProperty opacity =  imgSlide.opacityProperty();//ScreenManager.getInstance().opacityProperty();
                     Timeline fade = new Timeline(new KeyFrame(Duration.ONE, new KeyValue(opacity, 0.0)),
                             new KeyFrame(Duration.millis(1000),new KeyValue(opacity, 1.0)));
                     fade.play();
@@ -160,6 +164,12 @@ public class HomescreenController extends ScreenController implements Initializa
         }
     }
 
+    @FXML
+    public void showEnquiries()
+    {
+        popup_window.setVisible(true);
+    }
+
     @Override
     public void refreshModel()
     {
@@ -173,18 +183,18 @@ public class HomescreenController extends ScreenController implements Initializa
     public void initialize(URL url, ResourceBundle rb) 
     {
         //mapView.addMapInializedListener(this);
-        if(MVG.getScreenManager()!=null)
+        if(ScreenManager.getInstance()!=null)
         {
             SlideshowManager.getInstance().initialize();
-            //imgSlide.setFitWidth(Double.parseDouble(String.valueOf(MVG.getScreenManager().getStage().getWidth())));
-            //imgSlide.setFitHeight(Double.parseDouble(String.valueOf(MVG.getScreenManager().getStage().getHeight())));
+            //imgSlide.setFitWidth(Double.parseDouble(String.valueOf(ScreenManager.getInstance().getStage().getWidth())));
+            //imgSlide.setFitHeight(Double.parseDouble(String.valueOf(ScreenManager.getInstance().getStage().getHeight())));
 
-            MVG.getScreenManager().getStage().widthProperty().addListener((observable, oldValue, newValue) ->
+            ScreenManager.getInstance().getStage().widthProperty().addListener((observable, oldValue, newValue) ->
             {
                 imgSlide.setFitWidth(Double.parseDouble(String.valueOf(newValue)));
                 //imgSlide2.setFitWidth(Double.parseDouble(String.valueOf(newValue)));
             });
-            MVG.getScreenManager().getStage().heightProperty().addListener((observable, oldValue, newValue) ->
+            ScreenManager.getInstance().getStage().heightProperty().addListener((observable, oldValue, newValue) ->
             {
                 imgSlide.setFitHeight(Double.parseDouble(String.valueOf(newValue)));
                 //imgSlide2.setFitHeight(Double.parseDouble(String.valueOf(newValue)));
@@ -292,8 +302,8 @@ public class HomescreenController extends ScreenController implements Initializa
     {
         try
         {
-            if(MVG.getScreenManager().loadScreen(Screens.SETTINGS.getScreen(),getClass().getResource("../views/"+Screens.SETTINGS.getScreen())))
-                MVG.getScreenManager().setScreen(Screens.SETTINGS.getScreen());
+            if(ScreenManager.getInstance().loadScreen(Screens.SETTINGS.getScreen(),getClass().getResource("../views/"+Screens.SETTINGS.getScreen())))
+                ScreenManager.getInstance().setScreen(Screens.SETTINGS.getScreen());
             else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load settings screen.");
         } catch (IOException e)
         {

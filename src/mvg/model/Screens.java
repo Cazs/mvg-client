@@ -13,6 +13,7 @@ public enum Screens
 {
     HOME("Homescreen.fxml"),
     LOGIN("Login.fxml"),
+    DASHBOARD("Dashboard.fxml"),
     SETTINGS("Settings.fxml"),
     CREATE_ACCOUNT("CreateAccount.fxml"),
     RESET_PWD("ResetPassword.fxml");

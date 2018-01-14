@@ -24,7 +24,7 @@ import java.awt.*;
  */
 public class MVG extends Application
 {
-    private static ScreenManager screen_manager;
+    //private static ScreenManager screen_manager;
     public static final long DELAY = 4000;
 
     @Override
@@ -41,7 +41,9 @@ public class MVG extends Application
             else  event.consume();
         });
         //grid = new GridDisplay(2, 4);
-        screen_manager = new ScreenManager(stage);//ScreenManager.getInstance();
+        //screen_manager = new ScreenManager();
+        ScreenManager screen_manager = ScreenManager.getInstance();
+        screen_manager.setStage(stage);
         IO.getInstance().init(screen_manager);
 
         if(screen_manager.loadScreen(Screens.LOGIN.getScreen(),getClass().getResource("views/"+Screens.LOGIN.getScreen())))
@@ -77,8 +79,8 @@ public class MVG extends Application
         LauncherImpl.launchApplication(mvg.MVG.class, MVGPreloader.class, args);
     }
 
-    public static ScreenManager getScreenManager()
+    /*public static ScreenManager getScreenManager()
     {
         return screen_manager;
-    }
+    }*/
 }

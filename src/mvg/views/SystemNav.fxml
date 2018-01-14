@@ -16,7 +16,7 @@
                   <Insets left="130.0" />
                </BorderPane.margin>
                <children>
-                  <Hyperlink text="Enquiries">
+                  <Hyperlink onMouseClicked="#showEnquiries" text="Enquiries">
                      <VBox.margin>
                         <Insets top="100.0" />
                      </VBox.margin>

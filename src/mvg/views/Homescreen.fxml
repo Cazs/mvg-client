@@ -210,6 +210,19 @@
                   <Insets />
                </StackPane.margin>
             </BorderPane>
+            <BorderPane fx:id="popup_window" style="-fx-background-color: rgba(0,0,0,0.6);" visible="false">
+               <top>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../gfx/close_black.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </top>
+            </BorderPane>
          </children>
       </StackPane>
    </center>

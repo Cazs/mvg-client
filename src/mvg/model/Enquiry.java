@@ -17,38 +17,15 @@ import java.net.URLEncoder;
  *
  * @author ghost
  */
-public class Enquiry extends MVGObject implements Serializable
+public class Enquiry extends MVGObject
 {
-    private String _id;
     private String enquiry;
     private String pickup_location;
     private String destination;
     private String trip_type;
     private String comments;
     private long date_scheduled;
-    private boolean marked;
     public static final String TAG = "Enquiry";
-
-    public StringProperty idProperty(){return new SimpleStringProperty(_id);}
-
-    @Override
-    public String get_id()
-    {
-        return _id;
-    }
-
-    public void set_id(String _id)
-    {
-        this._id = _id;
-    }
-
-    public StringProperty short_idProperty(){return new SimpleStringProperty(_id.substring(0, 8));}
-
-    @Override
-    public String getShort_id()
-    {
-        return _id.substring(0, 8);
-    }
 
     private StringProperty enquiryProperty(){return new SimpleStringProperty(enquiry);}
 
@@ -175,18 +152,6 @@ public class Enquiry extends MVGObject implements Serializable
                 IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
                 return null;
         }
-    }
-
-    @Override
-    public boolean isMarked()
-    {
-        return marked;
-    }
-
-    @Override
-    public void setMarked(boolean marked)
-    {
-        this.marked=marked;
     }
 
     @Override

@@ -50,18 +50,14 @@ public class ScreenManager extends StackPane
     private ScreenController focused;
     private String focused_id;
     private String previous_id;
-    //private Node loading_screen;
+    private Node loading_screen;
     private ScreenController loading_screen_ctrl;
     private Node screen = null;
-    //private static ScreenManager screenManager = new ScreenManager();
+    private static ScreenManager screenManager = new ScreenManager();
     private Label lblScreenName;
     private Stage stage;
 
-    public ScreenManager()
-    {
-    }
-
-    public ScreenManager(Stage stage)
+    /*public ScreenManager(Stage stage)
     {
         super();
 
@@ -79,19 +75,38 @@ public class ScreenManager extends StackPane
         } catch (IOException e)
         {
             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-        }*/
-    }
-
-    /*public static ScreenManager getInstance()
-    {
-        return screenManager;
+        }/
     }*/
+
+    public void setStage(Stage stage)
+    {
+        this.stage = stage;
+    }
 
     public Stage getStage()
     {
         return stage;
     }
 
+    private ScreenManager()
+    {
+        super();
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(mvg.MVG.class.getResource("views/loading.fxml"));
+            loading_screen = loader.load();
+            loading_screen_ctrl = loader.getController();
+            //loading_screen_ctrl.setParent(this);
+        } catch (IOException e)
+        {
+            IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+        }
+    }
+
+    public static ScreenManager getInstance()
+    {
+        return screenManager;
+    }
 
     /**
      * Method to load a single ScreenController into memory.
