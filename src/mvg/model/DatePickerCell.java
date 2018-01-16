@@ -2,23 +2,18 @@ package mvg.model;
 
 import mvg.auxilary.IO;
 import mvg.auxilary.RemoteComms;
-import mvg.model.BusinessObject;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
-import javax.swing.*;
-import java.io.IOException;
-import java.net.HttpURLConnection;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by ghost on 2017/01/07.
  */
-public class DatePickerCell extends TableCell<BusinessObject, Long>
+public class DatePickerCell extends TableCell<MVGObject, Long>
 {
     private final SimpleDateFormat formatter;
     private final DatePicker datePicker;
@@ -110,11 +105,11 @@ public class DatePickerCell extends TableCell<BusinessObject, Long>
     public void commitEdit(Long newValue)
     {
         super.commitEdit(newValue);
-        BusinessObject bo = (BusinessObject) getTableRow().getItem();
-        if(bo!=null)
+        MVGObject obj = (MVGObject) getTableRow().getItem();
+        if(obj!=null)
         {
-            bo.parse(property, newValue);
-            RemoteComms.updateBusinessObjectOnServer(bo, api_method, property);
+            obj.parse(property, newValue);
+            RemoteComms.updateObjectOnServer(obj, api_method, property);
         }else IO.log(getClass().getName(), IO.TAG_WARN, "TableRow BusinessObject is null.");
     }
 

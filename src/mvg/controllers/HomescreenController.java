@@ -262,17 +262,17 @@ public class HomescreenController extends ScreenController implements Initializa
     @FXML
     public void submitEnquiry()
     {
-        if(!CustomTableViewControls.validateFormField(txtEnquiry, "Invalid Enquiry", "please enter a valid enquiry", "^.*(?=.{5,}).*"))
+        if(!Validators.isValidNode(txtEnquiry, "Invalid Enquiry", 5, "^.*(?=.{5,}).*"))//"please enter a valid enquiry"
             return;
         if(!Validators.isValidNode(dateScheduled, (dateScheduled.getValue()==null?"":String.valueOf(dateScheduled.getValue())), "^.*(?=.{1,}).*"))
             return;
-        if(!CustomTableViewControls.validateFormField(txtTime, "Invalid Pickup Location", "please enter a valid pickup address", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtTime, "Invalid Pickup Location", 5, "^.*(?=.{1,}).*"))//"please enter a valid pickup address"
             return;
-        if(!CustomTableViewControls.validateFormField(txtAddress, "Invalid Pickup Location", "please enter a valid pickup address", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtAddress, "Invalid Pickup Location", 1, "^.*(?=.{1,}).*"))//"please enter a valid pickup address"
             return;
-        if(!CustomTableViewControls.validateFormField(txtDestination, "Invalid Destination", "please enter a valid destination", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtDestination, "Invalid Destination", 1, "^.*(?=.{1,}).*"))//"please enter a valid destination"
             return;
-        if(!CustomTableViewControls.validateFormField(txtTripType, "Invalid Trip Type", "please enter a valid trip type", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtTripType, "Invalid Trip Type", 1, "^.*(?=.{1,}).*"))//"please enter a valid trip type"
             return;
 
         Enquiry enquiry = new Enquiry();

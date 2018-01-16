@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import mvg.controllers.ScreenController;
 import mvg.managers.ScreenManager;
+import mvg.model.MVGObject;
 import mvg.model.Message;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ import java.io.*;
 /**
  * Created by ghost on 2017/01/28.
  */
-public class IO
+public class IO<T extends MVGObject>
 {
 
     public static final String TAG_INFO = "info";
@@ -76,6 +77,39 @@ public class IO
                 System.out.println(String.format("%s> %s: %s", src, tag, msg));
                 break;
         }
+    }
+
+    public void quickSort(T arr[], int left, int right, String comparator)
+    {
+        int index = partition(arr, left, right, comparator);
+        if (left < index - 1)
+            quickSort(arr, left, index - 1, comparator);
+        if (index < right)
+            quickSort(arr, index, right, comparator);
+    }
+
+    public int partition(T arr[], int left, int right, String comparator) throws ClassCastException
+    {
+        int i = left, j = right;
+        T tmp;
+        double pivot = (Double) arr[(left + right) / 2].get(comparator);
+
+        while (i <= j)
+        {
+            while ((Double) arr[i].get(comparator) < pivot)
+                i++;
+            while ((Double) arr[j].get(comparator) > pivot)
+                j--;
+            if (i <= j)
+            {
+                tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+                i++;
+                j--;
+            }
+        }
+        return i;
     }
 
     public static void showMessage(String title, String msg, String type)

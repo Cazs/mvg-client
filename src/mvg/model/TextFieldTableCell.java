@@ -13,13 +13,13 @@ import javafx.util.Callback;
  * Created by ghost on 2017/01/09.
  */
 
-public class TextFieldTableCell extends TableCell<BusinessObject, String>
+public class TextFieldTableCell extends TableCell<MVGObject, String>
 {
     private TextField txt;
     private Label lbl;
     private String property, label_property;
     public static final String TAG = "TextFieldTableCell";
-    //private BusinessObject bo_selected;
+    //private MVGObject bo_selected;
 
     public TextFieldTableCell(String property, String label_property, Callback callback)
     {
@@ -37,7 +37,7 @@ public class TextFieldTableCell extends TableCell<BusinessObject, String>
             {
                 //IO.log(getClass().getName(),IO.TAG_INFO,"updated row:" + getTableRow().getItem());
 
-                BusinessObject obj = (BusinessObject)getTableRow().getItem();
+                MVGObject obj = (MVGObject)getTableRow().getItem();
                 obj.parse(property,txt.getText());
 
                 if(callback!=null)
@@ -69,9 +69,9 @@ public class TextFieldTableCell extends TableCell<BusinessObject, String>
 
         if(selected_id!=null)
         {
-            if (getTableRow().getItem() instanceof BusinessObject)
+            if (getTableRow().getItem() instanceof MVGObject)
             {
-                BusinessObject bo = (BusinessObject) getTableRow().getItem();
+                MVGObject bo = (MVGObject) getTableRow().getItem();
                 bo.parse(property, selected_id);
             } else IO.log(TAG, IO.TAG_ERROR, String.format("unknown row object: " + getTableRow().getItem()));
         }else IO.log(TAG, IO.TAG_ERROR, "selected id is null.");
@@ -82,9 +82,9 @@ public class TextFieldTableCell extends TableCell<BusinessObject, String>
     {
         super.updateItem(selected_id, empty);
 
-        if (getTableRow().getItem() instanceof BusinessObject)
+        if (getTableRow().getItem() instanceof MVGObject)
         {
-            BusinessObject bo = (BusinessObject) getTableRow().getItem();
+            MVGObject bo = (MVGObject) getTableRow().getItem();
             Object val = bo.get(property);
             if(val!=null)
                 txt.setText(val.toString());

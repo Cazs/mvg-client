@@ -12,9 +12,9 @@ import java.util.*;
  * Created by ghost on 2017/01/09.
  */
 
-public class ComboBoxTableCell<T extends  BusinessObject> extends TableCell<T, String>
+public class ComboBoxTableCell<T extends  MVGObject> extends TableCell<T, String>
 {
-    private ComboBox<BusinessObject> comboBox;
+    private ComboBox<MVGObject> comboBox;
     private String update_property, label_property, comparator_property, api_method;
     private HashMap<String, T> business_objects;
     public static final String TAG = "ComboBoxTableCell";
@@ -98,15 +98,15 @@ public class ComboBoxTableCell<T extends  BusinessObject> extends TableCell<T, S
         {
             if (getTableRow() != null)
             {
-                if (getTableRow().getItem() instanceof BusinessObject)
+                if (getTableRow().getItem() instanceof MVGObject)
                 {
-                    BusinessObject row_item = (BusinessObject) getTableRow().getItem();
+                    MVGObject row_item = (MVGObject) getTableRow().getItem();
 
                     if (row_item != null)
                     {
                         //String update_property_val = comboBox.getValue().get_id();
                         row_item.parse(update_property, selected_id);
-                        RemoteComms.updateBusinessObjectOnServer(row_item, api_method, update_property);
+                        RemoteComms.updateObjectOnServer(row_item, api_method, update_property);
                         IO.log(TAG, IO.TAG_INFO, "updated business object: " + "[" + row_item + "]'s "
                                 + update_property + " property to [" + selected_id + "].");
                     } else
@@ -122,14 +122,14 @@ public class ComboBoxTableCell<T extends  BusinessObject> extends TableCell<T, S
         super.updateItem(selected_id, empty);
         if (getTableRow() != null)
         {
-            if (getTableRow().getItem() instanceof BusinessObject)
+            if (getTableRow().getItem() instanceof MVGObject)
             {
-                BusinessObject row_item = (BusinessObject) getTableRow().getItem();
+                MVGObject row_item = (MVGObject) getTableRow().getItem();
                 //get the property value of the table row item, i.e client_id, supplier_id etc.
                 String upd_id = (String)row_item.get(update_property);
 
                 //use the property value to get selected object for combo box
-                BusinessObject selected_cbx_item = business_objects.get(upd_id);
+                MVGObject selected_cbx_item = business_objects.get(upd_id);
                 if(selected_cbx_item!=null)
                     comboBox.setValue(selected_cbx_item);
                 setGraphic(comboBox);

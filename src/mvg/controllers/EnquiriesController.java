@@ -50,7 +50,7 @@ public class EnquiriesController extends ScreenController implements Initializab
         CustomTableViewControls.makeEditableTableColumn(colAddress, TextFieldTableCell.forTableColumn(), 120, "pickup_location", "/enquiries");
         CustomTableViewControls.makeEditableTableColumn(colDestination, TextFieldTableCell.forTableColumn(), 120, "destination", "/enquiries");
         CustomTableViewControls.makeEditableTableColumn(colTripType, TextFieldTableCell.forTableColumn(), 80, "trip_type", "/enquiries");
-        CustomTableViewControls.makeLabelledDatePickerTableColumn(colDate, "date_scheduled", "/enquiries");
+        CustomTableViewControls.makeLabelledDatePickerTableColumn(colDate, "date_scheduled");
         CustomTableViewControls.makeEditableTableColumn(colOther, TextFieldTableCell.forTableColumn(), 50, "other", "/enquiries");
 
         ObservableList<Enquiry> lst_enquiries = FXCollections.observableArrayList();

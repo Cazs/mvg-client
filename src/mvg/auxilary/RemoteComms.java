@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mvg.exceptions.LoginException;
 import mvg.managers.SessionManager;
-import mvg.model.BusinessObject;
+import mvg.model.MVGObject;
 import mvg.model.Error;
 import javax.swing.*;
 import java.io.*;
@@ -368,21 +368,22 @@ public class RemoteComms
         return httpConn;
     }
 
-    public static void updateBusinessObjectOnServer(BusinessObject bo, String api_method, String property)
+    public static void updateObjectOnServer(MVGObject object, String api_method, String property)
     {
         if(SessionManager.getInstance().getActive()!=null)
         {
             if(!SessionManager.getInstance().getActive().isExpired())
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
-                String id = bo.get_id();
+                String id = object.get_id();
 
                 if(id!=null)
                 {
+                    headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                     try
                     {
-                        HttpURLConnection connection = RemoteComms.postData(api_method + "/update/" + id, bo.asUTFEncodedString(), headers);
+                        HttpURLConnection connection = RemoteComms.postJSON(api_method, object.toString(), headers);
                         if(connection!=null)
                         {
                             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -603,7 +604,7 @@ public class RemoteComms
         return httpConn;
     }
 
-    public static void updateBusinessObjectOnServer(BusinessObject bo, String property)
+    public static void updateObjectOnServer(MVGObject object, String property)
     {
         if(SessionManager.getInstance().getActive()!=null)
         {
@@ -612,17 +613,17 @@ public class RemoteComms
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
                 //String id = bo.get_id();
 
-                if(bo!=null)
+                if(object!=null)
                 {
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                     headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                     try
                     {
-                        HttpURLConnection connection = RemoteComms.patchJSON(bo.apiEndpoint(), bo.toString(), headers);
+                        HttpURLConnection connection = RemoteComms.patchJSON(object.apiEndpoint(), object.toString(), headers);
                         if(connection!=null)
                         {
                             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
-                                IO.log(TAG, IO.TAG_INFO, "Successfully updated BusinessObject{"+bo.getClass().getName()+"}'s '" + property + "' property to ["+bo.get(property)+"].");
+                                IO.log(TAG, IO.TAG_INFO, "Successfully updated BusinessObject{"+object.getClass().getName()+"}'s '" + property + "' property to ["+object.get(property)+"].");
                             else
                             {
                                 String msg = IO.readStream(connection.getErrorStream());

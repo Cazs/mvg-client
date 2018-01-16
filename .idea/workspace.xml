@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mvg/controllers/DashboardController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/mvg/model/BusinessObject.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/MVG.java" afterPath="$PROJECT_DIR$/src/mvg/MVG.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mvg-main.iml" afterPath="$PROJECT_DIR$/mvg-main.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/auxilary/IO.java" afterPath="$PROJECT_DIR$/src/mvg/auxilary/IO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/auxilary/PDF.java" afterPath="$PROJECT_DIR$/src/mvg/auxilary/PDF.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java" afterPath="$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/LoginController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/LoginController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/NavController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/NavController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/controllers/ScreenController.java" afterPath="$PROJECT_DIR$/src/mvg/controllers/ScreenController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/managers/EnquiryManager.java" afterPath="$PROJECT_DIR$/src/mvg/managers/EnquiryManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/managers/ScreenManager.java" afterPath="$PROJECT_DIR$/src/mvg/managers/ScreenManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/Enquiry.java" afterPath="$PROJECT_DIR$/src/mvg/model/Enquiry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/ComboBoxTableCell.java" afterPath="$PROJECT_DIR$/src/mvg/model/ComboBoxTableCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java" afterPath="$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/DatePickerCell.java" afterPath="$PROJECT_DIR$/src/mvg/model/DatePickerCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/LabelledDatePickerCell.java" afterPath="$PROJECT_DIR$/src/mvg/model/LabelledDatePickerCell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/Screens.java" afterPath="$PROJECT_DIR$/src/mvg/model/Screens.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/styles/tabs.css" afterPath="$PROJECT_DIR$/src/mvg/styles/tabs.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/views/Homescreen.fxml" afterPath="$PROJECT_DIR$/src/mvg/views/Homescreen.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/views/SystemNav.fxml" afterPath="$PROJECT_DIR$/src/mvg/views/SystemNav.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/views/loading.fxml" afterPath="$PROJECT_DIR$/src/mvg/views/loading.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java" afterPath="$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mvg/views/Dashboard.fxml" afterPath="$PROJECT_DIR$/src/mvg/views/Dashboard.fxml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,11 +75,111 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="QuotesController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/QuotesController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4199">
+              <caret line="270" column="24" lean-forward="false" selection-start-line="270" selection-start-column="24" selection-end-line="270" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuoteManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/managers/QuoteManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2091">
+              <caret line="200" column="60" lean-forward="false" selection-start-line="200" selection-start-column="60" selection-end-line="200" selection-end-column="60" />
+              <folding>
+                <element signature="docComment;class#QuoteManager#0" expanded="false" />
+                <element signature="method#QuoteManager#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#setSelectedQuote#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#setSelectedQuote#1;class#QuoteManager#0" expanded="false" />
+                <element signature="method#getSelectedQuote#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#loadDataFromServer#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#computeQuoteTotal#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#generatePDF#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#createQuote#0;class#QuoteManager#0" expanded="false" />
+                <element signature="e#13275#13305#0" expanded="false" />
+                <element signature="e#17713#17809#0" expanded="false" />
+                <element signature="method#updateQuote#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#updateQuoteItems#0;class#QuoteManager#0" expanded="false" />
+                <element signature="e#27346#27362#0" expanded="false" />
+                <element signature="method#createQuoteItem#0;class#QuoteManager#0" expanded="false" />
+                <element signature="e#29646#29687#0" expanded="false" />
+                <element signature="method#createQuoteItem#1;class#QuoteManager#0" expanded="false" />
+                <element signature="e#34266#34281#0" expanded="false" />
+                <element signature="e#35988#36029#0" expanded="false" />
+                <element signature="e#44103#44131#0" expanded="false" />
+                <element signature="e#47354#47372#0" expanded="false" />
+                <element signature="e#47934#48014#0" expanded="false" />
+                <element signature="e#51391#51434#0" expanded="false" />
+                <element signature="class#QuoteServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="class#Embedded#0;class#QuoteServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="class#QuoteResourceServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="class#Embedded#0;class#QuoteResourceServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="class#Embedded#0;class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+                <element signature="method#setQuote_representatives#0;class#Embedded#0;class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewQuoteController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewQuoteController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewClientController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewClientController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3417">
+              <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientsController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ClientsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewResource.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/views/NewResource.fxml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="57" lean-forward="false" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Dashboard.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mvg/views/Dashboard.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="30" column="27" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+            <state relative-caret-position="510">
+              <caret line="30" column="56" lean-forward="false" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -88,11 +188,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnquiriesTab.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/views/EnquiriesTab.fxml">
+      <file leaf-file-name="ClientsTab.fxml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/mvg/views/ClientsTab.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="41" />
+            <state relative-caret-position="109">
+              <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -101,115 +201,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnquiryManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/managers/EnquiryManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-              <folding>
-                <element signature="docComment;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#EnquiryManager#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="e#1213#1214#0" expanded="true" />
-                <element signature="e#1249#1250#0" expanded="true" />
-                <element signature="method#setSelectedEnquiry#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#setSelectedEnquiry#1;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#getSelectedEnquiry#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#loadDataFromServer#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#generatePDF#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#createEnquiry#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="method#updateEnquiry#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="class#EnquiryServerObject#0;class#EnquiryManager#0" expanded="false" />
-                <element signature="class#Embedded#0;class#EnquiryServerObject#0;class#EnquiryManager#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Enquiry.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/model/Enquiry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="19" column="38" lean-forward="false" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
-              <folding>
-                <element signature="docComment;class#Enquiry#0" expanded="false" />
-                <element signature="method#enquiryProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#pickup_locationProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#destinationProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#trip_typeProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#commentsProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#date_scheduledProperty#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#parse#0;class#Enquiry#0" expanded="false" />
-                <element signature="method#get#0;class#Enquiry#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MVGObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/model/MVGObject.java">
+      <file leaf-file-name="QuotesTab.fxml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/views/QuotesTab.fxml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
-              <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-              <folding>
-                <element signature="method#idProperty#0;class#MVGObject#0" expanded="false" />
-                <element signature="docComment;method#get_id#0;class#MVGObject#0" expanded="false" />
-                <element signature="docComment;method#set_id#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#getCreatorUser#0;class#MVGObject#0" expanded="false" />
-                <element signature="docComment;method#short_idProperty#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#short_idProperty#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#setMarked#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#set_links#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#parse#0;class#MVGObject#0" expanded="false" />
-                <element signature="method#get#0;class#MVGObject#0" expanded="false" />
-              </folding>
+              <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+              <folding />
             </state>
+          </provider>
+          <provider editor-type-id="JavaFX-Scene-Builder">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnquiriesController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java">
+      <file leaf-file-name="NewResourceController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewResourceController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+            <state relative-caret-position="2210">
+              <caret line="152" column="119" lean-forward="false" selection-start-line="152" selection-start-column="119" selection-end-line="152" selection-end-column="119" />
               <folding>
-                <marker date="1515949461697" expanded="false" signature="2804:6177" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/managers/ClientManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="131" column="20" lean-forward="false" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="20" />
-              <folding>
-                <element signature="docComment;class#ClientManager#0" expanded="false" />
-                <element signature="method#ClientManager#0;class#ClientManager#0" expanded="false" />
-                <element signature="method#getClients#0;class#ClientManager#0" expanded="false" />
-                <element signature="method#loadDataFromServer#0;class#ClientManager#0" expanded="false" />
-                <element signature="method#newClientWindow#0;class#ClientManager#0" expanded="false" />
-                <element signature="e#8848#12890#0" expanded="false" />
-                <element signature="e#12902#12929#0" expanded="false" />
-                <element signature="class#ClientServerObject#0;class#ClientManager#0" expanded="false" />
-                <element signature="class#Embedded#0;class#ClientServerObject#0;class#ClientManager#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScreenController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ScreenController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="131" column="44" lean-forward="false" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="44" />
-              <folding>
-                <element signature="docComment;class#ScreenController#0" expanded="false" />
-                <element signature="method#ScreenController#0;class#ScreenController#0" expanded="false" />
-                <element signature="method#refreshStatusBar#0;class#ScreenController#0" expanded="false" />
-                <element signature="e#1417#1691#0" expanded="false" />
-                <element signature="e#1972#2097#0" expanded="false" />
-                <element signature="method#comingSoon#0;class#ScreenController#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -234,7 +245,6 @@
       <find>map</find>
       <find>Employee</find>
       <find>Quote</find>
-      <find>employee</find>
       <find>NetBeansProjects</find>
       <find>css</find>
       <find>MVG.getScreenManager()</find>
@@ -242,17 +252,32 @@
       <find>quote</find>
       <find>Client</find>
       <find>colEnquiryId</find>
+      <find>getEmployees</find>
+      <find>EmployeeManager</find>
+      <find>BusinessObject</find>
+      <find>valida</find>
+      <find>CustomTableViewControls.validateFormField</find>
+      <find>employee</find>
+      <find>EmployeeU</find>
+      <find>fadulousbms</find>
+      <find>FadulousBMS</find>
     </findStrings>
     <replaceStrings>
       <replace>password</replace>
       <replace>users</replace>
       <replace>User</replace>
-      <replace>user</replace>
       <replace>ScreenManager.getInstance()</replace>
       <replace>MVGTabs</replace>
       <replace>enquiry</replace>
       <replace>Enquiry</replace>
       <replace>colId</replace>
+      <replace>UserManager</replace>
+      <replace>getUsers</replace>
+      <replace>MVGObject</replace>
+      <replace>Validators.isValidNode</replace>
+      <replace>user</replace>
+      <replace>mvg</replace>
+      <replace>MVG</replace>
     </replaceStrings>
   </component>
   <component name="FindManager">
@@ -271,73 +296,73 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/mvg/model/Message.java" />
-        <option value="$PROJECT_DIR$/src/mvg/model/ComboBoxTableCell.java" />
-        <option value="$PROJECT_DIR$/src/mvg/model/Error.java" />
-        <option value="$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java" />
-        <option value="$PROJECT_DIR$/src/mvg/views/Create_account.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/views/ResetPassword.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/MVGPreloader.java" />
-        <option value="$PROJECT_DIR$/src/mvg/views/Settings.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/IO.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/Globals.java" />
-        <option value="$PROJECT_DIR$/src/mvg/controllers/LoadingController.java" />
-        <option value="$PROJECT_DIR$/src/mvg/managers/EmployeeManager.java" />
-        <option value="$PROJECT_DIR$/mvg-client.xml" />
-        <option value="$PROJECT_DIR$/src/mvg/views/Homescreen.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/model/Link.java" />
-        <option value="$PROJECT_DIR$/src/mvg/managers/ServerObject.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/ServerObject.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/Page.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/Counter.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/PDF.java" />
-        <option value="$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java" />
-        <option value="$PROJECT_DIR$/src/mvg/managers/SlideshowManager.java" />
-        <option value="$PROJECT_DIR$/src/mvg/views/CreateAccount.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/model/MVGObject.java" />
-        <option value="$PROJECT_DIR$/src/mvg/managers/UserManager.java" />
-        <option value="$PROJECT_DIR$/src/mvg/managers/SessionManager.java" />
-        <option value="$PROJECT_DIR$/src/mvg/model/User.java" />
-        <option value="$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java" />
-        <option value="$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java" />
-        <option value="$PROJECT_DIR$/src/mvg/views/SystemNav.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/views/Login.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/styles/home.css" />
-        <option value="$PROJECT_DIR$/src/mvg/controllers/LoginController.java" />
         <option value="$PROJECT_DIR$/src/mvg/managers/ScreenManager.java" />
         <option value="$PROJECT_DIR$/src/mvg/MVG.java" />
-        <option value="$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java" />
         <option value="$PROJECT_DIR$/src/mvg/controllers/NavController.java" />
         <option value="$PROJECT_DIR$/src/mvg/controllers/DashboardController.java" />
         <option value="$PROJECT_DIR$/src/mvg/styles/tabs.css" />
         <option value="$PROJECT_DIR$/src/mvg/views/Enquiries.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/views/Dashboard.fxml" />
-        <option value="$PROJECT_DIR$/src/mvg/model/Screens.java" />
         <option value="$PROJECT_DIR$/src/mvg/views/loading.fxml" />
         <option value="$PROJECT_DIR$/src/mvg/views/EnquiriesTab.fxml" />
         <option value="$PROJECT_DIR$/src/mvg/model/Client.java" />
         <option value="$PROJECT_DIR$/src/mvg/auxilary/Counters.java" />
         <option value="$PROJECT_DIR$/src/mvg/managers/ClientManager.java" />
-        <option value="$PROJECT_DIR$/src/mvg/controllers/ScreenController.java" />
         <option value="$PROJECT_DIR$/src/mvg/managers/EnquiryManager.java" />
         <option value="$PROJECT_DIR$/src/mvg/model/Enquiry.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/ClientsTabController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/QuoteRep.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/Resource.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/ResourceType.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/Type.java" />
+        <option value="$PROJECT_DIR$/src/mvg/managers/ResourceManager.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/QuoteItem.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/Quote.java" />
+        <option value="$PROJECT_DIR$/src/mvg/auxilary/IO.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/FileMetadata.java" />
+        <option value="$PROJECT_DIR$/src/mvg/managers/QuoteManager.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/DatePickerCell.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/LabelledDatePickerCell.java" />
+        <option value="$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java" />
+        <option value="$PROJECT_DIR$/src/mvg/auxilary/PDF.java" />
+        <option value="$PROJECT_DIR$/src/mvg/auxilary/PDFViewer.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/ComboBoxTableCell.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/QuotesController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/ClientsController.java" />
         <option value="$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/model/Screens.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/QuoteController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/ScreenController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/ViewQuoteController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/views/View_quote.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/views/QuotesTab.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/NewResourceController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/NewQuoteController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/controllers/NewClientController.java" />
+        <option value="$PROJECT_DIR$/src/mvg/views/NewClient.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/views/NewQuote.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/views/NewResource.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/views/Dashboard.fxml" />
+        <option value="$PROJECT_DIR$/src/mvg/views/ClientsTab.fxml" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="-7" />
+    <option name="y" value="11" />
+    <option name="width" value="697" />
+    <option name="height" value="725" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -350,60 +375,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mvg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mvg" type="462c0819:PsiDirectoryNode" />
-              <item name="auxilary" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mvg" type="462c0819:PsiDirectoryNode" />
-              <item name="managers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mvg-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mvg-client" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="mvg" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
@@ -590,6 +562,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -599,13 +572,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3280507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25036603" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -623,6 +595,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -643,436 +616,11 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/java/lang/Error.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/Error.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="42" lean-forward="false" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Create_account.fxml" />
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Settings.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="25" column="64" lean-forward="false" selection-start-line="25" selection-start-column="64" selection-end-line="25" selection-end-column="64" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/ResetPassword.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="90" column="13" lean-forward="true" selection-start-line="90" selection-start-column="13" selection-end-line="90" selection-end-column="13" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/IO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="39" column="5" lean-forward="true" selection-start-line="39" selection-start-column="5" selection-end-line="39" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/MVGPreloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="92" column="46" lean-forward="false" selection-start-line="92" selection-start-column="46" selection-end-line="92" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/Globals.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="12" lean-forward="false" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mvg-main.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mvg-client.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="90" column="42" lean-forward="true" selection-start-line="90" selection-start-column="42" selection-end-line="90" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module_javafxapplication.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-978">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/Link.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="32" column="1" lean-forward="false" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/Page.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="21" lean-forward="true" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/ServerObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/Counter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/PDF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="269" column="1" lean-forward="true" selection-start-line="269" selection-start-column="1" selection-end-line="269" selection-end-column="1" />
-          <folding>
-            <element signature="method#drawHorzLines#0;class#PDF#0" expanded="false" />
-            <element signature="method#drawVertLines#0;class#PDF#0" expanded="false" />
-            <element signature="method#createBordersOnPage#0;class#PDF#0" expanded="false" />
-            <element signature="method#createLinesAndBordersOnPage#0;class#PDF#0" expanded="false" />
-            <element signature="method#addTextToPageStream#0;class#PDF#0" expanded="false" />
-            <element signature="method#addTextToPageStream#1;class#PDF#0" expanded="false" />
-            <element signature="method#createEnquiryPDF#0;class#PDF#0" expanded="false" />
-            <element signature="e#6676#6729#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="188" column="17" lean-forward="false" selection-start-line="188" selection-start-column="17" selection-end-line="188" selection-end-column="17" />
-          <folding>
-            <element signature="docComment;class#RemoteComms#0" expanded="false" />
-            <element signature="method#auth#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#pingServer#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#sendGetRequest#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#sendFileRequest#0;class#RemoteComms#0" expanded="false" />
-            <element signature="e#9149#9238#0" expanded="false" />
-            <element signature="e#11265#11354#0" expanded="false" />
-            <element signature="method#postData#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#postData#1;class#RemoteComms#0" expanded="false" />
-            <element signature="method#updateBusinessObjectOnServer#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#uploadFile#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#putJSONData#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#patchJSON#0;class#RemoteComms#0" expanded="false" />
-            <element signature="method#postJSON#0;class#RemoteComms#0" expanded="false" />
-            <marker date="1515878372846" expanded="false" signature="1026:3796" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/managers/SlideshowManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="119" column="72" lean-forward="false" selection-start-line="119" selection-start-column="72" selection-end-line="119" selection-end-column="72" />
-          <folding>
-            <element signature="method#loadDataFromServer#0;class#SlideshowManager#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/CreateAccount.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="85" column="68" lean-forward="false" selection-start-line="85" selection-start-column="68" selection-end-line="85" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/managers/SessionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="60" column="9" lean-forward="false" selection-start-line="60" selection-start-column="9" selection-end-line="60" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="87" column="41" lean-forward="false" selection-start-line="87" selection-start-column="41" selection-end-line="87" selection-end-column="41" />
-          <folding>
-            <element signature="e#1170#1171#0" expanded="false" />
-            <element signature="e#1196#1197#0" expanded="false" />
-            <element signature="e#1238#1239#0" expanded="false" />
-            <element signature="e#1268#1269#0" expanded="false" />
-            <element signature="e#1310#1311#0" expanded="false" />
-            <element signature="e#1340#1341#0" expanded="false" />
-            <element signature="e#1493#1494#0" expanded="false" />
-            <element signature="e#1528#1529#0" expanded="false" />
-            <element signature="e#1584#1585#0" expanded="false" />
-            <element signature="e#1632#1633#0" expanded="false" />
-            <element signature="e#1770#1771#0" expanded="false" />
-            <element signature="e#1815#1816#0" expanded="false" />
-            <element signature="e#1855#1856#0" expanded="false" />
-            <element signature="e#1884#1885#0" expanded="false" />
-            <element signature="e#1933#1934#0" expanded="false" />
-            <element signature="e#1969#1970#0" expanded="false" />
-            <element signature="e#2091#2092#0" expanded="false" />
-            <element signature="e#2140#2141#0" expanded="false" />
-            <element signature="e#2272#2273#0" expanded="false" />
-            <element signature="e#2304#2305#0" expanded="false" />
-            <element signature="e#2358#2359#0" expanded="false" />
-            <element signature="e#2400#2401#0" expanded="false" />
-            <element signature="e#2529#2530#0" expanded="false" />
-            <element signature="e#2560#2561#0" expanded="false" />
-            <element signature="e#2612#2613#0" expanded="false" />
-            <element signature="e#2652#2653#0" expanded="false" />
-            <element signature="e#2772#2773#0" expanded="false" />
-            <element signature="e#2800#2801#0" expanded="false" />
-            <element signature="e#3052#3053#0" expanded="false" />
-            <element signature="e#3090#3091#0" expanded="false" />
-            <element signature="e#3156#3157#0" expanded="false" />
-            <element signature="e#3210#3211#0" expanded="false" />
-            <element signature="e#3256#3257#0" expanded="false" />
-            <element signature="e#3290#3291#0" expanded="false" />
-            <element signature="e#3404#3405#0" expanded="false" />
-            <element signature="e#3430#3431#0" expanded="false" />
-            <element signature="e#3472#3473#0" expanded="false" />
-            <element signature="e#3502#3503#0" expanded="false" />
-            <element signature="e#3618#3619#0" expanded="false" />
-            <element signature="e#3645#3646#0" expanded="false" />
-            <element signature="e#3689#3690#0" expanded="false" />
-            <element signature="e#3721#3722#0" expanded="false" />
-            <element signature="e#3841#3842#0" expanded="false" />
-            <element signature="e#3870#3871#0" expanded="false" />
-            <element signature="e#3918#3919#0" expanded="false" />
-            <element signature="e#3954#3955#0" expanded="false" />
-            <element signature="e#7659#7660#0" expanded="false" />
-            <element signature="e#7690#7691#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="201" column="61" lean-forward="true" selection-start-line="201" selection-start-column="12" selection-end-line="201" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="83" column="36" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
-          <folding>
-            <element signature="docComment;class#CreateAccountController#0" expanded="false" />
-            <element signature="method#refreshView#0;class#CreateAccountController#0" expanded="false" />
-            <element signature="method#refreshModel#0;class#CreateAccountController#0" expanded="false" />
-            <element signature="docComment;method#initialize#0;class#CreateAccountController#0" expanded="false" />
-            <element signature="method#initialize#0;class#CreateAccountController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/managers/UserManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="90" column="112" lean-forward="false" selection-start-line="90" selection-start-column="112" selection-end-line="90" selection-end-column="112" />
-          <folding>
-            <element signature="docComment;class#UserManager#0" expanded="false" />
-            <element signature="method#UserManager#0;class#UserManager#0" expanded="false" />
-            <element signature="method#getUsers#0;class#UserManager#0" expanded="false" />
-            <element signature="method#loadDataFromServer#0;class#UserManager#0" expanded="false" />
-            <element signature="e#2965#3023#0" expanded="false" />
-            <element signature="method#newExternalUserWindow#0;class#UserManager#0" expanded="false" />
-            <element signature="e#6705#9331#0" expanded="false" />
-            <element signature="method#newUserWindow#0;class#UserManager#0" expanded="false" />
-            <element signature="e#13148#17318#0" expanded="false" />
-            <element signature="method#validateFormField#0;class#UserManager#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../rterp-GMapsFX-d4f4765/GMapsFX/src/test/java/com/lynden/gmapsfx/javascript/JavascriptRuntimeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Homescreen.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2431">
-          <caret line="143" column="70" lean-forward="false" selection-start-line="143" selection-start-column="70" selection-end-line="143" selection-end-column="70" />
-          <folding>
-            <marker date="1515946002521" expanded="true" signature="14077:14132" ph="..." />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Login.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="173" lean-forward="false" selection-start-line="9" selection-start-column="170" selection-end-line="9" selection-end-column="173" />
-          <folding>
-            <marker date="1515934801527" expanded="true" signature="5140:5166" ph="..." />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="498">
-          <caret line="120" column="11" lean-forward="true" selection-start-line="76" selection-start-column="8" selection-end-line="120" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/managers/ScreenManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="82" column="27" lean-forward="false" selection-start-line="82" selection-start-column="27" selection-end-line="82" selection-end-column="27" />
-          <folding>
-            <element signature="e#2616#2617#0" expanded="true" />
-            <element signature="e#2650#2651#0" expanded="true" />
-            <element signature="e#2685#2686#0" expanded="true" />
-            <element signature="e#2713#2714#0" expanded="true" />
-            <element signature="e#3220#3221#0" expanded="true" />
-            <element signature="e#3256#3257#0" expanded="true" />
-            <element signature="method#peekScreenControllers#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#peekScreens#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#setPreviousScreen#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#createRadialMenu#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#showRadialMenu#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#setScreen#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#showLoadingScreen#0;class#ScreenManager#0" expanded="false" />
-            <element signature="method#removeScreen#0;class#ScreenManager#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/MVG.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="45" column="37" lean-forward="false" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/DashboardController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/styles/home.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="37" column="41" lean-forward="true" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/styles/tabs.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="50" column="8" lean-forward="false" selection-start-line="50" selection-start-column="1" selection-end-line="50" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Enquiries.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="32" column="28" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/model/Screens.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="17" column="41" lean-forward="true" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;class#HomescreenController#0" expanded="false" />
-            <element signature="e#2127#2134#0" expanded="false" />
-            <element signature="e#2455#2546#0" expanded="false" />
-            <element signature="e#7070#7071#0" expanded="true" />
-            <element signature="e#7115#7116#0" expanded="true" />
-            <element signature="e#8256#8492#0" expanded="false" />
-            <marker date="1515943184503" expanded="false" signature="9248:9872" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="9916:9931" ph=" { " />
-            <marker date="1515943184503" expanded="false" signature="10006:10012" ph=" }" />
-            <marker date="1515943184503" expanded="false" signature="10065:10164" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="10209:10224" ph=" { " />
-            <marker date="1515943184503" expanded="false" signature="10301:10307" ph=" }" />
-            <marker date="1515943184503" expanded="false" signature="10355:12248" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="11976:12117" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="13374:13880" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="13933:16360" ph="{...}" />
-            <marker date="1515943184503" expanded="false" signature="14832:14904" ph="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/Enquiries.fxml" />
     <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NavController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="362">
           <caret line="90" column="35" lean-forward="false" selection-start-line="90" selection-start-column="35" selection-end-line="90" selection-end-column="35" />
-          <folding>
-            <element signature="method#refreshModel#0;class#NavController#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1080,7 +628,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
@@ -1091,7 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-445">
           <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1099,7 +645,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="3" selection-end-line="10" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
@@ -1110,7 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="11" lean-forward="false" selection-start-line="0" selection-start-column="11" selection-end-line="0" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1118,36 +662,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="250" column="5" lean-forward="false" selection-start-line="250" selection-start-column="5" selection-end-line="250" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#8312#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/views/Dashboard.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="30" column="27" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="131" column="44" lean-forward="false" selection-start-line="131" selection-start-column="44" selection-end-line="131" selection-end-column="44" />
-          <folding>
-            <element signature="docComment;class#ScreenController#0" expanded="false" />
-            <element signature="method#ScreenController#0;class#ScreenController#0" expanded="false" />
-            <element signature="method#refreshStatusBar#0;class#ScreenController#0" expanded="false" />
-            <element signature="e#1417#1691#0" expanded="false" />
-            <element signature="e#1972#2097#0" expanded="false" />
-            <element signature="method#comingSoon#0;class#ScreenController#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1155,17 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="131" column="20" lean-forward="false" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="20" />
-          <folding>
-            <element signature="docComment;class#ClientManager#0" expanded="false" />
-            <element signature="method#ClientManager#0;class#ClientManager#0" expanded="false" />
-            <element signature="method#getClients#0;class#ClientManager#0" expanded="false" />
-            <element signature="method#loadDataFromServer#0;class#ClientManager#0" expanded="false" />
-            <element signature="method#newClientWindow#0;class#ClientManager#0" expanded="false" />
-            <element signature="e#8848#12890#0" expanded="false" />
-            <element signature="e#12902#12929#0" expanded="false" />
-            <element signature="class#ClientServerObject#0;class#ClientManager#0" expanded="false" />
-            <element signature="class#Embedded#0;class#ClientServerObject#0;class#ClientManager#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1173,21 +676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
           <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#EnquiryManager#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="e#1213#1214#0" expanded="true" />
-            <element signature="e#1249#1250#0" expanded="true" />
-            <element signature="method#setSelectedEnquiry#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#setSelectedEnquiry#1;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#getSelectedEnquiry#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#loadDataFromServer#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#generatePDF#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#createEnquiry#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="method#updateEnquiry#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="class#EnquiryServerObject#0;class#EnquiryManager#0" expanded="false" />
-            <element signature="class#Embedded#0;class#EnquiryServerObject#0;class#EnquiryManager#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1195,18 +683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-          <folding>
-            <element signature="method#idProperty#0;class#MVGObject#0" expanded="false" />
-            <element signature="docComment;method#get_id#0;class#MVGObject#0" expanded="false" />
-            <element signature="docComment;method#set_id#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#getCreatorUser#0;class#MVGObject#0" expanded="false" />
-            <element signature="docComment;method#short_idProperty#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#short_idProperty#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#setMarked#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#set_links#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#parse#0;class#MVGObject#0" expanded="false" />
-            <element signature="method#get#0;class#MVGObject#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1214,7 +690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
       <provider editor-type-id="JavaFX-Scene-Builder">
@@ -1225,28 +700,344 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="94">
           <caret line="19" column="38" lean-forward="false" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
-          <folding>
-            <element signature="docComment;class#Enquiry#0" expanded="false" />
-            <element signature="method#enquiryProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#pickup_locationProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#destinationProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#trip_typeProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#commentsProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#date_scheduledProperty#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#parse#0;class#Enquiry#0" expanded="false" />
-            <element signature="method#get#0;class#Enquiry#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ClientsTabController.java" />
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/QuoteRep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="97" column="5" lean-forward="false" selection-start-line="97" selection-start-column="5" selection-end-line="97" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/Resource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="225" column="27" lean-forward="true" selection-start-line="225" selection-start-column="27" selection-end-line="225" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/ResourceType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/Type.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="45" column="30" lean-forward="true" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/QuoteItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="308" column="5" lean-forward="false" selection-start-line="308" selection-start-column="5" selection-end-line="308" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/managers/ResourceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="363">
+          <caret line="513" column="127" lean-forward="false" selection-start-line="513" selection-start-column="127" selection-end-line="513" selection-end-column="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/IO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="20" column="31" lean-forward="false" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/Quote.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="272" column="27" lean-forward="false" selection-start-line="272" selection-start-column="27" selection-end-line="272" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/FileMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/DatePickerCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/LabelledDatePickerCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="83" column="36" lean-forward="false" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/RemoteComms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="606" column="29" lean-forward="false" selection-start-line="606" selection-start-column="29" selection-end-line="606" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/PDF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="156" column="69" lean-forward="false" selection-start-line="156" selection-start-column="69" selection-end-line="156" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/PDFViewer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="81" column="83" lean-forward="false" selection-start-line="81" selection-start-column="83" selection-end-line="81" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/TextFieldTableCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="91" column="106" lean-forward="true" selection-start-line="91" selection-start-column="106" selection-end-line="91" selection-end-column="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/ComboBoxTableCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="18" column="48" lean-forward="true" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/CustomTableViewControls.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="214" column="54" lean-forward="false" selection-start-line="214" selection-start-column="54" selection-end-line="214" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/auxilary/Validators.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/CreateAccountController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="68" column="123" lean-forward="false" selection-start-line="68" selection-start-column="123" selection-end-line="68" selection-end-column="123" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/HomescreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="274" column="124" lean-forward="false" selection-start-line="274" selection-start-column="124" selection-end-line="274" selection-end-column="124" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/mvg/controllers/EnquiriesController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+        <state relative-caret-position="125">
+          <caret line="52" column="31" lean-forward="false" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/model/Screens.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="20" column="37" lean-forward="false" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="175" column="10" lean-forward="false" selection-start-line="175" selection-start-column="10" selection-end-line="175" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/QuoteController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="1522" column="0" lean-forward="true" selection-start-line="1522" selection-start-column="0" selection-end-line="1522" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ViewQuoteController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="227" column="7" lean-forward="false" selection-start-line="227" selection-start-column="7" selection-end-line="227" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/View_quote.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="162" column="104" lean-forward="true" selection-start-line="162" selection-start-column="104" selection-end-line="162" selection-end-column="104" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewResourceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2210">
+          <caret line="152" column="119" lean-forward="false" selection-start-line="152" selection-start-column="119" selection-end-line="152" selection-end-column="119" />
           <folding>
-            <marker date="1515949461697" expanded="false" signature="2804:6177" ph="{...}" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewQuoteController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/NewClientController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3417">
+          <caret line="224" column="5" lean-forward="false" selection-start-line="224" selection-start-column="5" selection-end-line="224" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/ClientsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/NewClient.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="39" column="147" lean-forward="false" selection-start-line="39" selection-start-column="147" selection-end-line="39" selection-end-column="147" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/NewQuote.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="175" column="61" lean-forward="true" selection-start-line="175" selection-start-column="61" selection-end-line="175" selection-end-column="61" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/NewResource.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="57" lean-forward="false" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/controllers/QuotesController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4199">
+          <caret line="270" column="24" lean-forward="false" selection-start-line="270" selection-start-column="24" selection-end-line="270" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/managers/QuoteManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2091">
+          <caret line="200" column="60" lean-forward="false" selection-start-line="200" selection-start-column="60" selection-end-line="200" selection-end-column="60" />
+          <folding>
+            <element signature="docComment;class#QuoteManager#0" expanded="false" />
+            <element signature="method#QuoteManager#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#setSelectedQuote#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#setSelectedQuote#1;class#QuoteManager#0" expanded="false" />
+            <element signature="method#getSelectedQuote#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#loadDataFromServer#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#computeQuoteTotal#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#generatePDF#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#createQuote#0;class#QuoteManager#0" expanded="false" />
+            <element signature="e#13275#13305#0" expanded="false" />
+            <element signature="e#17713#17809#0" expanded="false" />
+            <element signature="method#updateQuote#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#updateQuoteItems#0;class#QuoteManager#0" expanded="false" />
+            <element signature="e#27346#27362#0" expanded="false" />
+            <element signature="method#createQuoteItem#0;class#QuoteManager#0" expanded="false" />
+            <element signature="e#29646#29687#0" expanded="false" />
+            <element signature="method#createQuoteItem#1;class#QuoteManager#0" expanded="false" />
+            <element signature="e#34266#34281#0" expanded="false" />
+            <element signature="e#35988#36029#0" expanded="false" />
+            <element signature="e#44103#44131#0" expanded="false" />
+            <element signature="e#47354#47372#0" expanded="false" />
+            <element signature="e#47934#48014#0" expanded="false" />
+            <element signature="e#51391#51434#0" expanded="false" />
+            <element signature="class#QuoteServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="class#Embedded#0;class#QuoteServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="class#QuoteResourceServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="class#Embedded#0;class#QuoteResourceServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="class#Embedded#0;class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+            <element signature="method#setQuote_representatives#0;class#Embedded#0;class#QuoteRepServerObject#0;class#QuoteManager#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/QuotesTab.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/Dashboard.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="56" lean-forward="false" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mvg/views/ClientsTab.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="20" column="37" lean-forward="true" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
   </component>

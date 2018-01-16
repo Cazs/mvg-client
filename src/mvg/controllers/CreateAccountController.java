@@ -60,13 +60,13 @@ public class CreateAccountController extends ScreenController implements Initial
     {
         int sex_index = cbxSex.getSelectionModel().selectedIndexProperty().get();
 
-        if(!CustomTableViewControls.validateFormField(txtUsername, "Invalid Username", "please enter a valid username", "^.*(?=.{5,}).*"))
+        if(!Validators.isValidNode(txtUsername, "Invalid Username", 5, "^.*(?=.{5,}).*"))//"please enter a valid username"
             return;
-        if(!CustomTableViewControls.validateFormField(txtPassword, "Invalid Password", "please enter a valid password", "^.*(?=.{8,}).*"))//(?=[a-zA-Z])(?=.*[0-9])(?=.*[@#!$%^&*-+=])
+        if(!Validators.isValidNode(txtPassword, "Invalid Password", 8, "^.*(?=.{8,}).*"))//(?=[a-zA-Z])(?=.*[0-9])(?=.*[@#!$%^&*-+=])//"please enter a valid password"
             return;
-        if(!CustomTableViewControls.validateFormField(txtFirstname, "Invalid Firstname", "please enter a valid first name", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtFirstname, "Invalid Firstname", 1, "^.*(?=.{1,}).*"))//"please enter a valid first name"
             return;
-        if(!CustomTableViewControls.validateFormField(txtLastname, "Invalid Lastname", "please enter a valid last name", "^.*(?=.{1,}).*"))
+        if(!Validators.isValidNode(txtLastname, "Invalid Lastname", 1, "^.*(?=.{1,}).*"))//"please enter a valid last name"
             return;
 
         if(sex_index<0)
@@ -77,11 +77,11 @@ public class CreateAccountController extends ScreenController implements Initial
             cbxSex.getStyleClass().remove("control-input-error");
             cbxSex.getStyleClass().add("form-control-default");
         }
-        if(!CustomTableViewControls.validateFormField(txtEmail, "Invalid Email", "please enter a valid email address", "^.*(?=.{5,})(?=(.*@.*\\.)).*"))
+        if(!Validators.isValidNode(txtEmail, "Invalid Email", 5, "^.*(?=.{5,})(?=(.*@.*\\.)).*"))//"please enter a valid email address"
             return;
-        if(!CustomTableViewControls.validateFormField(txtTelephone, "Invalid Telephone Number", "please enter a valid telephone number", "^.*(?=.{10,}).*"))
+        if(!Validators.isValidNode(txtTelephone, "Invalid Telephone Number", 10, "^.*(?=.{10,}).*"))//"please enter a valid telephone number"
             return;
-        if(!CustomTableViewControls.validateFormField(txtCellphone, "Invalid Cellphone Number", "please enter a valid cellphone number", "^.*(?=.{10,}).*"))
+        if(!Validators.isValidNode(txtCellphone, "Invalid Cellphone Number", 10, "^.*(?=.{10,}).*"))//"please enter a valid cellphone number"
             return;
 
         //all valid, send data to server
