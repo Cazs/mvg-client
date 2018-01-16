@@ -17,7 +17,8 @@ import java.net.URLEncoder;
  *
  * @author ghost
  */
-public class Resource extends MVGObject implements Serializable
+public class
+Resource extends MVGObject implements Serializable
 {
     private String resource_name;
     private String resource_description;

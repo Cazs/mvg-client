@@ -32,6 +32,7 @@ public class MVG extends Application
     {
         stage.setOnCloseRequest(event ->
         {
+            //TODO: fix this!!! no swing!!
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
             if(result==JOptionPane.OK_OPTION)
             {

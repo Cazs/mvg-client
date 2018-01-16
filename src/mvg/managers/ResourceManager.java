@@ -15,6 +15,7 @@ import mvg.managers.MVGObjectManager;
 import mvg.model.CustomTableViewControls;
 import mvg.model.Resource;
 import mvg.model.ResourceType;
+import mvg.model.Type;
 
 import java.io.File;
 import java.io.IOException;
@@ -344,7 +345,7 @@ public class ResourceManager extends MVGObjectManager
                 return;
             if(!Validators.isValidNode(txt_resource_value, txt_resource_value.getText(), 1, ".+"))
                 return;
-            if(!Validators.isValidNode(txt_quantity, txt_quantity.getText(), 1, ".+"))
+            if(!Validators.isValidNode(txt_quantity, txt_quantity.getText(), 1, "{1,9}+"))
                 return;
             if(!Validators.isValidNode(txt_unit, txt_unit.getText(), 1, ".+"))
                 return;
@@ -353,7 +354,7 @@ public class ResourceManager extends MVGObjectManager
             //if(!Validators.isValidNode(txt_account, txt_account.getText(), 1, ".+"))
             //    return;
 
-            long date_acquired_in_sec, date_exhausted_in_sec=0;
+            long date_acquired_in_sec=0, date_exhausted_in_sec=0;
             String str_resource_name = txt_resource_name.getText();
             String str_resource_description = txt_resource_description.getText();
             String str_resource_serial = txt_resource_serial.getText();
@@ -365,7 +366,7 @@ public class ResourceManager extends MVGObjectManager
             //    date_exhausted_in_sec = dpk_date_exhausted.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
             String str_other = txt_other.getText();
 
-            ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
+            /*ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
             params.add(new AbstractMap.SimpleEntry<>("resource_name", str_resource_name));
             params.add(new AbstractMap.SimpleEntry<>("resource_description", str_resource_description));
             params.add(new AbstractMap.SimpleEntry<>("resource_serial", str_resource_serial));
@@ -377,11 +378,25 @@ public class ResourceManager extends MVGObjectManager
             //params.add(new AbstractMap.SimpleEntry<>("account", txt_account.getText()));
             if(date_exhausted_in_sec>0)
                 params.add(new AbstractMap.SimpleEntry<>("date_exhausted", String.valueOf(date_exhausted_in_sec)));
-            params.add(new AbstractMap.SimpleEntry<>("extra", str_other));
+            params.add(new AbstractMap.SimpleEntry<>("extra", str_other));*/
+
+            Resource res = new Resource();
+            res.setResource_name(str_resource_name);
+            res.setResource_description(str_resource_description);
+            res.setResource_serial(str_resource_serial);
+            res.setDate_acquired(date_acquired_in_sec);
+            res.setResource_type(str_resource_type);
+            res.setQuantity(Integer.parseInt(str_quantity));
+            res.setUnit(txt_unit.getText());
+            res.setCreator(SessionManager.getInstance().getActive().getUsername());
+            if(date_exhausted_in_sec>0)
+                res.setDate_exhausted(date_exhausted_in_sec);
+            res.setOther(str_other);
 
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 if(SessionManager.getInstance().getActive()!=null)
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 else
@@ -390,7 +405,7 @@ public class ResourceManager extends MVGObjectManager
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.postData("/api/resource/add", params, headers);
+                HttpURLConnection connection = RemoteComms.putJSON("/resources", res.toString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -398,27 +413,27 @@ public class ResourceManager extends MVGObjectManager
                         //close stage
                         stage.close();
 
-                        IO.logAndAlert("Success", "Successfully created a new resource!", IO.TAG_INFO);
+                        IO.logAndAlert("Success", "Successfully created a new Resource!", IO.TAG_INFO);
                         try
                         {
                             //refresh model & view when material has been created.
                             reloadDataFromServer();
-                        }catch (MalformedURLException ex)
+                        } catch (MalformedURLException ex)
                         {
                             IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
                             IO.showMessage("URL Error", ex.getMessage(), IO.TAG_ERROR);
-                        }catch (ClassNotFoundException e)
+                        } catch (ClassNotFoundException e)
                         {
                             IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
                             IO.showMessage("ClassNotFoundException", e.getMessage(), IO.TAG_ERROR);
-                        }catch (IOException ex)
+                        } catch (IOException ex)
                         {
                             IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
                             IO.showMessage("I/O Error", ex.getMessage(), IO.TAG_ERROR);
                         }
                         if(callback!=null)
                             callback.call(null);
-                    }else
+                    } else
                     {
                         //Get error message
                         String msg = IO.readStream(connection.getErrorStream());
@@ -502,14 +517,20 @@ public class ResourceManager extends MVGObjectManager
             String str_type_description = txt_type_description.getText();
             String str_type_other = txt_other.getText();
 
-            ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
+            /*ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
             params.add(new AbstractMap.SimpleEntry<>("type_name", str_type_name));
             params.add(new AbstractMap.SimpleEntry<>("type_description", str_type_description));
-            params.add(new AbstractMap.SimpleEntry<>("other", String.valueOf(str_type_other)));
+            params.add(new AbstractMap.SimpleEntry<>("other", str_type_other));*/
 
+            Type res_type = new Type();
+            res_type.setType_name(str_type_name);
+            res_type.setType_description(str_type_description);
+            res_type.setCreator(SessionManager.getInstance().getActive().getUsername());
+            res_type.setOther(str_type_other);
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 if(SessionManager.getInstance().getActive()!=null)
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 else
@@ -518,7 +539,7 @@ public class ResourceManager extends MVGObjectManager
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.postData("/api/resource/type/add", params, headers);
+                HttpURLConnection connection = RemoteComms.putJSON("/resources/types", res_type.toString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -545,7 +566,8 @@ public class ResourceManager extends MVGObjectManager
                         if(callback!=null)
                             callback.call(null);
                         stage.close();
-                    }else{
+                    } else
+                    {
                         IO.logAndAlert( "ERROR_" + connection.getResponseCode(),  IO.readStream(connection.getErrorStream()), IO.TAG_ERROR);
                     }
                     connection.disconnect();

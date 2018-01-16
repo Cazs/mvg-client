@@ -28,7 +28,6 @@ public abstract class MVGObject implements Serializable
      */
     public String get_id()
     {
-        IO.log(getClass().getName(), IO.TAG_INFO, ">>>>>>>>>>>>id: " + _id);
         return _id;
     }
 

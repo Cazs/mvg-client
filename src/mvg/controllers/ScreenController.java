@@ -138,6 +138,72 @@ public abstract class ScreenController
     }
 
     @FXML
+    public void newClientHandler()
+    {
+        ScreenManager.getInstance().showLoadingScreen(param ->
+        {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        //load User data to memory
+                        UserManager.getInstance().loadDataFromServer();
+
+                        if (ScreenManager.getInstance().loadScreen(Screens.NEW_CLIENT.getScreen(), MVG.class.getResource("views/" + Screens.NEW_CLIENT.getScreen())))
+                        {
+                            ScreenManager.getInstance().setScreen(Screens.NEW_CLIENT.getScreen());
+                        } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load clients creation screen.");
+                    } catch(ConnectException ex)
+                    {
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
+                    } catch (IOException e)
+                    {
+                        IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return null;
+        });
+    }
+
+    @FXML
+    public void newResourceHandler()
+    {
+        ScreenManager.getInstance().showLoadingScreen(param ->
+        {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        //load User data to memory
+                        UserManager.getInstance().loadDataFromServer();
+
+                        if (ScreenManager.getInstance().loadScreen(Screens.NEW_RESOURCE.getScreen(), MVG.class.getResource("views/" + Screens.NEW_RESOURCE.getScreen())))
+                        {
+                            ScreenManager.getInstance().setScreen(Screens.NEW_RESOURCE.getScreen());
+                        } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load resource creation screen.");
+                    } catch(ConnectException ex)
+                    {
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
+                    } catch (IOException e)
+                    {
+                        IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return null;
+        });
+    }
+
+    @FXML
     public void createAccount()
     {
         try
