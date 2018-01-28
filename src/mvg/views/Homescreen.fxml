@@ -246,6 +246,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newResourceHandler" text="New Resource" />
                   <MenuItem mnemonicParsing="false" onAction="#newClientHandler" text="New Client" />
+                  <MenuItem mnemonicParsing="false" onAction="#newQuoteHandler" text="New Quote" />
                   <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>

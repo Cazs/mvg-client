@@ -204,6 +204,39 @@ public abstract class ScreenController
     }
 
     @FXML
+    public void newQuoteHandler()
+    {
+        ScreenManager.getInstance().showLoadingScreen(param ->
+        {
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        //load User data to memory
+                        UserManager.getInstance().loadDataFromServer();
+
+                        if (ScreenManager.getInstance().loadScreen(Screens.NEW_QUOTE.getScreen(), MVG.class.getResource("views/" + Screens.NEW_QUOTE.getScreen())))
+                        {
+                            ScreenManager.getInstance().setScreen(Screens.NEW_QUOTE.getScreen());
+                        } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load quote creation screen.");
+                    } catch(ConnectException ex)
+                    {
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
+                    } catch (IOException e)
+                    {
+                        IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+            return null;
+        });
+    }
+
+    @FXML
     public void createAccount()
     {
         try

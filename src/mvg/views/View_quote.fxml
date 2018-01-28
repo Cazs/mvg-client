@@ -193,7 +193,7 @@
                                 <TableColumn fx:id="colEmail" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="eMail" />
                                 <TableColumn fx:id="colGender" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="Gender" visible="false" />
                                 <TableColumn fx:id="colActive" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="Active" visible="false" />
-                                <TableColumn fx:id="colEmployeeAction" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Action" />
+                                <TableColumn fx:id="colUserAction" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Action" />
                             </columns>
                             <GridPane.margin>
                                 <Insets top="20.0" />

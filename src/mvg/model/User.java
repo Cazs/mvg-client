@@ -119,9 +119,9 @@ public class User extends MVGObject implements Serializable
         return email;
     }
 
-    public StringProperty organisationProperty(){return new SimpleStringProperty(getOrganisation());}
+    public StringProperty organisationProperty(){return new SimpleStringProperty(getOrganisationName());}
 
-    public String getOrganisation()
+    public String getOrganisationName()
     {
         //TODO: implement this
         return "temp";

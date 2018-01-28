@@ -18,9 +18,9 @@ import java.util.HashMap;
  */
 public class Quote extends MVGObject
 {
+    private String enquiry_id;
     private String client_id;
-    private String contact_person_id;
-    private String sitename;
+    private String contact_person_id;;
     private String request;
     private double vat;
     private String account_name;
@@ -31,6 +31,16 @@ public class Quote extends MVGObject
     private QuoteRep[] representatives;
     private int rev_cursor = -1;
     public static final String TAG = "Quote";
+
+    public String getEnquiry_id()
+    {
+        return enquiry_id;
+    }
+
+    public void setEnquiry_id(String enquiry_id)
+    {
+        this.enquiry_id = enquiry_id;
+    }
 
     public StringProperty client_idProperty(){return new SimpleStringProperty(client_id);}
 
@@ -54,18 +64,6 @@ public class Quote extends MVGObject
     public void setContact_person_id(String contact_person_id)
     {
         this.contact_person_id = contact_person_id;
-    }
-
-    public StringProperty sitenameProperty(){return new SimpleStringProperty(sitename);}
-
-    public String getSitename()
-    {
-        return sitename;
-    }
-
-    public void setSitename(String sitename)
-    {
-        this.sitename = sitename;
     }
 
     public StringProperty requestProperty(){return new SimpleStringProperty(request);}
@@ -325,14 +323,13 @@ public class Quote extends MVGObject
         {
             switch (var.toLowerCase())
             {
+                case "enquiry_id":
+                    enquiry_id = (String)val;
                 case "client_id":
                     client_id = (String)val;
                     break;
                 case "contact_person_id":
                     contact_person_id = (String)val;
-                    break;
-                case "sitename":
-                    sitename = String.valueOf(val);
                     break;
                 case "request":
                     request = String.valueOf(val);
@@ -367,12 +364,12 @@ public class Quote extends MVGObject
     {
         switch (var.toLowerCase())
         {
+            case "enquiry_id":
+                return enquiry_id;
             case "client_id":
                 return client_id;
             case "contact_person_id":
                 return contact_person_id;
-            case "sitename":
-                return sitename;
             case "request":
                 return request;
             case "status":
@@ -394,17 +391,18 @@ public class Quote extends MVGObject
     {
         String json_obj = "{"+(get_id()!=null?"\"_id\":\""+get_id()+"\",":"")
                 +"\"contact_person_id\":\""+contact_person_id+"\""
-                +",\"sitename\":\""+sitename+"\""
                 +",\"request\":\""+request+"\""
                 +",\"vat\":\""+vat+"\""
                 +",\"account_name\":\""+account_name+"\""
                 +",\"revision\":\""+revision+"\"";
                 if(getClient_id()!=null)
                     json_obj+=",\"client_id\":\""+client_id+"\"";
-                if(parent_id!=null)
-                    json_obj+=",\"parent_id\":\""+ parent_id +"\"";
-                if(status>0)
-                    json_obj+=",\"status\":\""+status+"\"";
+                if(getEnquiry_id()!=null)
+                    json_obj+=",\"enquiry_id\":\""+getEnquiry_id()+"\"";
+                if(getParent_id()!=null)
+                    json_obj+=",\"parent_id\":\""+ getParent_id() +"\"";
+                if(getStatus()>0)
+                    json_obj+=",\"status\":\""+getStatus()+"\"";
                 if(getCreator()!=null)
                     json_obj+=",\"creator\":\""+getCreator()+"\"";
                 if(getDate_logged()>0)

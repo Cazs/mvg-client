@@ -497,7 +497,7 @@ public class PDF
         contents.stroke();
 
         contents.beginText();
-        addTextToPageStream(contents,"Site Location: " + quote.getSitename(),PDType1Font.HELVETICA, 13,20, line_pos);
+        addTextToPageStream(contents,"Site Location: ",PDType1Font.HELVETICA, 13,20, line_pos);
         //addTextToPageStream(contents,"Total Incl. VAT: "+String.valueOf(DecimalFormat.getCurrencyInstance().format(quote.getTotal()+quote.getTotal()*(Quote.VAT/100))), PDType1Font.COURIER_BOLD_OBLIQUE, 14, (int)((w/2)+15), line_pos);
         line_pos-=LINE_HEIGHT;//next line
 

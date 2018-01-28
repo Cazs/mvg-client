@@ -95,7 +95,6 @@ public class ViewQuoteController extends QuoteController
             //set selected Supplier account
             cbxAccount.getSelectionModel().select(QuoteManager.getInstance().getSelectedQuote().getAccount_name());
             //cbxAccount.setValue(QuoteManager.getInstance().getSelectedQuote().getAccount_name());
-            txtSite.setText(selected.getSitename());
             txtRequest.setText(selected.getRequest());
             //txtVat.setText(String.valueOf(selected.getVat_number()));
 

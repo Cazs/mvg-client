@@ -55,7 +55,7 @@ public abstract class QuoteController extends ScreenController implements Initia
     @FXML
     protected ComboBox<User> cbxContactPerson;
     @FXML
-    protected TextField txtCell,txtTel,txtTotal,txtQuoteId,txtFax,txtEmail,txtSite,txtDateGenerated,txtStatus,txtRevision,txtExtra;
+    protected TextField txtCell,txtTel,txtTotal,txtQuoteId,txtFax,txtEmail,txtDateGenerated,txtStatus,txtRevision,txtExtra;
     //@FXML
     //protected Slider vatSlider;
     @FXML
@@ -1054,11 +1054,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             cbxAccount.getStyleClass().add("form-control-default");
         }
 
-        if(!Validators.isValidNode(txtSite, txtSite.getText(), 1, ".+"))
-        {
-            txtSite.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
         if(!Validators.isValidNode(txtRequest, txtRequest.getText(), 1, ".+"))
         {
             txtRequest.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
@@ -1094,7 +1089,6 @@ public abstract class QuoteController extends ScreenController implements Initia
         Quote quote = new Quote();
         quote.setClient_id(cbxClients.getValue().get_id());
         quote.setContact_person_id(cbxContactPerson.getValue().getUsr());
-        quote.setSitename(txtSite.getText());
         quote.setRequest(txtRequest.getText());
         quote.setStatus(Quote.STATUS_PENDING);
         quote.setAccount_name(cbxAccount.getValue());
@@ -1200,11 +1194,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             cbxAccount.getStyleClass().add("form-control-default");
         }
 
-        if(!Validators.isValidNode(txtSite, txtSite.getText(), 1, ".+"))
-        {
-            txtSite.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
         if(!Validators.isValidNode(txtRequest, txtRequest.getText(), 1, ".+"))
         {
             txtRequest.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
@@ -1218,7 +1207,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             Quote quote = new Quote();
             quote.setClient_id(cbxClients.getValue().get_id());
             quote.setContact_person_id(cbxContactPerson.getValue().getUsr());
-            quote.setSitename(txtSite.getText());
             quote.setRequest(txtRequest.getText());
             quote.setAccount_name(cbxAccount.getValue());
             quote.setStatus(Quote.STATUS_PENDING);
@@ -1372,11 +1360,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             cbxAccount.getStyleClass().add("form-control-default");
         }
 
-        if(!Validators.isValidNode(txtSite, txtSite.getText(), 1, ".+"))
-        {
-            txtSite.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
         if(!Validators.isValidNode(txtRequest, txtRequest.getText(), 1, ".+"))
         {
             txtRequest.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
@@ -1396,7 +1379,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             if(toggleVatExempt.isSelected())
                 selected.setVat(0);
             else selected.setVat(QuoteManager.VAT);
-            selected.setSitename(txtSite.getText());
             selected.setRequest(txtRequest.getText());
             selected.setAccount_name(cbxAccount.getValue());
 
