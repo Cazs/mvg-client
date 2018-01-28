@@ -98,8 +98,7 @@ public class LoginController extends ScreenController implements Initializable
                                 if (screenManager.loadScreen(Screens.HOME.getScreen(), MVG.class.getResource("views/" + Screens.HOME.getScreen())))
                                 {
                                     screenManager.setScreen(Screens.HOME.getScreen());
-                                }
-                                else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
+                                } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not load home screen.");
                             } else IO.logAndAlert("Login Failure", "Invalid login credentials.", IO.TAG_ERROR);
                         } else
                         {
@@ -107,7 +106,7 @@ public class LoginController extends ScreenController implements Initializable
                         }
                     } catch(ConnectException ex)
                     {
-                        IO.logAndAlert("Error", ex.getMessage() + ", \nis the server up? are you connected to the network?", IO.TAG_ERROR);
+                        IO.logAndAlert("Error", ex.getMessage() + ", \nIs the server up? are you connected to the network?", IO.TAG_ERROR);
                     } catch (LoginException ex)
                     {
                         IO.logAndAlert("Login Failure", ex.getMessage(), IO.TAG_ERROR);

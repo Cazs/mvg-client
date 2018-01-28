@@ -3,6 +3,8 @@ package mvg.auxilary;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import javafx.geometry.Pos;
+import javafx.util.Duration;
 import mvg.controllers.ScreenController;
 import mvg.managers.ScreenManager;
 import mvg.model.MVGObject;
@@ -13,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
+
 import java.io.*;
 
 /**
@@ -116,41 +120,42 @@ public class IO<T extends MVGObject>
     {
         Platform.runLater(() ->
         {
-            Stage stage = new Stage();
-            stage.setTitle(title);
-            stage.setResizable(false);
-            stage.setAlwaysOnTop(true);
-            stage.centerOnScreen();
-
-            Label label = new Label(msg);
-            Button btn = new Button("Confirm");
-
-            BorderPane borderPane= new BorderPane();
-            borderPane.setTop(label);
-            borderPane.setCenter(btn);
-            //VBox vBox = new VBox(label, btn);
-            stage.setScene(new Scene(borderPane));
-
-            stage.show();
-
-            btn.setOnAction(event -> stage.close());
-
-            /*switch (type.toLowerCase())
+            switch (type.toLowerCase())
             {
                 case TAG_INFO:
-                    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.INFORMATION_MESSAGE);
+                    /*NotificationPane notificationPane = new NotificationPane();
+                    notificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+                    notificationPane.setShowFromTop(true);
+                    notificationPane.setText(msg);
+                    //notificationPane.setGraphic(new Button("a button"));
+                    notificationPane.show();*/
+                    Notifications.create()
+                            .title(title)
+                            .text(msg)
+                            .hideAfter(Duration.seconds(15))
+                            .position(Pos.BOTTOM_LEFT)
+                            .showInformation();
                     break;
                 case TAG_WARN:
-                    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.WARNING_MESSAGE);
+                    Notifications.create()
+                            .title(title)
+                            .text(msg)
+                            .hideAfter(Duration.seconds(30))
+                            .showWarning();
                     break;
                 case TAG_ERROR:
-                    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.ERROR_MESSAGE);
+                    Notifications.create()
+                            .title(title)
+                            .text(msg)
+                            .hideAfter(Duration.INDEFINITE)
+                            .position(Pos.CENTER)
+                            .showError();
                     break;
                 default:
-                    System.err.println("IO> unknown message type '" + type + "'");
-                    JOptionPane.showMessageDialog(null, msg, title, JOptionPane.PLAIN_MESSAGE);
+                    IO.log(IO.class.getName(), IO.TAG_ERROR, "unknown message type '" + type + "'");
+                    //Notifications.create().title(title).text(msg).showWarning();
                     break;
-            }*/
+            }
         });
     }
 

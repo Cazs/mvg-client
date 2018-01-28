@@ -27,6 +27,7 @@ import javafx.util.Callback;
 import jfxtras.labs.scene.control.radialmenu.RadialContainerMenuItem;
 import jfxtras.labs.scene.control.radialmenu.RadialMenu;
 import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
+import org.controlsfx.control.MaskerPane;
 
 /**
  *
@@ -320,20 +321,22 @@ public class ScreenManager extends StackPane
 
     public void showLoadingScreen(Callback callback)
     {
-        //TODO: show loading screen
-        /*if(getChildren().setAll(new Node[]{}))//remove all screens
+        //if(getChildren().setAll(new Node[]{}))//remove all screens
         {
-            loading_screen_ctrl.refreshStatusBar("Loading data, please wait...");
-            loading_screen_ctrl.refreshView();
-            getChildren().add(loading_screen);
+            //loading_screen_ctrl.refreshStatusBar("Loading data, please wait...");
+            //loading_screen_ctrl.refreshView();
+            MaskerPane maskerPane= new MaskerPane();
+            maskerPane.setVisible(true);
+            getChildren().add(maskerPane);
+            //getChildren().add(loading_screen);
             /*if(focused!=null)
             {
                 focused.getLoadingPane().setVisible(true);
                 //System.out.println(focused.getLoadingPane()==null);
-            }*
-            callback.call(null);
-        }*/
-        callback.call(null);
+            }*/
+            if(callback!=null)
+                callback.call(null);
+        }
     }
 
     public ScreenController getFocused()
