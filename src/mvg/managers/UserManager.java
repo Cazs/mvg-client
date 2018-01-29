@@ -102,10 +102,7 @@ public class UserManager extends MVGObjectManager
 
                             users = new HashMap();
                             for (User user : users_arr)
-                            {
-                                System.out.println(user.toString());
                                 users.put(user.getUsr(), user);
-                            }
                         } else IO.log(getClass().getName(), IO.TAG_ERROR, "could not find any Users in database.");
                     } else IO.log(getClass().getName(), IO.TAG_ERROR, "UserServerObject (containing User objects & other metadata) is null");
                     IO.log(getClass().getName(), IO.TAG_INFO, "reloaded user collection.");

@@ -8,9 +8,6 @@ import mvg.managers.QuoteManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -28,7 +25,6 @@ public class Quote extends MVGObject
     private int status;
     private String parent_id;
     private QuoteItem[] resources;
-    private QuoteRep[] representatives;
     private int rev_cursor = -1;
     public static final String TAG = "Quote";
 
@@ -186,30 +182,6 @@ public class Quote extends MVGObject
     public void setResources(QuoteItem[] resources)
     {
         this.resources=resources;
-    }
-
-    public User[] getRepresentatives()
-    {
-        if(representatives==null)
-        {
-            IO.log(getClass().getName(), IO.TAG_ERROR, "quote ["+get_id()+"] has no representatives.");
-            return null;
-        }
-        if(representatives.length==0)
-        {
-            IO.log(getClass().getName(), IO.TAG_ERROR, "quote ["+get_id()+"] has no representatives.");
-            return null;
-        }
-        User[] reps = new User[representatives.length];
-        UserManager.getInstance().loadDataFromServer();
-        for(int i=0;i<representatives.length;i++)
-            reps[i]= representatives[i].getUser();
-        return  reps;
-    }
-
-    public void setRepresentatives(QuoteRep[] representatives)
-    {
-        this.representatives=representatives;
     }
 
     public Client getClient()
@@ -387,10 +359,11 @@ public class Quote extends MVGObject
     }
 
     @Override
-    public String toString()
+    public String asJSONString()
     {
-        String json_obj = "{"+(get_id()!=null?"\"_id\":\""+get_id()+"\",":"")
-                +"\"contact_person_id\":\""+contact_person_id+"\""
+        String super_json = super.asJSONString();
+        String json_obj = super_json.substring(0,super_json.length()-1)//ignore last brace
+                +",\"contact_person_id\":\""+contact_person_id+"\""
                 +",\"request\":\""+request+"\""
                 +",\"vat\":\""+vat+"\""
                 +",\"account_name\":\""+account_name+"\""
@@ -403,13 +376,8 @@ public class Quote extends MVGObject
                     json_obj+=",\"parent_id\":\""+ getParent_id() +"\"";
                 if(getStatus()>0)
                     json_obj+=",\"status\":\""+getStatus()+"\"";
-                if(getCreator()!=null)
-                    json_obj+=",\"creator\":\""+getCreator()+"\"";
-                if(getDate_logged()>0)
-                    json_obj+=",\"date_logged\":\""+getDate_logged()+"\"";
-                json_obj+=",\"other\":\""+getOther()+"\"}";
+                json_obj+="}";
 
-        IO.log(getClass().getName(),IO.TAG_INFO, json_obj);
         return json_obj;
     }
 

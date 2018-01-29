@@ -199,34 +199,6 @@ public class QuoteManager extends MVGObjectManager
                                 }
                                 else IO.log(getClass().getName(), IO.TAG_WARN, String
                                         .format("quote '%s does not have any resources.", quote.get_id()));
-
-                                //Load Quote Representatives
-                                String quote_rep_ids_json = RemoteComms
-                                        .sendGetRequest("/quotes/representatives/" + quote.get_id(), headers);
-                                if (quote_rep_ids_json != null)
-                                {
-                                    if (!quote_rep_ids_json.equals("[]"))
-                                    {
-                                        QuoteRepServerObject quoteRepServerObject = gson
-                                                .fromJson(quote_rep_ids_json, QuoteRepServerObject.class);
-                                        if (quoteRepServerObject != null)
-                                        {
-                                            if (quoteRepServerObject.get_embedded() != null)
-                                            {
-                                                QuoteRep[] quote_reps_arr = quoteRepServerObject.get_embedded().getQuote_representatives();
-                                                quote.setRepresentatives(quote_reps_arr);
-                                                IO.log(getClass().getName(), IO.TAG_INFO, String.format("set reps["+quote_reps_arr.length+"] for quote '%s'.", quote.get_id()));
-                                            } else IO.log(getClass()
-                                                    .getName(), IO.TAG_ERROR, "could not find any Representatives for Quote #" + quote
-                                                    .get_id());
-                                        } else IO.log(getClass()
-                                                .getName(), IO.TAG_ERROR, "QuoteRepServerObject (containing QuoteRepresentative objects & other metadata) is null");
-                                    }
-                                    else IO.log(getClass().getName(), IO.TAG_WARN, String
-                                            .format("quote '%s does not have any representatives.", quote.get_id()));
-                                }
-                                else IO.log(getClass().getName(), IO.TAG_WARN, String
-                                        .format("quote '%s does not have any representatives.", quote.get_id()));
                             }
                             IO.log(getClass().getName(), IO.TAG_INFO, "reloaded collection of quotes.");
                             this.serialize(ROOT_PATH + filename, quotes);
@@ -260,7 +232,7 @@ public class QuoteManager extends MVGObjectManager
         else IO.logAndAlert("Error", "Please choose a valid quote.", IO.TAG_ERROR);
     }
 
-    public void createQuote(Quote quote, ObservableList<QuoteItem> quoteItems, ObservableList<User> quoteReps, Callback callback) throws IOException
+    public void createQuote(Quote quote, ObservableList<QuoteItem> quoteItems, Callback callback) throws IOException
     {
         ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
         headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
@@ -274,7 +246,7 @@ public class QuoteManager extends MVGObjectManager
 
         //create new quote on database
         //ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
-        HttpURLConnection connection = RemoteComms.putJSON("/quotes", quote.toString(), headers);
+        HttpURLConnection connection = RemoteComms.putJSON("/quotes", quote.asJSONString(), headers);
         if(connection!=null)
         {
             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -301,24 +273,6 @@ public class QuoteManager extends MVGObjectManager
                 //Close connection
                 if(connection!=null)
                     connection.disconnect();
-                    /* Add Quote Representatives/Users to Quote on database*/
-
-                boolean added_all_quote_reps = true;
-                for(User user : quoteReps)
-                {
-                    //prepare parameters for quote resources.
-                    /*ArrayList params = new ArrayList<>();
-                    params.add(new AbstractMap.SimpleEntry<>("quote_id", new_quote_id));
-                    params.add(new AbstractMap.SimpleEntry<>("usr", user.getUsr()));*/
-                    added_all_quote_reps = QuoteManager.getInstance().createQuoteRep(new QuoteRep(new_quote_id, user.getUsr()), headers);
-                }
-                if(!added_all_quote_reps)
-                    IO.logAndAlert("New Quote Representative Creation Failure", "Could not add representatives to quote, however, the quote["+new_quote_id+"] has been created.", IO.TAG_INFO);
-
-
-                //Close connection
-                if(connection!=null)
-                    connection.disconnect();
                     /* Add Quote Resources to Quote on database */
 
                 boolean added_all_quote_items = true;
@@ -326,47 +280,11 @@ public class QuoteManager extends MVGObjectManager
                 {
                     for (QuoteItem quoteItem : quoteItems)
                     {
-                        //prepare parameters for quote resources.
-                        /*ArrayList params = new ArrayList<>();
-                        params.add(new AbstractMap.SimpleEntry<>("quote_id", new_quote_id));
-                        params.add(new AbstractMap.SimpleEntry<>("item_number", quoteItem.getItem_number()));
-                        params.add(new AbstractMap.SimpleEntry<>("resource_id", quoteItem.getResource().get_id()));
-                        params.add(new AbstractMap.SimpleEntry<>("markup", quoteItem.getMarkup()));
-                        params.add(new AbstractMap.SimpleEntry<>("unit_cost", quoteItem.getUnit_cost()));
-                        params.add(new AbstractMap.SimpleEntry<>("quantity", quoteItem.getQuantity()));
-                        params.add(new AbstractMap.SimpleEntry<>("additional_costs", quoteItem.getAdditional_costs()));*/
-                        /*QuoteItem new_quote_item = new QuoteItem();
-                        new_quote_item.setQuote_id(new_quote_id);
-                        new_quote_item.setItem_number(quoteItem.getItem_numberValue());
-                        new_quote_item.setResource_id(quoteItem.getResource().get_id());
-                        new_quote_item.setMarkup(quoteItem.getMarkupValue());
-                        new_quote_item.setUnit_cost(quoteItem.getUnitCost());
-                        new_quote_item.setQuantity(quoteItem.getQuantityValue());
-                        new_quote_item.setAdditional_costs(quoteItem.getAdditional_costs());*/
-
                         quoteItem.setQuote_id(new_quote_id);
-
                         added_all_quote_items = QuoteManager.getInstance().createQuoteItem(quoteItem, headers);
-                        //added_all_quote_items = QuoteManager.getInstance().createQuoteItem(response, params, headers);
-
-                        //connection = RemoteComms.putJSONData("/quotes/resources", params, headers);
-                        //connection = RemoteComms.putJSON("/quotes/resources", quoteItem.toString(), headers);
-                        /*if (connection != null)
-                        {
-                            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-                            {
-                                IO.log(getClass().getName(), IO.TAG_INFO, "Successfully added a new resource for quote["+new_quote_id+"].");
-                            } else
-                            {
-                                added_all_quote_items = false;
-                                //Get error message
-                                String msg = IO.readStream(connection.getErrorStream());
-                                IO.logAndAlert("Error " + String.valueOf(connection.getResponseCode()), msg, IO.TAG_ERROR);
-                            }
-                        }else IO.logAndAlert("New Quote Item Creation Failure", "Could not connect to server.", IO.TAG_ERROR);*/
                     }
                 } else IO.log(getClass().getName(), IO.TAG_WARN, "Quote["+new_quote_id+"] has no items/resources.");
-                if(added_all_quote_items && added_all_quote_reps)
+                if(added_all_quote_items)
                 {
                     try
                     {
@@ -374,19 +292,19 @@ public class QuoteManager extends MVGObjectManager
                         QuoteManager.getInstance().reloadDataFromServer();
                         QuoteManager.getInstance().setSelectedQuote(new_quote_id);
 
-                        IO.logAndAlert("New Quote Creation Success", "Successfully created a new Quote.", IO.TAG_INFO);
+                        IO.logAndAlert("New Quote Creation Success", "Successfully created a new Quote: "+new_quote_id, IO.TAG_INFO);
                         if(callback!=null)
                             if(new_quote_id!=null)
                                 callback.call(new_quote_id);
-                    }catch (MalformedURLException ex)
+                    } catch (MalformedURLException ex)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
                         IO.showMessage("URL Error", ex.getMessage(), IO.TAG_ERROR);
-                    }catch (ClassNotFoundException e)
+                    } catch (ClassNotFoundException e)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
                         IO.showMessage("ClassNotFoundException", e.getMessage(), IO.TAG_ERROR);
-                    }catch (IOException ex)
+                    } catch (IOException ex)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
                         IO.showMessage("I/O Error", ex.getMessage(), IO.TAG_ERROR);
@@ -403,7 +321,7 @@ public class QuoteManager extends MVGObjectManager
         } else IO.logAndAlert("New Quote Creation Failure", "Could not connect to server.", IO.TAG_ERROR);
     }
 
-    public void updateQuote(Quote quote, ObservableList<QuoteItem> quoteItems, ObservableList<User> quoteReps)
+    public void updateQuote(Quote quote, ObservableList<QuoteItem> quoteItems)
     {
         if(quoteItems==null)
         {
@@ -415,28 +333,13 @@ public class QuoteManager extends MVGObjectManager
             IO.logAndAlert("Invalid Quote", "Quote has no items", IO.TAG_ERROR);
             return;
         }
-
-        if(quoteReps==null)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote representatives list is null.", IO.TAG_ERROR);
-            return;
-        }
-        if(quoteReps.size()<=0)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote has no representatives", IO.TAG_ERROR);
-            return;
-        }
-
         QuoteItem[] items = new QuoteItem[quoteItems.size()];
         quoteItems.toArray(items);
 
-        User[] users = new User[quoteReps.size()];
-        quoteReps.toArray(users);
-
-        updateQuote(quote, items, users);
+        updateQuote(quote, items);
     }
 
-    public void updateQuote(Quote quote, QuoteItem[] quoteItems, User[] quoteReps)
+    public void updateQuote(Quote quote, QuoteItem[] quoteItems)
     {
         if (SessionManager.getInstance().getActive() == null)
         {
@@ -459,17 +362,6 @@ public class QuoteManager extends MVGObjectManager
             return;
         }
 
-        if(quoteReps==null)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote representatives list is null.", IO.TAG_ERROR);
-            return;
-        }
-        if(quoteReps.length<=0)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote has no representatives", IO.TAG_ERROR);
-            return;
-        }
-
         //Quote selected = getSelectedQuote();
         if(quote!=null)
         {
@@ -477,40 +369,36 @@ public class QuoteManager extends MVGObjectManager
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 //update quote on database
-                HttpURLConnection connection = RemoteComms.postJSON("/quotes", quote.toString(), headers);
+                HttpURLConnection connection = RemoteComms.postJSON("/quotes", quote.asJSONString(), headers);
                 if (connection != null)
                 {
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     {
                         String response = IO.readStream(connection.getInputStream());
-                        IO.log(getClass().getName(), IO.TAG_INFO, "updated quote[" + quote.get_id() + "]. Adding representatives and resources to quote.");
+                        IO.log(getClass().getName(), IO.TAG_INFO, "updated quote[" + quote.get_id() + "]. adding resources to quote.");
 
                         if (response == null)
                         {
-                            IO.logAndAlert("Quote Update", "Invalid server response.", IO.TAG_ERROR);
+                            IO.logAndAlert("Quote Update Error", "Invalid server response.", IO.TAG_ERROR);
                             return;
                         }
                         if (response.isEmpty())
                         {
-                            IO.logAndAlert("Quote Update", "Invalid server response: " + response, IO.TAG_ERROR);
+                            IO.logAndAlert("Quote Update Error", "Invalid server response: " + response, IO.TAG_ERROR);
                             return;
                         }
 
                         boolean updated_all_quote_items = updateQuoteItems(quote.get_id(), quoteItems, headers);
-                        boolean updated_all_quote_reps = updateQuoteReps(quote, quoteReps, headers);
-                        //boolean updated_all_quote_reps = true;
 
-                        if (updated_all_quote_items && updated_all_quote_reps)
+                        if (updated_all_quote_items)
                         {
                             IO.logAndAlert("Quote Manager","successfully updated quote[" + quote.get_id() + "].", IO.TAG_INFO);
                             loadDataFromServer();
                         } else {
-                            if(!updated_all_quote_items)
-                                IO.logAndAlert("Quote Update Failure", "Could not update all Quote Items for Quote["+quote.get_id()+"].", IO.TAG_INFO);
-                            if(!updated_all_quote_reps)
-                                IO.logAndAlert("Quote Update Failure", "Could not update all Quote Representatives for Quote["+quote.get_id()+"].", IO.TAG_INFO);
+                            IO.logAndAlert("Quote Update Failure", "Could not update all Quote Items for Quote["+quote.get_id()+"].", IO.TAG_ERROR);
                         }
                     } else
                     {
@@ -526,7 +414,7 @@ public class QuoteManager extends MVGObjectManager
             {
                 IO.logAndAlert(getClass().getName(), e.getMessage(), IO.TAG_ERROR);
             }
-        }else IO.logAndAlert("Update Quote","Selected Quote is invalid.", IO.TAG_ERROR);
+        } else IO.logAndAlert("Error","Selected Quote is invalid.", IO.TAG_ERROR);
     }
 
     public boolean updateQuoteItems(String quote_id, QuoteItem[] quoteItems, ArrayList headers) throws IOException
@@ -589,7 +477,7 @@ public class QuoteManager extends MVGObjectManager
         //set quote_item creator
         quoteItem.setCreator(SessionManager.getInstance().getActive().getUsername());
         //IO.log(getClass().getName(), IO.TAG_INFO, "attempting to create new quote_item for quote[" + quote_id + "].");
-        HttpURLConnection connection = RemoteComms.putJSON("/quotes/resources", quoteItem.toString(), headers);
+        HttpURLConnection connection = RemoteComms.putJSON("/quotes/resources", quoteItem.asJSONString(), headers);
 
         if (connection != null)
         {
@@ -644,7 +532,7 @@ public class QuoteManager extends MVGObjectManager
         if(quoteItem!=null)
         {
             IO.log(getClass().getName(), IO.TAG_INFO, "attempting to update quote_item["+quoteItem.get_id()+"] for quote[" + quoteItem.getQuote_id() + "].");
-            HttpURLConnection connection = RemoteComms.postJSON("/quotes/resources", quoteItem.toString(), headers);
+            HttpURLConnection connection = RemoteComms.postJSON("/quotes/resources", quoteItem.asJSONString(), headers);
             if (connection != null)
             {
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
@@ -664,90 +552,6 @@ public class QuoteManager extends MVGObjectManager
             if (connection != null)
                 connection.disconnect();
         }else IO.log(getClass().getName(), IO.TAG_ERROR, "invalid[null] quote_item.");
-        return false;
-    }
-
-    public boolean updateQuoteReps(Quote quote, User[] reps, ArrayList headers) throws IOException
-    {
-        if(quote==null || reps==null || headers == null || SessionManager.getInstance().getActive()==null)
-        {
-            IO.log(getClass().getName(), IO.TAG_ERROR, String.format("invalid data: [Quote: %s, Reps: %s, headers: %s]", quote, reps,headers));
-            return false;
-        }
-
-        boolean all_successful = true;
-        /* Update/Create Quote representatives on database */
-        for (User rep : reps)
-        {
-            if (rep != null)
-            {
-                if (rep.get_id() != null)
-                {
-                    //check if user already in list of quote reps
-                    boolean found=false;
-                    if(quote.getRepresentatives()!=null)
-                    {
-                        for (User user : quote.getRepresentatives())
-                        {
-                            if (user.get_id().equals(rep.get_id()))
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-                    }
-                    if(!found)
-                    {
-                        //new quote rep
-                        //prepare parameters for quote_item.
-                        /*ArrayList params = new ArrayList<>();
-                        params.add(new AbstractMap.SimpleEntry<>("quote_id", quote.get_id()));
-                        params.add(new AbstractMap.SimpleEntry<>("usr", rep.getUsr()));*/
-
-                        all_successful = createQuoteRep(new QuoteRep(quote.get_id(), rep.getUsr(), SessionManager.getInstance().getActive().getUsername()), headers);
-                    } else IO.log(getClass().getName(), IO.TAG_INFO, "quote representatives are up to date.");
-                }
-            } else IO.log(getClass().getName(), IO.TAG_ERROR, "invalid[null] quote_item.");
-        }
-        return all_successful;
-    }
-
-    public boolean createQuoteRep(QuoteRep quoteRep, ArrayList<AbstractMap.SimpleEntry<String, String>> headers) throws IOException
-    {
-        if(quoteRep==null)
-        {
-            IO.log(getClass().getName(), IO.TAG_ERROR, "invalid QuoteRep.");
-            return false;
-        }
-        if(SessionManager.getInstance().getActive()==null)
-        {
-            IO.log(getClass().getName(), IO.TAG_ERROR, "invalid active User Session.");
-            return false;
-        }
-        //set quoteRep creator
-        quoteRep.setCreator(SessionManager.getInstance().getActive().getUsername());
-
-        HttpURLConnection connection = RemoteComms.putJSON("/quotes/representatives", quoteRep.toString(), headers);
-        if (connection != null)
-        {
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                IO.log(getClass().getName(), IO.TAG_INFO, "successfully added a new quote_rep.");
-                //loadDataFromServer();//refresh data set
-                //Close connection
-                if (connection != null)
-                    connection.disconnect();
-                return true;
-            } else
-            {
-                //Get error message
-                String msg = IO.readStream(connection.getErrorStream());
-                IO.logAndAlert("Error " + String.valueOf(connection.getResponseCode()), msg, IO.TAG_ERROR);
-            }
-        }else IO.logAndAlert("New Quote Representative Creation Failure", "Could not connect to server.", IO.TAG_ERROR);
-        //Close connection
-        if (connection != null)
-            connection.disconnect();
         return false;
     }
 
@@ -823,14 +627,14 @@ public class QuoteManager extends MVGObjectManager
                 if(SessionManager.getInstance().getActive()!=null)
                 {
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
-                    params.add(new AbstractMap.SimpleEntry<>("from_name", SessionManager.getInstance().getActiveUser().toString()));
+                    params.add(new AbstractMap.SimpleEntry<>("from_name", SessionManager.getInstance().getActiveUser().getName()));
                 } else
                 {
                     IO.logAndAlert( "No active sessions.", "Session expired", IO.TAG_ERROR);
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.postData("/api/quote/mailto", params, headers);
+                HttpURLConnection connection = RemoteComms.postData("/quotes/mailto", params, headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -932,43 +736,6 @@ public class QuoteManager extends MVGObjectManager
 
         VBox vbox = new VBox(1);
 
-        //gather list of Users with enough clearance to approve quotes
-        /*ArrayList<User> lst_auth_users = new ArrayList<>();
-        for(User user: UserManager.getInstance().getUsers().values())
-            if(user.getAccessLevel()>=User.ACCESS_LEVEL_SUPER)
-                lst_auth_users.add(user);
-
-        if(lst_auth_users==null)
-        {
-            IO.logAndAlert("Error", "Could not find any user with the required access rights to approve documents.", IO.TAG_ERROR);
-            return;
-        }
-
-        /*final ComboBox<User> cbx_destination = new ComboBox(FXCollections.observableArrayList(lst_auth_users));
-        cbx_destination.setCellFactory(new Callback<ListView<User>, ListCell<User>>()
-        {
-            @Override
-            public ListCell<User> call(ListView<User> param)
-            {
-                return new ListCell<User>()
-                {
-                    @Override
-                    protected void updateItem(User user, boolean empty)
-                    {
-                        if(user!=null && !empty)
-                        {
-                            super.updateItem(user, empty);
-                            setText(user.toString() + " <" + user.getEmail() + ">");
-                        }
-                    }
-                };
-            }
-        });
-        cbx_destination.setMinWidth(200);
-        cbx_destination.setMaxWidth(Double.MAX_VALUE);
-        cbx_destination.setPromptText("Pick a recipient");
-        HBox destination = CustomTableViewControls.getLabelledNode("To: ", 200, cbx_destination);*/
-
         final TextField txt_subject = new TextField();
         txt_subject.setMinWidth(200);
         txt_subject.setMaxWidth(Double.MAX_VALUE);
@@ -1023,7 +790,7 @@ public class QuoteManager extends MVGObjectManager
                 if(SessionManager.getInstance().getActive()!=null)
                 {
                     headers.add(new AbstractMap.SimpleEntry<>("session_id", SessionManager.getInstance().getActive().getSessionId()));
-                    headers.add(new AbstractMap.SimpleEntry<>("from_name", SessionManager.getInstance().getActiveUser().toString()));
+                    headers.add(new AbstractMap.SimpleEntry<>("from_name", SessionManager.getInstance().getActiveUser().getName()));
                 } else
                 {
                     IO.logAndAlert( "No active sessions.", "Session expired", IO.TAG_ERROR);
@@ -1033,7 +800,7 @@ public class QuoteManager extends MVGObjectManager
                 //String data = "{\"file\":\""+finalBase64_quote+"\"}";
                 FileMetadata fileMetadata = new FileMetadata("quote_"+quote.get_id()+".pdf","application/pdf");
                 fileMetadata.setFile(finalBase64_quote);
-                HttpURLConnection connection = RemoteComms.postJSON("/quotes/approval_request", fileMetadata.toString(), headers);
+                HttpURLConnection connection = RemoteComms.postJSON("/quotes/approval_request", fileMetadata.asJSONString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -1197,36 +964,6 @@ public class QuoteManager extends MVGObjectManager
             public void setQuote_resources(QuoteItem[] quote_resources)
             {
                 this.quote_resources = quote_resources;
-            }
-        }
-    }
-
-    class QuoteRepServerObject extends ServerObject
-    {
-        private Embedded _embedded;
-
-        Embedded get_embedded()
-        {
-            return _embedded;
-        }
-
-        void set_embedded(Embedded _embedded)
-        {
-            this._embedded = _embedded;
-        }
-
-        class Embedded
-        {
-            private QuoteRep[] quote_representatives;
-
-            public QuoteRep[] getQuote_representatives()
-            {
-                return quote_representatives;
-            }
-
-            public void setQuote_representatives(QuoteRep[] quote_representatives)
-            {
-                this.quote_representatives = quote_representatives;
             }
         }
     }

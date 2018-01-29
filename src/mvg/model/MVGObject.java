@@ -163,4 +163,13 @@ public abstract class MVGObject implements Serializable
     }
 
     public abstract String apiEndpoint();
+
+    public String asJSONString()
+    {
+        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")
+                +"\"creator\":\""+getCreator()+"\""
+                +(getDate_logged()>0?",\"date_logged\":\""+getDate_logged()+"\"":"")
+                +(getOther()!=null?",\"other\":\""+getOther()+"\"":"")
+                +"}";
+    }
 }

@@ -42,11 +42,6 @@ public abstract class QuoteController extends ScreenController implements Initia
 
     @FXML
     protected TableView<QuoteItem> tblQuoteItems;
-    @FXML
-    protected TableView<User> tblSaleReps;
-    //Quote reps columns
-    @FXML
-    protected TableColumn colFirstname,colLastname,colCell,colEmail,colTel,colGender,colActive,colUserAction;
     //Quote items table columns
     @FXML
     protected TableColumn colMarkup,colQuantity, colItemNumber, colEquipmentName, colDescription, colUnit, colValue, colRate, colTotal, colAction;
@@ -56,8 +51,6 @@ public abstract class QuoteController extends ScreenController implements Initia
     protected ComboBox<User> cbxContactPerson;
     @FXML
     protected TextField txtCell,txtTel,txtTotal,txtQuoteId,txtFax,txtEmail,txtDateGenerated,txtStatus,txtRevision,txtExtra;
-    //@FXML
-    //protected Slider vatSlider;
     @FXML
     protected ToggleButton toggleVatExempt;
     @FXML
@@ -114,7 +107,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             refreshTotal();
         });
 
-        tblSaleReps.getItems().clear();
         tblQuoteItems.getItems().clear();
 
         //Setup Quote Items table
@@ -208,15 +200,6 @@ public abstract class QuoteController extends ScreenController implements Initia
 
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
-        //Setup Sale Reps table
-        colFirstname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        colLastname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-        colCell.setCellValueFactory(new PropertyValueFactory<>("cell"));
-        colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        colActive.setCellValueFactory(new PropertyValueFactory<>("active"));
-
         cbxClients.setCellFactory(new Callback<ListView<Client>, ListCell<Client>>()
         {
             @Override public ListCell<Client> call(ListView<Client> p)
@@ -240,15 +223,6 @@ public abstract class QuoteController extends ScreenController implements Initia
         });
         cbxClients.setButtonCell(null);
         cbxClients.setItems(FXCollections.observableArrayList(ClientManager.getInstance().getClients().values()));
-        /*cbxClients.setOnAction(event ->
-        {
-            if(cbxClients.getValue()!=null)
-            {
-                txtFax.setText(cbxClients.getValue().getFax());
-                itemsModified=true;
-            }
-            //else IO.logAndAlert("Invalid Client", "Client company selected is invalid.", IO.TAG_ERROR);
-        });*/
 
         cbxContactPerson.setCellFactory(new Callback<ListView<User>, ListCell<User>>()
         {
@@ -488,7 +462,7 @@ public abstract class QuoteController extends ScreenController implements Initia
                                         getTableView().getItems().remove(user);
                                         getTableView().refresh();
                                         //TODO: remove from server
-                                        System.out.println("Successfully removed sale representative: " + user.toString());
+                                        System.out.println("Successfully removed sale representative: " + user.getName());
                                     });
                                     setGraphic(btnRemove);
                                     setText(null);
@@ -498,9 +472,6 @@ public abstract class QuoteController extends ScreenController implements Initia
                         return cell;
                     }
                 };
-
-        colUserAction.setMinWidth(120);
-        colUserAction.setCellFactory(actionColCellFactory);
     }
 
     public Callback getAdditionalCostCallback(TableColumn col)
@@ -895,76 +866,6 @@ public abstract class QuoteController extends ScreenController implements Initia
     }
 
     @FXML
-    public void newSaleConsultant()
-    {
-        if(QuoteManager.getInstance()!=null)
-        {
-            if(UserManager.getInstance().getUsers()!=null)
-            {
-                if(UserManager.getInstance().getUsers().size()>0)
-                {
-                    User[] users = new User[UserManager.getInstance().getUsers().size()];
-                    UserManager.getInstance().getUsers().values().toArray(users);
-
-                    ComboBox<User> userComboBox = new ComboBox<>();
-                    userComboBox.setMinWidth(120);
-                    userComboBox.setItems(FXCollections.observableArrayList(users));
-                    HBox.setHgrow(userComboBox, Priority.ALWAYS);
-
-                    Button btnAdd = new Button("Add");
-                    btnAdd.setMinWidth(80);
-                    btnAdd.setMinHeight(40);
-                    btnAdd.setDefaultButton(true);
-                    btnAdd.getStyleClass().add("btnApply");
-                    btnAdd.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-
-                    Button btnCancel = new Button("Close");
-                    btnCancel.setMinWidth(80);
-                    btnCancel.setMinHeight(40);
-                    btnCancel.getStyleClass().add("btnBack");
-                    btnCancel.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-
-                    HBox hBox = new HBox(new Label("User: "), userComboBox);
-                    HBox.setHgrow(hBox, Priority.ALWAYS);
-                    hBox.setSpacing(20);
-
-                    HBox hBoxButtons = new HBox(btnAdd, btnCancel);
-                    hBoxButtons.setHgrow(btnAdd, Priority.ALWAYS);
-                    hBoxButtons.setHgrow(btnCancel, Priority.ALWAYS);
-                    hBoxButtons.setSpacing(20);
-
-                    VBox vBox = new VBox(hBox, hBoxButtons);
-                    VBox.setVgrow(vBox, Priority.ALWAYS);
-                    vBox.setSpacing(20);
-                    HBox.setHgrow(vBox, Priority.ALWAYS);
-                    vBox.setFillWidth(true);
-
-                    Stage stage = new Stage();
-                    stage.setTitle("Add Quote Representative");
-                    stage.setScene(new Scene(vBox));
-                    stage.setAlwaysOnTop(true);
-                    stage.show();
-
-                    btnAdd.setOnAction(event ->
-                    {
-                        if(userComboBox.getValue()!=null)
-                        {
-                            tblSaleReps.getItems().add(userComboBox.getValue());
-                            itemsModified=true;
-                        }
-                        else IO.logAndAlert("Add Quote Representative", "Invalid user selected.", IO.TAG_ERROR);
-                    });
-
-                    btnCancel.setOnAction(event ->
-                        stage.close());
-                    return;
-                }
-            }
-        }
-        IO.logAndAlert("New Sale Consultant", "No users were found in the database, please add an user first and try again.",IO.TAG_ERROR);
-    }
-
-    @FXML
     public void apply()
     {
         SessionManager smgr = SessionManager.getInstance();
@@ -996,7 +897,7 @@ public abstract class QuoteController extends ScreenController implements Initia
             if(selected.getStatus()!=Quote.STATUS_APPROVED)
             {
                 selected.setStatus(Quote.STATUS_APPROVED);
-                QuoteManager.getInstance().updateQuote(selected, tblQuoteItems.getItems(), tblSaleReps.getItems());
+                QuoteManager.getInstance().updateQuote(selected, tblQuoteItems.getItems());
                 refreshModel();
                 refreshView();
             } else IO.logAndAlert("Error", "Selected quote has already been approved.", IO.TAG_ERROR);
@@ -1072,19 +973,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             IO.logAndAlert("Invalid Quote", "Quote has no materials", IO.TAG_ERROR);
             return;
         }
-
-        List<User> quoteReps = tblSaleReps.getItems();
-        if(quoteReps==null)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote has no representatives.", IO.TAG_ERROR);
-            return;
-        }
-        if(quoteReps.size()<=0)
-        {
-            IO.logAndAlert("Invalid Quote", "Quote has no representatives", IO.TAG_ERROR);
-            return;
-        }
-
         //prepare quote attributes
         Quote quote = new Quote();
         quote.setClient_id(cbxClients.getValue().get_id());
@@ -1105,7 +993,7 @@ public abstract class QuoteController extends ScreenController implements Initia
 
         try
         {
-            QuoteManager.getInstance().createQuote(quote, tblQuoteItems.getItems(), tblSaleReps.getItems(), new Callback()
+            QuoteManager.getInstance().createQuote(quote, tblQuoteItems.getItems(), new Callback()
             {
                 @Override
                 public Object call(Object quote_id)
@@ -1234,7 +1122,7 @@ public abstract class QuoteController extends ScreenController implements Initia
             try
             {
                 //Create new Quote with new _id & +1 revision number, with parent Quote pointing to current selected Quote
-                QuoteManager.getInstance().createQuote(quote, tblQuoteItems.getItems(), tblSaleReps.getItems(), new Callback()
+                QuoteManager.getInstance().createQuote(quote, tblQuoteItems.getItems(), new Callback()
                 {
                     @Override
                     public Object call(Object quote_id)
@@ -1305,107 +1193,6 @@ public abstract class QuoteController extends ScreenController implements Initia
             } catch (IOException e)
             {
                 IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-            }
-        } else IO.logAndAlert("Error", "Selected quote is invalid.", IO.TAG_ERROR);
-    }
-
-    @FXML
-    public void updateQuoteLegacy()
-    {
-        cbxClients.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-        if(cbxClients.getValue()==null)
-        {
-            cbxClients.getStyleClass().remove("form-control-default");
-            cbxClients.getStyleClass().add("control-input-error");
-            return;
-        }else{
-            cbxClients.getStyleClass().remove("control-input-error");
-            cbxClients.getStyleClass().add("form-control-default");
-        }
-
-        cbxContactPerson.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-        if(cbxContactPerson.getValue()==null)
-        {
-            cbxContactPerson.getStyleClass().remove("form-control-default");
-            cbxContactPerson.getStyleClass().add("control-input-error");
-            return;
-        }else{
-            cbxContactPerson.getStyleClass().remove("control-input-error");
-            cbxContactPerson.getStyleClass().add("form-control-default");
-        }
-
-        if(!Validators.isValidNode(txtCell, txtCell.getText(), 1, ".+"))
-        {
-            txtCell.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
-        if(!Validators.isValidNode(txtTel, txtTel.getText(), 1, ".+"))
-        {
-            txtTel.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
-        if(!Validators.isValidNode(txtEmail, txtEmail.getText(), 1, ".+"))
-        {
-            txtEmail.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
-        cbxAccount.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-        if(cbxAccount.getValue()==null)
-        {
-            cbxAccount.getStyleClass().remove("form-control-default");
-            cbxAccount.getStyleClass().add("control-input-error");
-            return;
-        }else{
-            cbxAccount.getStyleClass().remove("control-input-error");
-            cbxAccount.getStyleClass().add("form-control-default");
-        }
-
-        if(!Validators.isValidNode(txtRequest, txtRequest.getText(), 1, ".+"))
-        {
-            txtRequest.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-            return;
-        }
-
-        Quote selected = QuoteManager.getInstance().getSelectedQuote();
-        if(selected!=null)
-        {
-            if(selected.getStatus()==Quote.STATUS_APPROVED)
-            {
-                IO.logAndAlert("Error", "Selected Quote has already been approved and can no longer be changed.", IO.TAG_ERROR);
-                return;
-            }
-            selected.setClient_id(cbxClients.getValue().get_id());
-            selected.setContact_person_id(cbxContactPerson.getValue().getUsr());
-            if(toggleVatExempt.isSelected())
-                selected.setVat(0);
-            else selected.setVat(QuoteManager.VAT);
-            selected.setRequest(txtRequest.getText());
-            selected.setAccount_name(cbxAccount.getValue());
-
-            QuoteManager.getInstance().updateQuote(selected, tblQuoteItems.getItems(), tblSaleReps.getItems());
-
-            try
-            {
-                QuoteManager.getInstance().reloadDataFromServer();
-                if(QuoteManager.getInstance().getQuotes()!=null)
-                    QuoteManager.getInstance().setSelectedQuote(QuoteManager.getInstance().getQuotes().get(selected.get_id()));
-                new Thread(() ->
-                {
-                    refreshModel();
-                    Platform.runLater(() -> refreshView());
-                }).start();
-            }catch (MalformedURLException ex)
-            {
-                IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
-                IO.showMessage("URL Error", ex.getMessage(), IO.TAG_ERROR);
-            }catch (ClassNotFoundException e)
-            {
-                IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
-                IO.showMessage("ClassNotFoundException", e.getMessage(), IO.TAG_ERROR);
-            }catch (IOException ex)
-            {
-                IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
-                IO.showMessage("I/O Error", ex.getMessage(), IO.TAG_ERROR);
             }
         } else IO.logAndAlert("Error", "Selected quote is invalid.", IO.TAG_ERROR);
     }

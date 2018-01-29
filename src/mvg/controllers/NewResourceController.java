@@ -154,7 +154,7 @@ public class NewResourceController extends ScreenController implements Initializ
             headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
 
             //create new supplier on database
-            HttpURLConnection connection = RemoteComms.putJSON("/resources", resource.toString(), headers);
+            HttpURLConnection connection = RemoteComms.putJSON("/resources", resource.asJSONString(), headers);
             if(connection!=null)
             {
                 if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)

@@ -90,18 +90,6 @@ public class CreateAccountController extends ScreenController implements Initial
         {
             if(access_levels[access_level_index].toLowerCase().equals("super"))
             {
-                /*ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
-                params.add(new AbstractMap.SimpleEntry<>("username", txtUsername.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("password", txtPassword.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("access_level", "3"));
-                params.add(new AbstractMap.SimpleEntry<>("firstname", txtFirstname.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("lastname", txtLastname.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("gender", cbxSex.getItems().get(sex_index).toString()));
-                params.add(new AbstractMap.SimpleEntry<>("email", txtEmail.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("tel", txtTelephone.getText()));
-                params.add(new AbstractMap.SimpleEntry<>("cell", txtCellphone.getText()));
-                if(txtOther.getText()!=null)
-                    params.add(new AbstractMap.SimpleEntry<>("other", txtOther.getText()));*/
                 User user = new User();
                 user.setUsr(txtUsername.getText());
                 user.setPwd(txtPassword.getText());
@@ -113,7 +101,7 @@ public class CreateAccountController extends ScreenController implements Initial
                 user.setTel(txtTelephone.getText());
                 user.setCell(txtCellphone.getText());
                 user.setOrganisation_id(txtOrganisationId.getText());
-                user.setCreator("system");//TODO: check this
+                //user.setCreator("system");//TODO: check this
                 if(txtOther.getText()!=null)
                     user.setOther(txtOther.getText());
 
@@ -122,7 +110,7 @@ public class CreateAccountController extends ScreenController implements Initial
                     ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
                     headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
 
-                    HttpURLConnection connection = RemoteComms.putJSON("/users", user.toString(), headers);
+                    HttpURLConnection connection = RemoteComms.putJSON("/users", user.asJSONString(), headers);
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
                     {
                         IO.logAndAlert("Account Creation Success", "Successfully created account.", IO.TAG_INFO);
@@ -130,7 +118,7 @@ public class CreateAccountController extends ScreenController implements Initial
                         IO.logAndAlert("Account Creation Failure", IO.readStream(connection.getErrorStream()), IO.TAG_ERROR);
 
                     connection.disconnect();
-                }catch (IOException e)
+                } catch (IOException e)
                 {
                     IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
                 }

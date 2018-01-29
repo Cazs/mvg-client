@@ -169,8 +169,8 @@ public class NewClientController extends ScreenController implements Initializab
             headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
             headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
 
-            //create new supplier on database
-            HttpURLConnection connection = RemoteComms.putJSON("/clients", client.toString(), headers);
+            //create new client on database
+            HttpURLConnection connection = RemoteComms.putJSON("/clients", client.asJSONString(), headers);
             if(connection!=null)
             {
                 if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)

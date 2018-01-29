@@ -237,25 +237,37 @@ public class ClientManager extends MVGObjectManager
             if(!Validators.isValidNode(txt_website, txt_website.getText(), 1, ".+"))
                 return;
 
+            if(SessionManager.getInstance().getActive()==null)
+            {
+                IO.logAndAlert("Error: Invalid Session", "Active session is invalid.\nPlease log in.", IO.TAG_ERROR);
+                return;
+            }
+            if(SessionManager.getInstance().getActive().isExpired())
+            {
+                IO.logAndAlert("Error: Session Expired", "Active session has expired.\nPlease log in.", IO.TAG_ERROR);
+                return;
+            }
             long date_partnered_in_sec = dpk_date_partnered.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
 
-            ArrayList<AbstractMap.SimpleEntry<String, String>> params = new ArrayList<>();
-            params.add(new AbstractMap.SimpleEntry<>("client_name", txt_client_name.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("physical_address", txt_physical_address.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("postal_address", txt_postal_address.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("tel", txt_tel.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("contact_email", txt_contact_email.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("registration", txt_client_reg.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("vat", txt_client_vat.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("account_name", txt_client_account.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("date_partnered", String.valueOf(date_partnered_in_sec)));
-            params.add(new AbstractMap.SimpleEntry<>("website", txt_website.getText()));
-            params.add(new AbstractMap.SimpleEntry<>("active", String.valueOf(chbx_active.isSelected())));
-            params.add(new AbstractMap.SimpleEntry<>("other", txt_other.getText()));
-
+            Client client = new Client();
+            client.setClient_name(txt_client_name.getText());
+            client.setPhysical_address(txt_physical_address.getText());
+            client.setPostal_address(txt_postal_address.getText());
+            client.setTel(txt_tel.getText());
+            client.setContact_email(txt_contact_email.getText());
+            client.setRegistration_number(txt_client_reg.getText());
+            client.setVat_number(txt_client_vat.getText());
+            client.setAccount_name(txt_client_account.getText());
+            client.setDate_partnered(date_partnered_in_sec);
+            client.setWebsite(txt_website.getText());
+            client.setCreator(SessionManager.getInstance().getActiveUser().getUsr());
+            client.setActive(chbx_active.isSelected());
+            if(txt_other.getText()!=null)
+                client.setOther(txt_other.getText());
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 if(SessionManager.getInstance().getActive()!=null)
                     headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 else
@@ -264,7 +276,7 @@ public class ClientManager extends MVGObjectManager
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.postData("/api/client/add", params, headers);
+                HttpURLConnection connection = RemoteComms.putJSON("/clients", client.asJSONString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)

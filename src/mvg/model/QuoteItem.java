@@ -5,11 +5,8 @@ import mvg.auxilary.IO;
 import mvg.managers.ResourceManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import mvg.model.MVGObject;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -309,10 +306,11 @@ public class QuoteItem extends MVGObject implements Serializable
     }
 
     @Override
-    public String toString()
+    public String asJSONString()
     {
-        String json_obj = "{";//\"_id\":\""+get_id()+"\"
-        json_obj+="\"resource_id\":\""+resource_id+"\""
+        String super_json = super.asJSONString();
+        String json_obj = super_json.substring(0,super_json.length()-1);//ignore last brace
+        json_obj+=",\"resource_id\":\""+resource_id+"\""
                 +",\"quote_id\":\""+quote_id+"\""
                 +",\"item_number\":\""+item_number+"\""
                 +",\"quantity\":\""+quantity+"\""
@@ -320,13 +318,8 @@ public class QuoteItem extends MVGObject implements Serializable
                 +",\"markup\":\""+markup+"\"";
         if(additional_costs!=null)
                 json_obj+=",\"additional_costs\":\""+additional_costs+"\"";
-        if(getCreator()!=null)
-            json_obj+=",\"creator\":\""+getCreator()+"\"";
-        if(getDate_logged()>0)
-            json_obj+=",\"date_logged\":\""+getDate_logged()+"\"";
-        json_obj+=",\"other\":\""+getOther()+"\"}";
+        json_obj+="}";
 
-        IO.log(getClass().getName(),IO.TAG_INFO, json_obj);
         return json_obj;
     }
 

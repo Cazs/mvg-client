@@ -122,11 +122,9 @@ public class EnquiriesController extends ScreenController implements Initializab
                                         quote.setRevision(1.0);
 
                                         List<User> quote_reps = new ArrayList<>();
-                                        quote_reps.add(SessionManager.getInstance().getActiveUser());
                                         try
                                         {
-                                            QuoteManager.getInstance().createQuote(quote, null, FXCollections
-                                                    .observableList(quote_reps), new Callback()
+                                            QuoteManager.getInstance().createQuote(quote, null, new Callback()
                                             {
                                                 @Override
                                                 public Object call(Object new_quote_id)

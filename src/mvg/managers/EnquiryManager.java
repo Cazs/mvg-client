@@ -183,7 +183,7 @@ public class EnquiryManager extends MVGObjectManager
         }
 
         //create new enquiry on database
-        HttpURLConnection connection = RemoteComms.putJSON("/enquiries", enquiry.toString(), headers);
+        HttpURLConnection connection = RemoteComms.putJSON("/enquiries", enquiry.asJSONString(), headers);
         if(connection!=null)
         {
             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -247,9 +247,10 @@ public class EnquiryManager extends MVGObjectManager
             try
             {
                 ArrayList<AbstractMap.SimpleEntry<String, String>> headers = new ArrayList<>();
+                headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 //update Enquiry on database
-                HttpURLConnection connection = RemoteComms.putJSON("/enquiries/"+enquiry.get_id(), enquiry.toString(), headers);
+                HttpURLConnection connection = RemoteComms.postJSON("/enquiries/"+enquiry.get_id(), enquiry.asJSONString(), headers);
                 if (connection != null)
                 {
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)

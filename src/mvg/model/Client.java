@@ -10,8 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  *
@@ -262,10 +260,11 @@ public class Client extends MVGObject implements Serializable
     }
 
     @Override
-    public String toString()
+    public String asJSONString()
     {
-        String json_obj = "{"+(get_id()!=null?"\"_id\":\""+get_id()+"\",":"")
-                +"\"client_name\":\""+getClient_name()+"\""
+        String super_json = super.asJSONString();
+        String json_obj = super_json.substring(0,super_json.length()-1)//ignore last brace
+                +",\"client_name\":\""+getClient_name()+"\""
                 +",\"tel\":\""+getTel()+"\""
                 +",\"fax\":\""+getFax()+"\""
                 +",\"physical_address\":\""+getPhysical_address()+"\""
@@ -277,14 +276,16 @@ public class Client extends MVGObject implements Serializable
                 +",\"vat_number\":\""+getVat_number()+"\"";
         if(getDate_partnered()>0)
             json_obj+=",\"date_partnered\":\""+getDate_partnered()+"\"";
-        if(getCreator()!=null)
-            json_obj+=",\"creator\":\""+getCreator()+"\"";
-        if(getDate_logged()>0)
-            json_obj+=",\"date_logged\":\""+getDate_logged()+"\"";
-        json_obj+=",\"other\":\""+getOther()+"\"}";
+        json_obj+="}";
 
         IO.log(getClass().getName(),IO.TAG_INFO, json_obj);
         return json_obj;
+    }
+
+    @Override
+    public String toString()
+    {
+        return getClient_name();
     }
 
     @Override

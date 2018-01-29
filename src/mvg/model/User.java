@@ -9,8 +9,6 @@ import mvg.auxilary.IO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  *
@@ -261,26 +259,30 @@ public class User extends MVGObject implements Serializable
     public String getInitials(){return new String(firstname.substring(0,1) + lastname.substring(0,1));}
 
     @Override
-    public String toString()
+    public String asJSONString()
     {
         //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
-        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")+
-                "\"firstname\":\""+firstname+"\""+
-                ",\"lastname\":\""+lastname+"\""+
-                ",\"usr\":\""+usr+"\""+
-                ",\"pwd\":\""+pwd+"\""
-                +(organisation_id!=null?",\"organisation_id\":\""+organisation_id+"\"":"")+
-                ",\"access_level\":\""+access_level+"\""+
-                ",\"gender\":\""+gender+"\""+
-                ",\"email\":\""+email+"\""+
-                ",\"tel\":\""+tel+"\""+
-                ",\"cell\":\""+cell+"\""+
-                ",\"active\":\""+active+"\""
-                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
-                +(getDate_logged()>0?",\"date_logged\":\""+getDate_logged()+"\"":"")
-                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
-                +(getOther()!=null?",\"other\":\""+getOther()+"\"":"")
+        String super_json = super.asJSONString();
+        String json_obj = super_json.substring(0,super_json.length()-1)//ignore last brace
+                +",\"firstname\":\""+firstname+"\""
+                +",\"lastname\":\""+lastname+"\""
+                +",\"usr\":\""+usr+"\""
+                +",\"pwd\":\""+pwd+"\""
+                +(organisation_id!=null?",\"organisation_id\":\""+organisation_id+"\"":"")
+                +",\"access_level\":\""+access_level+"\""
+                +",\"gender\":\""+gender+"\""
+                +",\"email\":\""+email+"\""
+                +",\"tel\":\""+tel+"\""
+                +",\"cell\":\""+cell+"\""
+                +",\"active\":\""+active+"\""
                 +"}";
+        return json_obj;
+    }
+
+    @Override
+    public String toString()
+    {
+        return getName();
     }
 
     @Override

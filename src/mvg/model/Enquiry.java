@@ -9,10 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import mvg.auxilary.IO;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 /**
  *
  * @author ghost
@@ -155,20 +151,23 @@ public class Enquiry extends MVGObject
     }
 
     @Override
-    public String toString()
+    public String asJSONString()
     {
         //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
-        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")+
-                "\"enquiry\":\""+getEnquiry()+"\""+
-                ",\"destination\":\""+getDestination()+"\""+
-                ",\"pickup_location\":\""+getPickup_location()+"\""+
-                ",\"trip_type\":\""+getTrip_type()+"\""+
-                ",\"date_scheduled\":\""+getDate_scheduled()+"\""
-                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
-                +(getDate_logged()>0?",\"date_logged\":\""+getDate_logged()+"\"":"")
-                +(getCreator()!=null?",\"creator\":\""+getCreator()+"\"":"")
-                +(getOther()!=null?",\"other\":\""+getOther()+"\"":"")
+        String super_json = super.asJSONString();
+        return super_json.substring(0,super_json.length()-1)//ignore last brace
+                +",\"enquiry\":\""+getEnquiry()+"\""
+                +",\"destination\":\""+getDestination()+"\""
+                +",\"pickup_location\":\""+getPickup_location()+"\""
+                +",\"trip_type\":\""+getTrip_type()+"\""
+                +",\"date_scheduled\":\""+getDate_scheduled()+"\""
                 +"}";
+    }
+
+    @Override
+    public String toString()
+    {
+        return getEnquiry();
     }
 
     @Override

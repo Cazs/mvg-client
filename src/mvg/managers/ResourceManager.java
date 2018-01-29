@@ -349,10 +349,6 @@ public class ResourceManager extends MVGObjectManager
                 return;
             if(!Validators.isValidNode(txt_unit, txt_unit.getText(), 1, ".+"))
                 return;
-            //if(!Validators.isValidNode(dpk_date_acquired, dpk_date_acquired.getValue()==null?"":dpk_date_acquired.getValue().toString(), 4, date_regex))
-            //    return;
-            //if(!Validators.isValidNode(txt_account, txt_account.getText(), 1, ".+"))
-            //    return;
 
             long date_acquired_in_sec=0, date_exhausted_in_sec=0;
             String str_resource_name = txt_resource_name.getText();
@@ -405,7 +401,7 @@ public class ResourceManager extends MVGObjectManager
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.putJSON("/resources", res.toString(), headers);
+                HttpURLConnection connection = RemoteComms.putJSON("/resources", res.asJSONString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
@@ -539,7 +535,7 @@ public class ResourceManager extends MVGObjectManager
                     return;
                 }
 
-                HttpURLConnection connection = RemoteComms.putJSON("/resources/types", res_type.toString(), headers);
+                HttpURLConnection connection = RemoteComms.putJSON("/resources/types", res_type.asJSONString(), headers);
                 if(connection!=null)
                 {
                     if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)

@@ -310,13 +310,6 @@ public class PDF
             IO.logAndAlert("PDF Viewer Error", "Quote has no client assigned to it.", IO.TAG_ERROR);
             return null;
         }
-        //Load Users assigned to Quote
-        User[] reps = quote.getRepresentatives();
-        if(reps==null)
-        {
-            IO.logAndAlert("PDF Viewer Error", "Quote has no representatives(users) assigned to it.", IO.TAG_ERROR);
-            return null;
-        }
         User contact = quote.getContact_person();
         if(contact==null)
         {
@@ -405,61 +398,59 @@ public class PDF
         //temp_pos-=LINE_HEIGHT;//next line (for internal consultants)
         //Render sale representatives
         int int_rep_count=0;
-        for(User user : reps)
+        User creator = quote.getCreatorUser();
+        //if the page can't hold 4 more lines add a new page
+        if(line_pos-(4*LINE_HEIGHT)<h-logo_h-(ROW_COUNT*LINE_HEIGHT) || temp_pos-(4*LINE_HEIGHT)<h-logo_h-(ROW_COUNT*LINE_HEIGHT))
         {
-            //if the page can't hold 4 more lines add a new page
-            if(line_pos-(4*LINE_HEIGHT)<h-logo_h-(ROW_COUNT*LINE_HEIGHT) || temp_pos-(4*LINE_HEIGHT)<h-logo_h-(ROW_COUNT*LINE_HEIGHT))
+            addTextToPageStream(contents, "Page "+quote_page_count, PDType1Font.HELVETICA_OBLIQUE, 14,(int)(w/2)-20, 50);
+            //add new page
+            page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+            //TODO: setup page, i.e. draw lines and stuff
+            contents.close();
+            contents = new PDPageContentStream(document, page);
+            temp_pos = (int)h-logo_h;
+            line_pos = (int)h-logo_h;
+
+            createLinesAndBordersOnPage(contents, (int)w, line_pos, line_pos+LINE_HEIGHT/2);
+
+            contents.beginText();
+            quote_page_count++;
+        }
+
+        if(!creator.isActiveVal())//external user
+        {
+            addTextToPageStream(contents,"Contact Person:   " + creator.toString(), 12,20, line_pos);
+            line_pos-=LINE_HEIGHT;//next line
+            addTextToPageStream(contents,"Tel    :  " + creator.getTel(), 12,120, line_pos);
+            line_pos-=LINE_HEIGHT;//next line
+            addTextToPageStream(contents,"Cell   :  " + creator.getCell(), 12,120, line_pos);
+            line_pos-=LINE_HEIGHT;//next line
+            addTextToPageStream(contents,"eMail :  " + creator.getEmail(), 12,120, line_pos);
+            line_pos-=LINE_HEIGHT;//next line
+        }else {//internal representatives
+            if(int_rep_count==0)//make first internal rep bold
             {
-                addTextToPageStream(contents, "Page "+quote_page_count, PDType1Font.HELVETICA_OBLIQUE, 14,(int)(w/2)-20, 50);
-                //add new page
-                page = new PDPage(PDRectangle.A4);
-                document.addPage(page);
-                //TODO: setup page, i.e. draw lines and stuff
-                contents.close();
-                contents = new PDPageContentStream(document, page);
-                temp_pos = (int)h-logo_h;
-                line_pos = (int)h-logo_h;
-
-                createLinesAndBordersOnPage(contents, (int)w, line_pos, line_pos+LINE_HEIGHT/2);
-
-                contents.beginText();
-                quote_page_count++;
-            }
-
-            if(!user.isActiveVal())//external user
+                addTextToPageStream(contents, "Sale Consultant:  " + creator.toString(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 5, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "Tel    :  " + creator.getTel(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "Cell   :  " + creator.getCell(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "eMail :  " + creator.getEmail(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+            }else
             {
-                addTextToPageStream(contents,"Contact Person:   " + user.toString(), 12,20, line_pos);
-                line_pos-=LINE_HEIGHT;//next line
-                addTextToPageStream(contents,"Tel    :  " + user.getTel(), 12,120, line_pos);
-                line_pos-=LINE_HEIGHT;//next line
-                addTextToPageStream(contents,"Cell   :  " + user.getCell(), 12,120, line_pos);
-                line_pos-=LINE_HEIGHT;//next line
-                addTextToPageStream(contents,"eMail :  " + user.getEmail(), 12,120, line_pos);
-                line_pos-=LINE_HEIGHT;//next line
-            }else {//internal representatives
-                if(int_rep_count==0)//make first internal rep bold
-                {
-                    addTextToPageStream(contents, "Sale Consultant:  " + user.toString(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 5, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "Tel    :  " + user.getTel(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "Cell   :  " + user.getCell(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "eMail :  " + user.getEmail(), PDType1Font.HELVETICA_BOLD, 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                }else
-                {
-                    addTextToPageStream(contents, "Sale Consultant:  " + user.toString(), 12, (int) (w / 2) + 5, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "Tel    :  " + user.getTel(), 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "Cell   :  " + user.getCell(), 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                    addTextToPageStream(contents, "eMail :  " + user.getEmail(), 12, (int) (w / 2) + 105, temp_pos);
-                    temp_pos -= LINE_HEIGHT;//next line
-                }
-                int_rep_count++;
+                addTextToPageStream(contents, "Sale Consultant:  " + creator.toString(), 12, (int) (w / 2) + 5, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "Tel    :  " + creator.getTel(), 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "Cell   :  " + creator.getCell(), 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
+                addTextToPageStream(contents, "eMail :  " + creator.getEmail(), 12, (int) (w / 2) + 105, temp_pos);
+                temp_pos -= LINE_HEIGHT;//next line
             }
+            int_rep_count++;
         }
         //set the cursor to the line after the sale/client rep info
         line_pos = line_pos<temp_pos?line_pos:temp_pos;
