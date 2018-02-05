@@ -1,53 +1,58 @@
+package mvg.model;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mvg.model;
 
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import mvg.auxilary.IO;
+import mvg.managers.ClientManager;
+
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *
  * @author ghost
  */
-public class Enquiry extends MVGObject
+public class Enquiry extends MVGObject implements Serializable
 {
     private String enquiry;
     private String pickup_location;
     private String destination;
     private String trip_type;
     private String comments;
+    private String client_id;
     private long date_scheduled;
     public static final String TAG = "Enquiry";
-
-    private StringProperty enquiryProperty(){return new SimpleStringProperty(enquiry);}
 
     public String getEnquiry()
     {
         return enquiry;
     }
 
-    public void setEnquiry(String enquiry) {
+    public void setEnquiry(String enquiry)
+    {
         this.enquiry = enquiry;
     }
-
-    private StringProperty pickup_locationProperty(){return new SimpleStringProperty(pickup_location);}
 
     public String getPickup_location()
     {
         return pickup_location;
     }
 
-    public void setPickup_location(String pickup_location) {
+    public void setPickup_location(String pickup_location)
+    {
         this.pickup_location = pickup_location;
     }
 
-    private StringProperty destinationProperty(){return new SimpleStringProperty(String.valueOf(destination));}
-
-    public String getDestination() {
+    public String getDestination()
+    {
         return destination;
     }
 
@@ -55,8 +60,6 @@ public class Enquiry extends MVGObject
     {
         this.destination = destination;
     }
-
-    private StringProperty trip_typeProperty(){return new SimpleStringProperty(String.valueOf(trip_type));}
 
     public String getTrip_type()
     {
@@ -68,8 +71,6 @@ public class Enquiry extends MVGObject
         this.trip_type = trip_type;
     }
 
-    private StringProperty commentsProperty(){return new SimpleStringProperty(comments);}
-
     public String getComments()
     {
         return comments;
@@ -80,8 +81,6 @@ public class Enquiry extends MVGObject
         this.comments = comments;
     }
 
-    private StringProperty date_scheduledProperty(){return new SimpleStringProperty(String.valueOf(getDate_scheduled()));}
-
     public long getDate_scheduled()
     {
         return date_scheduled;
@@ -91,6 +90,39 @@ public class Enquiry extends MVGObject
     {
         this.date_scheduled = date_scheduled;
     }
+
+    public Client getClient()
+    {
+        HashMap<String, Client> clients = ClientManager.getInstance().getClients();
+        if(clients!=null)
+        {
+            return clients.get(client_id);
+        }else IO.log(getClass().getName(), IO.TAG_ERROR, "no clients were found in database.");
+        return null;
+    }
+
+    public String getClient_id()
+    {
+        return client_id;
+    }
+
+    public void setClient_id(String client_id)
+    {
+        this.client_id = client_id;
+    }
+
+    // Properties
+    public StringProperty client_nameProperty()
+    {
+        if(getClient()!=null)
+            return new SimpleStringProperty(getClient().getClient_name());
+        return new SimpleStringProperty("N/A");
+    }
+    public StringProperty pickup_locationProperty(){return new SimpleStringProperty(pickup_location);}
+    public StringProperty destinationProperty(){return new SimpleStringProperty(String.valueOf(destination));}
+    public StringProperty trip_typeProperty(){return new SimpleStringProperty(String.valueOf(trip_type));}
+    public StringProperty commentsProperty(){return new SimpleStringProperty(comments);}
+    public LongProperty date_scheduledProperty(){return new SimpleLongProperty(getDate_scheduled());}
 
     @Override
     public void parse(String var, Object val)
@@ -116,6 +148,9 @@ public class Enquiry extends MVGObject
                     break;
                 case "comments":
                     setComments((String)val);
+                    break;
+                case "client_id":
+                    setClient_id((String)val);
                     break;
                 default:
                     IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
@@ -144,6 +179,8 @@ public class Enquiry extends MVGObject
                 return trip_type;
             case "comments":
                 return comments;
+            case "client_id":
+                return client_id;
             default:
                 IO.log(TAG, IO.TAG_WARN, String.format("unknown "+getClass().getName()+" attribute '%s'", var));
                 return null;
@@ -153,21 +190,23 @@ public class Enquiry extends MVGObject
     @Override
     public String asJSONString()
     {
-        //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
         String super_json = super.asJSONString();
-        return super_json.substring(0,super_json.length()-1)//ignore last brace
+        String json_obj = super_json.substring(0,super_json.length()-1)//ignore last brace
                 +",\"enquiry\":\""+getEnquiry()+"\""
+                +",\"client_id\":\""+getClient_id()+"\""
                 +",\"destination\":\""+getDestination()+"\""
                 +",\"pickup_location\":\""+getPickup_location()+"\""
                 +",\"trip_type\":\""+getTrip_type()+"\""
-                +",\"date_scheduled\":\""+getDate_scheduled()+"\""
-                +"}";
+                +",\"date_scheduled\":\""+getDate_scheduled()+"\"";
+        json_obj+="}";
+
+        return json_obj;
     }
 
     @Override
     public String toString()
     {
-        return getEnquiry();
+        return asJSONString();
     }
 
     @Override
@@ -176,3 +215,4 @@ public class Enquiry extends MVGObject
         return "/enquiries";
     }
 }
+

@@ -8,10 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import mvg.auxilary.IO;
 import mvg.managers.*;
@@ -20,8 +18,6 @@ import mvg.model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class EnquiriesController extends ScreenController implements Initializable
@@ -30,7 +26,7 @@ public class EnquiriesController extends ScreenController implements Initializab
     private TableView<Enquiry> tblEnquiries;
     @FXML
     private TableColumn colId, colClient, colEnquiry, colAddress,
-            colDestination,colTripType,colDate,colOther,colAction;
+            colDestination,colTripType,colCreator,colDate,colDateLogged,colOther,colAction;
     
     @Override
     public void refreshView()
@@ -38,17 +34,21 @@ public class EnquiriesController extends ScreenController implements Initializab
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading enquiries view..");
         if( EnquiryManager.getInstance().getEnquiries()==null)
         {
-            IO.logAndAlert(getClass().getName(), "no enquiries were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "No enquiries were found in the database.", IO.TAG_WARN);
             return;
         }
 
         colId.setMinWidth(100);
         colId.setCellValueFactory(new PropertyValueFactory<>("_id"));
+        colClient.setCellValueFactory(new PropertyValueFactory<>("client_name"));
         CustomTableViewControls.makeEditableTableColumn(colEnquiry, TextFieldTableCell.forTableColumn(), 80, "enquiry", "/enquiries");
         CustomTableViewControls.makeEditableTableColumn(colAddress, TextFieldTableCell.forTableColumn(), 120, "pickup_location", "/enquiries");
         CustomTableViewControls.makeEditableTableColumn(colDestination, TextFieldTableCell.forTableColumn(), 120, "destination", "/enquiries");
         CustomTableViewControls.makeEditableTableColumn(colTripType, TextFieldTableCell.forTableColumn(), 80, "trip_type", "/enquiries");
+        colCreator.setMinWidth(100);
+        colCreator.setCellValueFactory(new PropertyValueFactory<>("creator"));
         CustomTableViewControls.makeLabelledDatePickerTableColumn(colDate, "date_scheduled");
+        CustomTableViewControls.makeLabelledDatePickerTableColumn(colDateLogged, "date_logged", false);
         CustomTableViewControls.makeEditableTableColumn(colOther, TextFieldTableCell.forTableColumn(), 50, "other", "/enquiries");
 
         ObservableList<Enquiry> lst_enquiries = FXCollections.observableArrayList();
@@ -94,9 +94,19 @@ public class EnquiriesController extends ScreenController implements Initializab
 
                                     btnQuote.setOnAction(event ->
                                     {
-                                        if(enquiry==null)
+                                        if(enquiry ==null)
                                         {
-                                            IO.logAndAlert("Error " + getClass().getName(), "Requisition object is not set", IO.TAG_ERROR);
+                                            IO.logAndAlert("Error", "Enquiry object is not set", IO.TAG_ERROR);
+                                            return;
+                                        }
+                                        if(enquiry.getCreatorUser() ==null)
+                                        {
+                                            IO.logAndAlert("Error", "Enquiry creator object is not set", IO.TAG_ERROR);
+                                            return;
+                                        }
+                                        if(enquiry.getCreatorUser().getOrganisation() ==null)
+                                        {
+                                            IO.logAndAlert("Error", "Enquiry creator's organisation object is not set", IO.TAG_ERROR);
                                             return;
                                         }
                                         if(SessionManager.getInstance().getActive()==null)
@@ -114,14 +124,13 @@ public class EnquiriesController extends ScreenController implements Initializab
                                         quote.setEnquiry_id(enquiry.get_id());
                                         quote.setVat(QuoteManager.VAT);
                                         quote.setStatus(Quote.STATUS_PENDING);
-                                        quote.setAccount_name(enquiry.getCreatorUser().getOrganisationName().toLowerCase());//TODO: get Organisation object and getName()
+                                        quote.setAccount_name(enquiry.getCreatorUser().getOrganisation().getAccount_name());
                                         quote.setRequest(enquiry.getEnquiry());
                                         quote.setClient_id(enquiry.getCreatorUser().getOrganisation_id());
                                         quote.setContact_person_id(enquiry.getCreator());
                                         quote.setCreator(SessionManager.getInstance().getActiveUser().getUsr());
                                         quote.setRevision(1.0);
 
-                                        List<User> quote_reps = new ArrayList<>();
                                         try
                                         {
                                             QuoteManager.getInstance().createQuote(quote, null, new Callback()
@@ -198,6 +207,7 @@ public class EnquiriesController extends ScreenController implements Initializab
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading enquiries data model..");
         try
         {
+            ClientManager.getInstance().reloadDataFromServer();
             EnquiryManager.getInstance().reloadDataFromServer();
         } catch (ClassNotFoundException e)
         {

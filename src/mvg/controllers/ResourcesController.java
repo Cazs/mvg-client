@@ -20,8 +20,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
-import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,11 +41,16 @@ public class ResourcesController extends ScreenController implements Initializab
     public void refreshView()
     {
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading resources/materials view..");
-        /*if(ResourceManager.getInstance().getResource_types()!=null)
+        if(ResourceManager.getInstance().getResources()==null)
         {
-            ResourceType[] res_types = new ResourceType[ResourceManager.getInstance().getResource_types().size()];
-            ResourceManager.getInstance().getResource_types().values().toArray(res_types);
-        }*/
+            IO.logAndAlert(getClass().getSimpleName(), "No resources were found in the database.", IO.TAG_WARN);
+            return;
+        }
+        if(ResourceManager.getInstance().getResource_types()==null)
+        {
+            IO.logAndAlert(getClass().getSimpleName(), "No resource types were found in the database.", IO.TAG_WARN);
+            return;
+        }
 
         colId.setMinWidth(80);
         colId.setCellValueFactory(new PropertyValueFactory<>("_id"));

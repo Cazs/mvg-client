@@ -145,7 +145,7 @@ public class QuoteManager extends MVGObjectManager
                 if(!isSerialized(ROOT_PATH+filename))
                 {
                     //Load Quotes
-                    String quotes_json = RemoteComms.sendGetRequest("/quotes", headers);
+                    String quotes_json = RemoteComms.sendGetRequest("/quotes/"+smgr.getActiveUser().getOrganisation_id(), headers);
                     QuoteServerObject quoteServerObject = gson.fromJson(quotes_json, QuoteServerObject.class);
                     if(quoteServerObject!=null)
                     {

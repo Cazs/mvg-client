@@ -5,6 +5,7 @@
  */
 package mvg.controllers;
 
+import mvg.MVG;
 import mvg.auxilary.IO;
 import mvg.managers.*;
 import mvg.model.*;
@@ -22,6 +23,7 @@ import javafx.util.Callback;
 import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -45,7 +47,7 @@ public class ClientsController extends ScreenController implements Initializable
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading clients view..");
         if( ClientManager.getInstance().getClients()==null)
         {
-            IO.logAndAlert(getClass().getName(), "no clients were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "No clients were found in the database.", IO.TAG_WARN);
             return;
         }
 
@@ -79,18 +81,18 @@ public class ClientsController extends ScreenController implements Initializable
                     {
                         final TableCell<Client, String> cell = new TableCell<Client, String>()
                         {
-                            final Button btnView = new Button("View");
+                            final Button btnNotification = new Button("Send Notification");
                             final Button btnRemove = new Button("Delete");
 
                             @Override
                             public void updateItem(String item, boolean empty)
                             {
                                 super.updateItem(item, empty);
-                                btnView.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
-                                btnView.getStyleClass().add("btnApply");
-                                btnView.setMinWidth(100);
-                                btnView.setMinHeight(35);
-                                HBox.setHgrow(btnView, Priority.ALWAYS);
+                                btnNotification.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
+                                btnNotification.getStyleClass().add("btnAdd");
+                                btnNotification.setMinWidth(100);
+                                btnNotification.setMinHeight(35);
+                                HBox.setHgrow(btnNotification, Priority.ALWAYS);
 
                                 btnRemove.getStylesheets().add(mvg.MVG.class.getResource("styles/home.css").toExternalForm());
                                 btnRemove.getStyleClass().add("btnBack");
@@ -104,23 +106,57 @@ public class ClientsController extends ScreenController implements Initializable
                                     setText(null);
                                 } else
                                 {
-                                    HBox hBox = new HBox(btnView, btnRemove);
+                                    HBox hBox = new HBox(btnNotification, btnRemove);
                                     Client client = getTableView().getItems().get(getIndex());
 
-                                    btnView.setOnAction(event ->
-                                    {
-                                        //System.out.println("Successfully added material quote number " + quoteItem.getItem_number());
-                                        ClientManager.getInstance().setSelected(client);
-                                        //screenManager.setScreen(Screens.VIEW_JOB.getScreen());
-                                    });
+                                    btnNotification.setOnAction(event ->
+                                        NotificationManager.getInstance().newNotificationWindow(client, new Callback()
+                                        {
+                                            @Override
+                                            public Object call(Object arg)
+                                            {
+                                                ScreenManager.getInstance().showLoadingScreen(param ->
+                                                {
+                                                    new Thread(new Runnable()
+                                                    {
+                                                        @Override
+                                                        public void run()
+                                                        {
+                                                            try
+                                                            {
+                                                                //load User data to memory
+                                                                UserManager.getInstance().loadDataFromServer();
+
+                                                                //TODO: set screen to notifications screen
+                                                                if (ScreenManager.getInstance()
+                                                                        .loadScreen(Screens.DASHBOARD
+                                                                                .getScreen(), MVG.class
+                                                                                .getResource("views/" + Screens.DASHBOARD
+                                                                                        .getScreen())))
+                                                                {
+                                                                    ScreenManager.getInstance()
+                                                                            .setScreen(Screens.DASHBOARD.getScreen());
+                                                                } else IO.log(getClass()
+                                                                        .getName(), IO.TAG_ERROR, "could not load dashboard screen.");
+                                                            } catch (IOException e)
+                                                            {
+                                                                IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
+                                                            }
+                                                        }
+                                                    }).start();
+                                                    return null;
+                                                });
+                                                return null;
+                                            }
+                                        })
+                                    );
 
                                     btnRemove.setOnAction(event ->
                                     {
-                                        //Quote quote = getTableView().getItems().get(getIndex());
                                         getTableView().getItems().remove(client);
                                         getTableView().refresh();
                                         //TODO: remove from server
-                                        //IO.log(getClass().getName(), IO.TAG_INFO, "successfully removed quote: " + quote.get_id());
+                                        IO.log(getClass().getName(), IO.TAG_INFO, "successfully removed client: " + client.get_id());
                                     });
 
                                     hBox.setFillHeight(true);

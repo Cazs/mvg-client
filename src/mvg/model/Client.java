@@ -30,8 +30,6 @@ public class Client extends MVGObject implements Serializable
     private String website;
     private boolean active;
 
-    public StringProperty client_nameProperty(){return new SimpleStringProperty(client_name);}
-
     public String getClient_name()
     {
         return client_name;
@@ -41,8 +39,6 @@ public class Client extends MVGObject implements Serializable
     {
         this.client_name = client_name;
     }
-
-    public StringProperty physical_addressProperty(){return new SimpleStringProperty(physical_address);}
 
     public String getPhysical_address()
     {
@@ -54,8 +50,6 @@ public class Client extends MVGObject implements Serializable
         this.physical_address = physical_address;
     }
 
-    public StringProperty postal_addressProperty(){return new SimpleStringProperty(postal_address);}
-
     public String getPostal_address()
     {
         return postal_address;
@@ -65,8 +59,6 @@ public class Client extends MVGObject implements Serializable
     {
         this.postal_address = postal_address;
     }
-
-    public StringProperty telProperty(){return new SimpleStringProperty(tel);}
 
     public String getTel()
     {
@@ -78,8 +70,6 @@ public class Client extends MVGObject implements Serializable
         this.tel = tel;
     }
 
-    public StringProperty faxProperty(){return new SimpleStringProperty(fax);}
-
     public String getFax()
     {
         return fax;
@@ -90,8 +80,6 @@ public class Client extends MVGObject implements Serializable
         this.fax = fax;
     }
 
-    public StringProperty contact_emailProperty(){return new SimpleStringProperty(contact_email);}
-
     public String getContact_email()
     {
         return contact_email;
@@ -101,8 +89,6 @@ public class Client extends MVGObject implements Serializable
     {
         this.contact_email = contact_email;
     }
-
-    public StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
 
     public boolean isActive()
     {
@@ -124,8 +110,6 @@ public class Client extends MVGObject implements Serializable
         this.date_partnered = date_partnered;
     }
 
-    public StringProperty websiteProperty(){return new SimpleStringProperty(website);}
-
     public String getWebsite()
     {
         return website;
@@ -135,8 +119,6 @@ public class Client extends MVGObject implements Serializable
     {
         this.website = website;
     }
-
-    public StringProperty registration_numberProperty(){return new SimpleStringProperty(getRegistration_number());}
 
     public String getRegistration_number()
     {
@@ -148,8 +130,6 @@ public class Client extends MVGObject implements Serializable
         this.registration_number = registration_number;
     }
 
-    public StringProperty vat_numberProperty(){return new SimpleStringProperty(getVat_number());}
-
     public String getVat_number()
     {
         return vat_number;
@@ -160,8 +140,6 @@ public class Client extends MVGObject implements Serializable
         this.vat_number = vat_number;
     }
 
-    public StringProperty account_nameProperty(){return new SimpleStringProperty(getAccount_name()==null?"N/A":getAccount_name());}
-
     public String getAccount_name()
     {
         return account_name;
@@ -171,6 +149,19 @@ public class Client extends MVGObject implements Serializable
     {
         this.account_name = account_name;
     }
+
+    //Properties
+    public StringProperty client_nameProperty(){return new SimpleStringProperty(client_name);}
+    public StringProperty physical_addressProperty(){return new SimpleStringProperty(physical_address);}
+    public StringProperty postal_addressProperty(){return new SimpleStringProperty(postal_address);}
+    public StringProperty telProperty(){return new SimpleStringProperty(tel);}
+    public StringProperty faxProperty(){return new SimpleStringProperty(fax);}
+    public StringProperty contact_emailProperty(){return new SimpleStringProperty(contact_email);}
+    public StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
+    public StringProperty websiteProperty(){return new SimpleStringProperty(website);}
+    public StringProperty registration_numberProperty(){return new SimpleStringProperty(getRegistration_number());}
+    public StringProperty vat_numberProperty(){return new SimpleStringProperty(getVat_number());}
+    public StringProperty account_nameProperty(){return new SimpleStringProperty(getAccount_name()==null?"N/A":getAccount_name());}
 
     @Override
     public void parse(String var, Object val)

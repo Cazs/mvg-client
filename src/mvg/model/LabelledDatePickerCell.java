@@ -12,18 +12,20 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * Created by ghost on 2017/01/07.
+ * Created by ghost on 2018/01/17.
  */
 public class LabelledDatePickerCell extends TableCell<MVGObject, Long>
 {
     private final SimpleDateFormat formatter;
     private final DatePicker datePicker;
+    private boolean editable=true;
     private final Label label = new Label("double click to set");
     private String property;
 
     public LabelledDatePickerCell(String property, boolean editable)
     {
         this.property = property;
+        this.editable=editable;
 
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         datePicker = new DatePicker();
@@ -43,12 +45,15 @@ public class LabelledDatePickerCell extends TableCell<MVGObject, Long>
         {
             if(!newValue)//if lost focus
             {
-                long date_epoch = datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+                if(datePicker.getValue()!=null)//if datepicker value is not null
+                {
+                    long date_epoch = datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
 
-                if(date_epoch>0)
-                    setGraphic(datePicker);
-                else setGraphic(label);
-                getTableView().refresh();
+                    if (date_epoch > 0)
+                        setGraphic(datePicker);
+                    else setGraphic(label);
+                    getTableView().refresh();
+                } else setGraphic(label);
             }
         });
     }
@@ -89,18 +94,20 @@ public class LabelledDatePickerCell extends TableCell<MVGObject, Long>
     protected void updateItem(Long date, boolean empty)
     {
         super.updateItem(date, empty);
-        //setGraphic(label);
-        IO.log(getClass().getName(), IO.TAG_INFO, ">>>>>>>>>date: "+date);
-        if(date==null)
-            setGraphic(null);
-        else if (empty || date<=0)
-            setGraphic(label);
-        else if(date>0)
+        if(date==null || getTableRow().getItem()==null)//don't render anything if invalid date
         {
-            datePicker.setValue(LocalDate.parse(formatter.format(new Date(date))));
+            setGraphic(null);
+            return;
+        }
+        if(date>0 && getTableRow().getItem()!=null)
+        {
+            //render date
+            label.setText(String.valueOf(LocalDate.parse(formatter.format(new Date(date)))));
+            //datePicker.setValue(LocalDate.parse(formatter.format(new Date(date))));
             //setText(formatter.format(new Date(date)));
-            setGraphic(datePicker);
-        } else setGraphic(label);
+            setGraphic(label);
+        } else if(date==0 || empty)//render label prompting user to pick a date
+            setGraphic(label);
         //getTableView().refresh();
     }
 
@@ -108,7 +115,7 @@ public class LabelledDatePickerCell extends TableCell<MVGObject, Long>
     public void startEdit()
     {
         super.startEdit();
-        if (!isEmpty())
+        if (!isEmpty() && editable)
         {
             setGraphic(datePicker);
             datePicker.requestFocus();

@@ -36,7 +36,7 @@ public class QuotesController extends ScreenController implements Initializable
     @FXML
     private TableView<Quote>    tblQuotes;
     @FXML
-    private TableColumn     colId, colClient, colSitename, colRequest, colContactPerson, colTotal,
+    private TableColumn     colId, colClient, colAddress, colDestination, colRequest, colContactPerson, colTotal,
                             colDateGenerated, colStatus, colCreator, colRevision,
                             colExtra,colAction;
     @FXML
@@ -49,31 +49,33 @@ public class QuotesController extends ScreenController implements Initializable
 
         if(UserManager.getInstance().getUsers()==null)
         {
-            IO.logAndAlert(getClass().getName(), "no employees were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "no employees were found in the database.", IO.TAG_ERROR);
             return;
         }
         if(QuoteManager.getInstance().getQuotes()==null)
         {
-            IO.logAndAlert(getClass().getName(), "no quotes were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "no quotes were found in the database.", IO.TAG_WARN);
             return;
         }
         if(ClientManager.getInstance().getClients()==null)
         {
-            IO.logAndAlert(getClass().getName(), "no clients were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "no clients were found in the database.", IO.TAG_WARN);
             return;
         }
 
         colId.setCellValueFactory(new PropertyValueFactory<>("_id"));
         colClient.setMinWidth(120);
-        colClient.setCellValueFactory(new PropertyValueFactory<>("client_id"));
-        colClient.setCellFactory(col -> new ComboBoxTableCell(ClientManager.getInstance().getClients(), "client_id", "/quotes"));
+        colClient.setCellValueFactory(new PropertyValueFactory<>("client_name"));
         colContactPerson.setMinWidth(120);
-        colContactPerson.setCellValueFactory(new PropertyValueFactory<>("contact_person_id"));
-        colContactPerson.setCellFactory(col -> new ComboBoxTableCell(UserManager.getInstance().getUsers(), "contact_person_id", "usr"));
-        CustomTableViewControls.makeLabelledDatePickerTableColumn(colDateGenerated, "date_logged");
-        CustomTableViewControls.makeEditableTableColumn(colRequest, TextFieldTableCell.forTableColumn(), 100, "request", "/quotes");
-        CustomTableViewControls.makeEditableTableColumn(colSitename, TextFieldTableCell.forTableColumn(), 100, "sitename", "/quotes");
-        CustomTableViewControls.makeDynamicToggleButtonTableColumn(colStatus,100, "status", new String[]{"0","PENDING","1","SALE"}, false,"/quotes");
+        colContactPerson.setCellValueFactory(new PropertyValueFactory<>("contact_person"));
+        CustomTableViewControls.makeLabelledDatePickerTableColumn(colDateGenerated, "date_logged", false);
+        colRequest.setMinWidth(120);
+        colRequest.setCellValueFactory(new PropertyValueFactory<>("request"));
+        colAddress.setMinWidth(120);
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colDestination.setMinWidth(120);
+        colDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
+        CustomTableViewControls.makeDynamicToggleButtonTableColumn(colStatus,100, "status", new String[]{"0","PENDING","1","APPROVED"}, false,"/quotes");
         colCreator.setCellValueFactory(new PropertyValueFactory<>("creator"));
         colRevision.setCellValueFactory(new PropertyValueFactory<>("revision"));
         colVat.setCellValueFactory(new PropertyValueFactory<>("vat"));
@@ -127,7 +129,7 @@ public class QuotesController extends ScreenController implements Initializable
                                     Quote quote = getTableView().getItems().get(getIndex());
                                     if(quote==null)
                                     {
-                                        IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
+                                        IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
                                         return;
                                     }
                                     if (quote.getStatus()==MVGObject.STATUS_APPROVED)
@@ -161,7 +163,7 @@ public class QuotesController extends ScreenController implements Initializable
                                         Quote quote = getTableView().getItems().get(getIndex());
                                         if(quote==null)
                                         {
-                                            IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
+                                            IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
                                             return;
                                         }
                                         try
@@ -190,7 +192,7 @@ public class QuotesController extends ScreenController implements Initializable
                                         Quote quote = getTableView().getItems().get(getIndex());
                                         if(quote==null)
                                         {
-                                            IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
+                                            IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
                                             return;
                                         }
 
@@ -299,6 +301,7 @@ public class QuotesController extends ScreenController implements Initializable
         UserManager.getInstance().loadDataFromServer();
         ClientManager.getInstance().loadDataFromServer();
         ResourceManager.getInstance().loadDataFromServer();
+        EnquiryManager.getInstance().loadDataFromServer();
         QuoteManager.getInstance().loadDataFromServer();
     }
 

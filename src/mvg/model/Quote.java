@@ -3,6 +3,7 @@ package mvg.model;
 import mvg.auxilary.Globals;
 import mvg.auxilary.IO;
 import mvg.managers.ClientManager;
+import mvg.managers.EnquiryManager;
 import mvg.managers.UserManager;
 import mvg.managers.QuoteManager;
 import javafx.beans.property.SimpleStringProperty;
@@ -28,6 +29,16 @@ public class Quote extends MVGObject
     private int rev_cursor = -1;
     public static final String TAG = "Quote";
 
+    public Enquiry getEnquiry()
+    {
+        HashMap<String, Enquiry> enquiries = EnquiryManager.getInstance().getEnquiries();
+        if(enquiries!=null)
+        {
+            return enquiries.get(getEnquiry_id());
+        } else IO.log(getClass().getName(), IO.TAG_ERROR, "no enquiries were found in database.");
+        return null;
+    }
+
     public String getEnquiry_id()
     {
         return enquiry_id;
@@ -37,8 +48,6 @@ public class Quote extends MVGObject
     {
         this.enquiry_id = enquiry_id;
     }
-
-    public StringProperty client_idProperty(){return new SimpleStringProperty(client_id);}
 
     public String getClient_id()
     {
@@ -50,8 +59,6 @@ public class Quote extends MVGObject
         this.client_id = client_id;
     }
 
-    public StringProperty contact_person_idProperty(){return new SimpleStringProperty(contact_person_id);}
-
     public String getContact_person_id()
     {
         return contact_person_id;
@@ -62,8 +69,6 @@ public class Quote extends MVGObject
         this.contact_person_id = contact_person_id;
     }
 
-    public StringProperty requestProperty(){return new SimpleStringProperty(request);}
-
     public String getRequest()
     {
         return request;
@@ -73,8 +78,6 @@ public class Quote extends MVGObject
     {
         this.request = request;
     }
-
-    private StringProperty statusProperty(){return new SimpleStringProperty(String.valueOf(status));}
 
     public int getStatus()
     {
@@ -96,11 +99,6 @@ public class Quote extends MVGObject
         this.rev_cursor = cursor;
     }
 
-    public StringProperty vatProperty()
-    {
-        return new SimpleStringProperty(String.valueOf(getVat()));
-    }
-
     public double getVat()
     {
         return vat;
@@ -111,8 +109,6 @@ public class Quote extends MVGObject
         this.vat = vat;
     }
 
-    private StringProperty account_nameProperty(){return new SimpleStringProperty(getAccount_name());}
-
     public String getAccount_name()
     {
         return account_name;
@@ -121,11 +117,6 @@ public class Quote extends MVGObject
     public void setAccount_name(String account_name)
     {
         this.account_name = account_name;
-    }
-
-    public StringProperty parent_idProperty()
-    {
-        return new SimpleStringProperty(String.valueOf(getParent_id()));
     }
 
     public Quote getParent()
@@ -146,8 +137,6 @@ public class Quote extends MVGObject
         this.parent_id = parent_id;
     }
 
-    public StringProperty revisionProperty(){return new SimpleStringProperty(String.valueOf(revision));}
-
     public double getRevision()
     {
         return revision;
@@ -157,8 +146,6 @@ public class Quote extends MVGObject
     {
         this.revision = revision;
     }
-
-    public SimpleStringProperty totalProperty(){return new SimpleStringProperty(Globals.CURRENCY_SYMBOL.getValue() + " " + String.valueOf(getTotal()));}
 
     public double getTotal()
     {
@@ -274,6 +261,50 @@ public class Quote extends MVGObject
         return null;
     }
 
+    //Properties
+    public StringProperty client_idProperty(){return new SimpleStringProperty(client_id);}
+    public StringProperty client_nameProperty()
+    {
+        if(getClient()!=null)
+            return new SimpleStringProperty(getClient().getClient_name());
+        return new SimpleStringProperty("N/A");
+    }
+    public StringProperty contact_person_idProperty(){return new SimpleStringProperty(contact_person_id);}
+    public StringProperty contact_personProperty()
+    {
+        if(getContact_person()!=null)
+            return new SimpleStringProperty(getContact_person().getName());
+        return new SimpleStringProperty("N/A");
+    }
+    public StringProperty requestProperty(){return new SimpleStringProperty(request);}
+    public StringProperty addressProperty()
+    {
+        if(getEnquiry()!=null)
+            return new SimpleStringProperty(getEnquiry().getPickup_location());
+        else if(getEnquiry_id()!=null)
+            return new SimpleStringProperty(getEnquiry_id());
+        else return new SimpleStringProperty("N/A");
+    }
+    public StringProperty destinationProperty()
+    {
+        if(getEnquiry()!=null)
+            return new SimpleStringProperty(getEnquiry().getDestination());
+        else if(getEnquiry_id()!=null)
+            return new SimpleStringProperty(getEnquiry_id());
+        else return new SimpleStringProperty("N/A");
+    }
+    public StringProperty statusProperty(){return new SimpleStringProperty(String.valueOf(status));}
+    public StringProperty vatProperty()
+    {
+        return new SimpleStringProperty(String.valueOf(getVat()));
+    }
+    public StringProperty account_nameProperty(){return new SimpleStringProperty(getAccount_name());}
+    public StringProperty parent_idProperty()
+    {
+        return new SimpleStringProperty(String.valueOf(getParent_id()));
+    }
+    public StringProperty revisionProperty(){return new SimpleStringProperty(String.valueOf(revision));}
+    public SimpleStringProperty totalProperty(){return new SimpleStringProperty(Globals.CURRENCY_SYMBOL.getValue() + " " + String.valueOf(getTotal()));}
     public SimpleStringProperty quoteProperty()
     {
         if(this!=null)

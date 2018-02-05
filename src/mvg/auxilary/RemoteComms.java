@@ -167,14 +167,17 @@ public class RemoteComms
             while ((line=in.readLine())!=null)
                 response += line;
             //Log.d(TAG,response);
-        }else
+        } else
         {
             response="";
-            BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getErrorStream()));
-            String line="";
-            int read=0;
-            while ((line=in.readLine())!=null)
-                response += line;
+            if(httpConn.getErrorStream()!=null)
+            {
+                BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getErrorStream()));
+                String line = "";
+                int read = 0;
+                while ((line = in.readLine()) != null)
+                    response += line;
+            } else response = String.valueOf(httpConn.getResponseCode());
         }
 
         IO.log(TAG, IO.TAG_INFO, "GET response> " + response + "\n");
@@ -387,7 +390,7 @@ public class RemoteComms
                         if(connection!=null)
                         {
                             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
-                                IO.log(TAG, IO.TAG_INFO, "Successfully updated BusinessObject's '" + property + "' property.");
+                                IO.log(TAG, IO.TAG_INFO, "Successfully updated MVGObject's '" + property + "' property.");
                             else
                             {
                                 String msg = IO.readStream(connection.getErrorStream());
@@ -401,7 +404,7 @@ public class RemoteComms
                     {
                         IO.logAndAlert(TAG, e.getMessage(), IO.TAG_ERROR);
                     }
-                } else IO.log(TAG, IO.TAG_ERROR, "Invalid BusinessObject ID");
+                } else IO.log(TAG, IO.TAG_ERROR, "Invalid MVGObject ID");
             }else{
                 IO.logAndAlert("Session expired", "No active sessions.", IO.TAG_ERROR);
             }
@@ -623,7 +626,7 @@ public class RemoteComms
                         if(connection!=null)
                         {
                             if(connection.getResponseCode()==HttpURLConnection.HTTP_OK)
-                                IO.log(TAG, IO.TAG_INFO, "Successfully updated BusinessObject{"+object.getClass().getName()+"}'s '" + property + "' property to ["+object.get(property)+"].");
+                                IO.log(TAG, IO.TAG_INFO, "Successfully updated MVGObject{"+object.getClass().getName()+"}'s '" + property + "' property to ["+object.get(property)+"].");
                             else
                             {
                                 String msg = IO.readStream(connection.getErrorStream());
@@ -637,7 +640,7 @@ public class RemoteComms
                     {
                         IO.logAndAlert(TAG, e.getMessage(), IO.TAG_ERROR);
                     }
-                } else IO.log(TAG, IO.TAG_ERROR, "Invalid BusinessObject");
+                } else IO.log(TAG, IO.TAG_ERROR, "Invalid MVGObject");
             } else IO.logAndAlert("Session expired", "No active sessions.", IO.TAG_ERROR);
         } else IO.logAndAlert("Error: Invalid Session", "Active Session is invalid.", IO.TAG_ERROR);
     }

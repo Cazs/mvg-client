@@ -171,7 +171,7 @@ public class PDF
             Doc documentToBePrinted = new SimpleDoc(new ByteArrayInputStream(byteStream), docType, null);
             printJob.print(documentToBePrinted, null);
         }else{
-            IO.logAndAlert("Print Job", "Print job cancelled.", IO.TAG_INFO);
+            IO.logAndAlert("Print Trip", "Print job cancelled.", IO.TAG_INFO);
         }
     }
 

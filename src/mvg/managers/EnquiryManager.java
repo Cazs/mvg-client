@@ -2,23 +2,14 @@ package mvg.managers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.util.*;
 
 import mvg.auxilary.*;
-import mvg.model.CustomTableViewControls;
 import mvg.model.Enquiry;
 
 /**
@@ -57,7 +48,7 @@ public class EnquiryManager extends MVGObjectManager
 
     public void setSelectedEnquiry(Enquiry enquiry)
     {
-        if(enquiry!=null)
+        if(enquiry !=null)
         {
             this.selected_enquiry = enquiry;
             IO.log(getClass().getName(), IO.TAG_INFO, "set selected enquiry to: " + selected_enquiry.get_id());
@@ -87,7 +78,7 @@ public class EnquiryManager extends MVGObjectManager
 
     public void nullifySelected()
     {
-        this.selected_enquiry=null;
+        this.selected_enquiry =null;
     }
 
     public void loadDataFromServer()
@@ -139,8 +130,8 @@ public class EnquiryManager extends MVGObjectManager
 
                 if(!isSerialized(ROOT_PATH+filename))
                 {
-                    //Load Enquiries
-                    String enquiries_json = RemoteComms.sendGetRequest("/enquiries", headers);
+                    //Load Enquiries for logged in User's organisation
+                    String enquiries_json = RemoteComms.sendGetRequest("/enquiries/"+smgr.getActiveUser().getOrganisation_id(), headers);
                     EnquiryServerObject enquiryServerObject = gson.fromJson(enquiries_json, EnquiryServerObject.class);
                     if(enquiryServerObject!=null)
                     {
@@ -155,7 +146,8 @@ public class EnquiryManager extends MVGObjectManager
 
                     IO.log(getClass().getName(), IO.TAG_INFO, "reloaded collection of enquiries.");
                     this.serialize(ROOT_PATH + filename, enquiries);
-                } else {
+                } else
+                {
                     IO.log(this.getClass().getName(), IO.TAG_INFO, "binary object ["+ROOT_PATH+filename+"] on local disk is already up-to-date.");
                     enquiries = (HashMap<String, Enquiry>) this.deserialize(ROOT_PATH+filename);
                 }
@@ -165,7 +157,7 @@ public class EnquiryManager extends MVGObjectManager
 
     public void generatePDF() throws IOException
     {
-        if(selected_enquiry!=null)
+        if(selected_enquiry !=null)
             PDF.createEnquiryPDF(selected_enquiry);
         else IO.logAndAlert("Error", "Please choose a valid enquiry.", IO.TAG_ERROR);
     }
@@ -241,7 +233,7 @@ public class EnquiryManager extends MVGObjectManager
         }
 
         //Enquiry selected = getSelectedEnquiry();
-        if(enquiry!=null)
+        if(enquiry !=null)
         {
             //prepare enquiry parameters
             try
@@ -250,7 +242,7 @@ public class EnquiryManager extends MVGObjectManager
                 headers.add(new AbstractMap.SimpleEntry<>("Content-Type", "application/json"));
                 headers.add(new AbstractMap.SimpleEntry<>("Cookie", SessionManager.getInstance().getActive().getSessionId()));
                 //update Enquiry on database
-                HttpURLConnection connection = RemoteComms.postJSON("/enquiries/"+enquiry.get_id(), enquiry.asJSONString(), headers);
+                HttpURLConnection connection = RemoteComms.postJSON("/enquiries/"+ enquiry.get_id(), enquiry.asJSONString(), headers);
                 if (connection != null)
                 {
                     if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)

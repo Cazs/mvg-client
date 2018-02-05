@@ -85,9 +85,14 @@ public class CustomTableViewControls
 
     public static void makeLabelledDatePickerTableColumn(TableColumn<MVGObject, Long> date_col, String property)
     {
+        makeLabelledDatePickerTableColumn(date_col, property, true);
+    }
+
+    public static void makeLabelledDatePickerTableColumn(TableColumn<MVGObject, Long> date_col, String property, boolean editable)
+    {
         date_col.setMinWidth(130);
         date_col.setCellValueFactory(new PropertyValueFactory<>(property));
-        date_col.setCellFactory(col -> new LabelledDatePickerCell(property));
+        date_col.setCellFactory(col -> new LabelledDatePickerCell(property, editable));
         date_col.setEditable(true);
         date_col.setOnEditCommit(event -> event.getRowValue().parse(property, event.getNewValue()));
     }
@@ -581,7 +586,7 @@ public class CustomTableViewControls
                         PDF.printPDF(file);
                         IO.log(TAG, IO.TAG_INFO, "Printing: " + filename + " ["+bo.get_id()+"]");
                     }else{
-                        IO.logAndAlert("Print Job", "Could not download file '"+filename+"'", IO.TAG_ERROR);
+                        IO.logAndAlert("Print Trip", "Could not download file '"+filename+"'", IO.TAG_ERROR);
                     }
                 }catch (PrintException e)
                 {

@@ -185,7 +185,7 @@ public class NewResourceController extends ScreenController implements Initializ
             } else IO.logAndAlert("New Resource Creation Failure", "Could not connect to server.", IO.TAG_ERROR);
         } catch (IOException e)
         {
-            IO.logAndAlert(getClass().getName(), e.getMessage(), IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), e.getMessage(), IO.TAG_ERROR);
         }
     }
 

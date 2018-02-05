@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<Tab fx:id="notificationsTab" text="Notifications" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvg.controllers.NotificationsController">
+    <content>
+        <TableView fx:id="tblNotifications" editable="true" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colId" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="-1.0" text="Quote ID" visible="false">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="_id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colClient" maxWidth="1.7976931348623157E308" minWidth="70.0" prefWidth="-1.0" text="Client">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="client_id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colSubject" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="Subject">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="subject" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colMessage" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="Message">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="message" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colDateLogged" editable="false" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="-1.0" text="Date Logged">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="date_logged" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colStatus" maxWidth="1.7976931348623157E308" minWidth="80.0" text="Status" visible="true">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="status" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="colCreator" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="Creator" />
+                <TableColumn fx:id="colAction" maxWidth="1.7976931348623157E308" minWidth="280.0" prefWidth="-1.0" text="Action"/>
+                <TableColumn fx:id="colExtra" maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="-1.0" text="Extra" visible="false">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="extra" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </content>
+</Tab>

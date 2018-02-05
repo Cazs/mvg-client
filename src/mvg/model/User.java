@@ -8,7 +8,10 @@ package mvg.model;
 import mvg.auxilary.IO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import mvg.managers.ClientManager;
+
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  *
@@ -33,8 +36,6 @@ public class User extends MVGObject implements Serializable
     public static int ACCESS_LEVEL_ADMIN = 2;
     public static int ACCESS_LEVEL_SUPER = 3;
 
-    public StringProperty usrProperty(){return new SimpleStringProperty(usr);}
-
     public String getUsr()
     {
         return usr;
@@ -50,8 +51,6 @@ public class User extends MVGObject implements Serializable
         this.pwd = pwd;
     }
 
-    public StringProperty access_levelProperty(){return new SimpleStringProperty(String.valueOf(access_level));}
-
     public int getAccessLevel()
     {
         return access_level;
@@ -61,8 +60,6 @@ public class User extends MVGObject implements Serializable
     {
         this.access_level = access_level;
     }
-
-    public StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
 
     public String isActive()
     {
@@ -79,14 +76,10 @@ public class User extends MVGObject implements Serializable
         this.active = active;
     }
 
-    public StringProperty nameProperty(){return new SimpleStringProperty(getName());}
-
     public String getName()
     {
         return firstname + " " + lastname;
     }
-
-    public StringProperty firstnameProperty(){return new SimpleStringProperty(firstname);}
 
     public String getFirstname()
     {
@@ -98,8 +91,6 @@ public class User extends MVGObject implements Serializable
         this.firstname = firstname;
     }
 
-    public StringProperty lastnameProperty(){return new SimpleStringProperty(lastname);}
-
     public String getLastname()
     {
         return lastname;
@@ -110,19 +101,9 @@ public class User extends MVGObject implements Serializable
         this.lastname = lastname;
     }
 
-    public StringProperty emailProperty(){return new SimpleStringProperty(email);}
-
     public String getEmail()
     {
         return email;
-    }
-
-    public StringProperty organisationProperty(){return new SimpleStringProperty(getOrganisationName());}
-
-    public String getOrganisationName()
-    {
-        //TODO: implement this
-        return "temp";
     }
 
     public String getOrganisation_id()
@@ -140,8 +121,6 @@ public class User extends MVGObject implements Serializable
         this.email = email;
     }
 
-    public StringProperty telProperty(){return new SimpleStringProperty(usr);}
-
     public String getTel()
     {
         return tel;
@@ -151,8 +130,6 @@ public class User extends MVGObject implements Serializable
     {
         this.tel = tel;
     }
-
-    public StringProperty cellProperty(){return new SimpleStringProperty(usr);}
 
     public String getCell()
     {
@@ -164,8 +141,6 @@ public class User extends MVGObject implements Serializable
         this.cell = cell;
     }
 
-    public StringProperty genderProperty(){return new SimpleStringProperty(usr);}
-
     public String getGender()
     {
         return gender;
@@ -175,6 +150,41 @@ public class User extends MVGObject implements Serializable
     {
         this.gender = gender;
     }
+
+    public Client getOrganisation()
+    {
+        if(getOrganisation_id()==null)
+        {
+            IO.log(getClass().getName(), IO.TAG_WARN, "user "+getName()+" does not belong to any organisation.");
+            return null;
+        }
+
+        HashMap<String, Client> clients = ClientManager.getInstance().getClients();
+        if(clients!=null)
+        {
+            return clients.get(getOrganisation_id());
+        }else IO.log(getClass().getName(), IO.TAG_ERROR, "no clients were found in database.");
+        return null;
+    }
+
+    //Properties
+
+    public StringProperty usrProperty(){return new SimpleStringProperty(usr);}
+    public StringProperty access_levelProperty(){return new SimpleStringProperty(String.valueOf(access_level));}
+    public StringProperty activeProperty(){return new SimpleStringProperty(String.valueOf(active));}
+    public StringProperty nameProperty(){return new SimpleStringProperty(getName());}
+    public StringProperty firstnameProperty(){return new SimpleStringProperty(firstname);}
+    public StringProperty lastnameProperty(){return new SimpleStringProperty(lastname);}
+    public StringProperty emailProperty(){return new SimpleStringProperty(email);}
+    public StringProperty organisationProperty()
+    {
+        if(getOrganisation()!=null)
+            return new SimpleStringProperty(getOrganisation().getClient_name());
+        else return new SimpleStringProperty("N/A");
+    }
+    public StringProperty telProperty(){return new SimpleStringProperty(usr);}
+    public StringProperty cellProperty(){return new SimpleStringProperty(usr);}
+    public StringProperty genderProperty(){return new SimpleStringProperty(usr);}
 
     @Override
     public void parse(String var, Object val)

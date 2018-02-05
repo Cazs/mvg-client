@@ -194,8 +194,10 @@ public class NewClientController extends ScreenController implements Initializab
                     {
                         ClientManager.getInstance().reloadDataFromServer();
                         ClientManager.getInstance().setSelected(client);
-                        IO.logAndAlert("New Client Creation Success", "Successfully created new Client "+new_client_id, IO.TAG_INFO);
+                        IO.logAndAlert("Success", "Successfully created a new client: "+client.getClient_name(), IO.TAG_INFO);
                         itemsModified = false;
+                        //reload client data
+                        ClientManager.getInstance().reloadDataFromServer();
                     }catch (MalformedURLException ex)
                     {
                         IO.log(getClass().getName(), IO.TAG_ERROR, ex.getMessage());
@@ -220,7 +222,7 @@ public class NewClientController extends ScreenController implements Initializab
             } else IO.logAndAlert("New Generic Quote Creation Failure", "Could not connect to server.", IO.TAG_ERROR);
         } catch (IOException e)
         {
-            IO.logAndAlert(getClass().getName(), e.getMessage(), IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), e.getMessage(), IO.TAG_ERROR);
         }
     }
 }
