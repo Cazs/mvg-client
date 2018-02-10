@@ -93,7 +93,7 @@ public class Enquiry extends MVGObject implements Serializable
 
     public Client getClient()
     {
-        HashMap<String, Client> clients = ClientManager.getInstance().getClients();
+        HashMap<String, Client> clients = ClientManager.getInstance().getDataset();
         if(clients!=null)
         {
             return clients.get(client_id);
@@ -135,7 +135,7 @@ public class Enquiry extends MVGObject implements Serializable
                     setEnquiry((String)val);
                     break;
                 case "date_scheduled":
-                    setDate_scheduled(Long.parseLong((String)val));
+                    setDate_scheduled(Long.parseLong(String.valueOf(val)));
                     break;
                 case "pickup_location":
                     setPickup_location((String)val);
@@ -188,25 +188,19 @@ public class Enquiry extends MVGObject implements Serializable
     }
 
     @Override
-    public String asJSONString()
-    {
-        String super_json = super.asJSONString();
-        String json_obj = super_json.substring(0,super_json.length()-1)//ignore last brace
-                +",\"enquiry\":\""+getEnquiry()+"\""
-                +",\"client_id\":\""+getClient_id()+"\""
-                +",\"destination\":\""+getDestination()+"\""
-                +",\"pickup_location\":\""+getPickup_location()+"\""
-                +",\"trip_type\":\""+getTrip_type()+"\""
-                +",\"date_scheduled\":\""+getDate_scheduled()+"\"";
-        json_obj+="}";
-
-        return json_obj;
-    }
-
-    @Override
     public String toString()
     {
-        return asJSONString();
+        //return String.format("[id = %s, firstname = %s, lastname = %s]", get_id(), getFirstname(), getLastname());
+        return "{"+(get_id()==null?"":"\"_id\":\""+get_id()+"\", ")+
+                "\"enquiry\":\""+getEnquiry()+"\""+
+                ",\"client_id\":\""+getClient_id()+"\""+
+                ",\"destination\":\""+getDestination()+"\""+
+                ",\"pickup_location\":\""+getPickup_location()+"\""+
+                ",\"trip_type\":\""+getTrip_type()+"\""+
+                ",\"date_scheduled\":\""+getDate_scheduled()+"\""+
+                ",\"creator\":\""+getCreator()+"\""+
+                ",\"date_logged\":\""+getDate_logged()+"\""+
+                "\"other\":\""+getOther()+"\"}";
     }
 
     @Override

@@ -21,7 +21,8 @@ public enum Screens
     NEW_RESOURCE("NewResource.fxml"),
     NEW_QUOTE("NewQuote.fxml"),
     QUOTES("Quotes.fxml"),
-    VIEW_QUOTE("View_quote.fxml");
+    VIEW_QUOTE("View_quote.fxml"),
+    ENQUIRY_FORM("EnquiryForm.fxml");
 
     private String screen;
     

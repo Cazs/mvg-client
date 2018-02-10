@@ -47,19 +47,19 @@ public class QuotesController extends ScreenController implements Initializable
     {
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading quotes view..");
 
-        if(UserManager.getInstance().getUsers()==null)
+        if(UserManager.getInstance().getDataset()==null)
         {
-            IO.logAndAlert(getClass().getSimpleName(), "no employees were found in the database.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getSimpleName(), "No users were found in the database.", IO.TAG_ERROR);
             return;
         }
-        if(QuoteManager.getInstance().getQuotes()==null)
+        if(QuoteManager.getInstance().getDataset()==null)
         {
-            IO.logAndAlert(getClass().getSimpleName(), "no quotes were found in the database.", IO.TAG_WARN);
+            IO.logAndAlert(getClass().getSimpleName(), "No quotes were found in the database.", IO.TAG_WARN);
             return;
         }
-        if(ClientManager.getInstance().getClients()==null)
+        if(ClientManager.getInstance().getDataset()==null)
         {
-            IO.logAndAlert(getClass().getSimpleName(), "no clients were found in the database.", IO.TAG_WARN);
+            IO.logAndAlert(getClass().getSimpleName(), "No clients were found in the database.", IO.TAG_WARN);
             return;
         }
 
@@ -129,7 +129,7 @@ public class QuotesController extends ScreenController implements Initializable
                                     Quote quote = getTableView().getItems().get(getIndex());
                                     if(quote==null)
                                     {
-                                        IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
+                                        IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
                                         return;
                                     }
                                     if (quote.getStatus()==MVGObject.STATUS_APPROVED)
@@ -163,7 +163,7 @@ public class QuotesController extends ScreenController implements Initializable
                                         Quote quote = getTableView().getItems().get(getIndex());
                                         if(quote==null)
                                         {
-                                            IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
+                                            IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
                                             return;
                                         }
                                         try
@@ -192,7 +192,7 @@ public class QuotesController extends ScreenController implements Initializable
                                         Quote quote = getTableView().getItems().get(getIndex());
                                         if(quote==null)
                                         {
-                                            IO.logAndAlert("Error " + getClass().getSimpleName(), "Quote object is not set", IO.TAG_ERROR);
+                                            IO.logAndAlert("Error " + getClass().getName(), "Quote object is not set", IO.TAG_ERROR);
                                             return;
                                         }
 
@@ -203,7 +203,7 @@ public class QuotesController extends ScreenController implements Initializable
                                                 @Override
                                                 public void run()
                                                 {
-                                                    QuoteManager.getInstance().setSelectedQuote(quote);
+                                                    QuoteManager.getInstance().setSelected(quote);
                                                     try
                                                     {
                                                         if(ScreenManager.getInstance().loadScreen(Screens.VIEW_QUOTE.getScreen(),mvg.MVG.class.getResource("views/"+Screens.VIEW_QUOTE.getScreen())))
@@ -270,10 +270,10 @@ public class QuotesController extends ScreenController implements Initializable
         colAction.setCellFactory(cellFactory);
 
         tblQuotes.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) ->
-                QuoteManager.getInstance().setSelectedQuote(tblQuotes.getSelectionModel().getSelectedItem()));
+                QuoteManager.getInstance().setSelected(tblQuotes.getSelectionModel().getSelectedItem()));
 
         HashMap<String, Quote> latest_rev_quotes = new HashMap<>();
-        for(Quote quote: QuoteManager.getInstance().getQuotes().values())
+        for(Quote quote: QuoteManager.getInstance().getDataset().values())
         {
             if(quote.getParent_id()!=null)//if quote has parent, i.e. siblings
             {
@@ -298,11 +298,11 @@ public class QuotesController extends ScreenController implements Initializable
     {
         IO.log(getClass().getName(), IO.TAG_INFO, "reloading quotes data model..");
 
-        UserManager.getInstance().loadDataFromServer();
-        ClientManager.getInstance().loadDataFromServer();
-        ResourceManager.getInstance().loadDataFromServer();
-        EnquiryManager.getInstance().loadDataFromServer();
-        QuoteManager.getInstance().loadDataFromServer();
+        UserManager.getInstance().initialize();
+        ClientManager.getInstance().initialize();
+        ResourceManager.getInstance().initialize();
+        EnquiryManager.getInstance().initialize();
+        QuoteManager.getInstance().initialize();
     }
 
     /**

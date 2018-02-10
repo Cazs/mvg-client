@@ -86,7 +86,7 @@ public class SettingsController extends ScreenController implements Initializabl
                             System.out.println();
                         } else
                         {
-                            IO.logAndAlert(getClass().getSimpleName(), "File not found.", IO.TAG_ERROR);
+                            IO.logAndAlert(getClass().getName(), "File not found.", IO.TAG_ERROR);
                         }
                     } else
                     {
@@ -94,16 +94,16 @@ public class SettingsController extends ScreenController implements Initializabl
                     }
                 } catch (FileNotFoundException e)
                 {
-                    IO.logAndAlert(getClass().getSimpleName(), e.getMessage(), IO.TAG_ERROR);
+                    IO.logAndAlert(getClass().getName(), e.getMessage(), IO.TAG_ERROR);
                 } catch (IOException e)
                 {
-                    IO.logAndAlert(getClass().getSimpleName(), e.getMessage(), IO.TAG_ERROR);
+                    IO.logAndAlert(getClass().getName(), e.getMessage(), IO.TAG_ERROR);
                 }
             }else{
-                IO.logAndAlert(getClass().getSimpleName(), "Active session has expired.", IO.TAG_ERROR);
+                IO.logAndAlert(getClass().getName(), "Active session has expired.", IO.TAG_ERROR);
             }
         }else{
-            IO.logAndAlert(getClass().getSimpleName(), "Active session is invalid.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getName(), "Active session is invalid.", IO.TAG_ERROR);
         }
     }
 
@@ -113,8 +113,8 @@ public class SettingsController extends ScreenController implements Initializabl
         if(txtPort.getText()!=null && txtIP.getText()!=null)
         {
             RemoteComms.setHost("http://" + txtIP.getText() + ":" + txtPort.getText());
-            IO.logAndAlert(getClass().getSimpleName(), "successfully updated system configuration.", IO.TAG_INFO);
-        } else IO.logAndAlert(SettingsController.class.getSimpleName(), "Empty entries are not allowed for required fields.", IO.TAG_ERROR);
+            IO.logAndAlert(getClass().getName(), "successfully updated system configuration.", IO.TAG_INFO);
+        } else IO.logAndAlert(SettingsController.class.getName(), "Empty entries are not allowed for required fields.", IO.TAG_ERROR);
     }
     
 }

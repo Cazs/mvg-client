@@ -32,8 +32,6 @@ public class MVG extends Application
     {
         stage.setOnCloseRequest(event ->
         {
-            //TODO: fix this!!! no swing!!
-            //int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
             if(IO.showConfirm("Confirm Exit", "Are you sure you want to quit?", IO.YES, IO.NO).equals(IO.YES))
             {
                 stage.close();
@@ -41,7 +39,6 @@ public class MVG extends Application
             } else  event.consume();
         });
         //grid = new GridDisplay(2, 4);
-        //screen_manager = new ScreenManager();
         ScreenManager screen_manager = ScreenManager.getInstance();
         screen_manager.setStage(stage);
         IO.getInstance().init(screen_manager);
@@ -59,7 +56,7 @@ public class MVG extends Application
             stage.setScene(scene);
 
             stage.setMinHeight(600);
-            stage.setHeight(700);
+            //stage.setHeight(600);
             stage.setMinWidth(600);
 
             if(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth()>=1200)

@@ -13,7 +13,9 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -40,6 +42,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import org.controlsfx.control.PopOver;
 
 import javax.imageio.ImageIO;
 
@@ -59,15 +62,7 @@ public class HomescreenController extends ScreenController implements Initializa
     private ImageView imgSlide;
     @FXML
     private HBox hboxSliderNav;
-    @FXML
-    private VBox enquiryForm;
-    @FXML
-    private TextField txtEnquiry, txtTime, txtAddress, txtDestination, txtTripType, txtComments;
-    @FXML
-    private DatePicker dateScheduled;
-    @FXML
-    private BorderPane popup_window;
-
+    public static String selected_enquiry = "";
     //@FXML
     //private GoogleMapView mapView;
 
@@ -87,11 +82,20 @@ public class HomescreenController extends ScreenController implements Initializa
                 /*Image image = SwingFXUtils.toFXImage(ImageIO.read(
                         new File(MVG.class.getResource("/images/slider/" + SlideshowManager.getInstance()
                                 .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()]).getFile())), null);*/
-                Image image = SwingFXUtils.toFXImage(ImageIO.read(
-                        new File("images/slider/" + SlideshowManager.getInstance()
-                                .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()])), null);
-                imgSlide.setImage(image);
-                imgSlide.setSmooth(true);
+                if(SlideshowManager.getInstance().getCurrentIndex()<SlideshowManager.getInstance().getImagePaths().length)
+                {
+                    Image image = SwingFXUtils.toFXImage(ImageIO.read(
+                            new File("images/slider/" + SlideshowManager.getInstance()
+                                    .getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()])), null);
+                    if(image!=null)
+                    {
+                        if(imgSlide!=null)
+                        {
+                            imgSlide.setImage(image);
+                            imgSlide.setSmooth(true);
+                        } else IO.log(getClass().getName(), IO.TAG_ERROR, "slider ImageView is invalid.");
+                    } else IO.log(getClass().getName(), IO.TAG_WARN, "slider image [/images/slider/"+SlideshowManager.getInstance().getImagePaths()[SlideshowManager.getInstance().getCurrentIndex()]+"] does not exist.");
+                } else IO.log(getClass().getName(), IO.TAG_WARN, "slider image cursor is out of bounds ["+SlideshowManager.getInstance().getCurrentIndex()+"].");
 
                 //Set ImageView sizes
                 if(ScreenManager.getInstance()!=null)
@@ -162,12 +166,6 @@ public class HomescreenController extends ScreenController implements Initializa
         }
     }
 
-    @FXML
-    public void showEnquiries()
-    {
-        popup_window.setVisible(true);
-    }
-
     @Override
     public void refreshModel()
     {
@@ -220,85 +218,42 @@ public class HomescreenController extends ScreenController implements Initializa
         }
     }
 
-    private void showEnquiryWindow(String enquiry, double pos)
+    private void showEnquiryWindow(String enquiry, Node parent_node)
     {
-        if(!txtEnquiry.getText().toLowerCase().equals(enquiry.toLowerCase()))//if text is not {enquiry}
+        selected_enquiry = enquiry;
+        try
         {
-            txtEnquiry.setText(enquiry);
-            //show if hidden
-            if(!enquiryForm.isVisible())
-                enquiryForm.setVisible(true);
-        } else //text is {enquiry}
+            FXMLLoader loader = new FXMLLoader(MVG.class.getResource("views/"+Screens.ENQUIRY_FORM.getScreen()));
+            Parent screen = loader.load();
+
+            PopOver popOver = new PopOver(screen);
+            popOver.setTitle("Enquiry Form");
+            popOver.setAnimated(true);
+
+            popOver.show(parent_node);
+
+        } catch (IOException e)
         {
-            //show if hidden, hide if shown
-            enquiryForm.setVisible(!enquiryForm.isVisible());
+            IO.log(getClass().getName(), IO.TAG_ERROR, e.getMessage());
         }
-        enquiryForm.setTranslateY(pos);
-        //enquiryForm.getParent().setTranslateY(pos);
-        enquiryForm.setLayoutY(pos);
-        //enquiryForm.getParent().setTranslateY(pos);
     }
 
     @FXML
     public void transportClick()
     {
-        showEnquiryWindow("Transport", btnTransport.getBoundsInParent().getMinY());
+        showEnquiryWindow("Transport", btnTransport);//.getBoundsInParent().getMinY()
     }
 
     @FXML
     public void accommodationClick()
     {
-        showEnquiryWindow("Accommodation", btnAccommodation.getBoundsInParent().getMinY());
+        showEnquiryWindow("Accommodation", btnAccommodation);
     }
 
     @FXML
     public void experienceClick()
     {
-        showEnquiryWindow("Experience", btnExperience.getBoundsInParent().getMinY());
-    }
-
-    @FXML
-    public void submitEnquiry()
-    {
-        if(SessionManager.getInstance().getActiveUser()!=null)
-        {
-            IO.logAndAlert("Error: Invalid Session", "Active session is invalid.", IO.TAG_ERROR);
-            return;
-        }
-        if(!Validators.isValidNode(txtEnquiry, "Invalid Enquiry", 5, "^.*(?=.{5,}).*"))//"please enter a valid enquiry"
-            return;
-        if(!Validators.isValidNode(dateScheduled, (dateScheduled.getValue()==null?"":String.valueOf(dateScheduled.getValue())), "^.*(?=.{1,}).*"))
-            return;
-        if(!Validators.isValidNode(txtTime, "Invalid Pickup Location", 5, "^.*(?=.{1,}).*"))//"please enter a valid pickup address"
-            return;
-        if(!Validators.isValidNode(txtAddress, "Invalid Pickup Location", 1, "^.*(?=.{1,}).*"))//"please enter a valid pickup address"
-            return;
-        if(!Validators.isValidNode(txtDestination, "Invalid Destination", 1, "^.*(?=.{1,}).*"))//"please enter a valid destination"
-            return;
-        if(!Validators.isValidNode(txtTripType, "Invalid Trip Type", 1, "^.*(?=.{1,}).*"))//"please enter a valid trip type"
-            return;
-
-        Enquiry enquiry = new Enquiry();
-        enquiry.setEnquiry(txtEnquiry.getText());
-        enquiry.setClient_id(SessionManager.getInstance().getActiveUser().getOrganisation_id());
-        enquiry.setComments(txtComments.getText());
-        enquiry.setPickup_location(txtAddress.getText());
-        enquiry.setDestination(txtDestination.getText());
-        enquiry.setDate_scheduled(dateScheduled.getValue().atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
-        enquiry.setTrip_type(txtTripType.getText());
-        enquiry.setCreator(SessionManager.getInstance().getActive().getUsername());
-
-        try
-        {
-            EnquiryManager.getInstance().createEnquiry(enquiry, new_enquiry_id ->
-            {
-                IO.logAndAlert("Success", "Created Enquiry ["+new_enquiry_id+"].", IO.TAG_INFO);
-                return null;
-            });
-        } catch (IOException e)
-        {
-            IO.logAndAlert("I/O Error", e.getMessage(), IO.TAG_ERROR);
-        }
+        showEnquiryWindow("Experience", btnExperience);
     }
 
     @FXML
